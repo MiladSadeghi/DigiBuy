@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+@function text-stroke($size: 2, $color: #fff, $correction: 0) {
+	$radius: $size - $correction;
+	$stroke: ();
+
+	@for $i from -$size through $size {
+		@for $k from -$size through $size {
+
+			$x: $k;
+			$y: $i;
+
+			@if $k > 0 {
+				$x: $k - 0.5;
+			} @else if $k < 0 {
+				$x: $k + 0.5;
+			}
+
+			@if $i > 0 {
+				$y: $i - 0.5;
+			} @else if $i < 0 {
+				$y: $i + 0.5;
+			}
+
+			@if ($x*$x + $y*$y <= $radius*$radius) {
+				$stroke: append($stroke, $i*1px $k*1px 0 $color, comma);
+			}
+		}
+	}
+
+	@return $stroke;
+}
+
+@mixin text-stroke($size: 2, $color: #fff, $correction: 0) {
+	text-shadow: text-stroke($size, $color, $correction);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Sans Pro' !important;
+}
+
+.navbar {
+  padding: 0.75rem 0 !important;
+  background: rgba(97, 97, 97, 0.356);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.281);
+
+  #logo {
+    color: #fff;
+    @include text-stroke(2, #52616B);
+  }
+
+  .search-box {
+    padding: .624rem 1.2rem;
+  }
+
+  .bi-box-arrow-in-right {
+    vertical-align: middle
+  }
+
+  #login {
+    font-size: 0.88rem;
+  }
+
+  .roller {
+    width: 1px;
+    height: 24px;
+    background-color: rgb(90 90 90 / 26%);
+  }
+
+  #card {
+    font-size: 1.2rem;
+  }
+
+  button {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    background: #EEEEEE;
+  }
+}

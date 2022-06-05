@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro" !important;
+}
+
+.navbar {
+  padding: 0.75rem 0 !important;
+  background: rgba(97, 97, 97, 0.356);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.281);
+}
+.navbar #logo {
+  color: #fff;
+  text-shadow: -2px -1px 0 #52616B, -2px 0px 0 #52616B, -2px 1px 0 #52616B, -1px -2px 0 #52616B, -1px -1px 0 #52616B, -1px 0px 0 #52616B, -1px 1px 0 #52616B, -1px 2px 0 #52616B, 0px -2px 0 #52616B, 0px -1px 0 #52616B, 0px 0px 0 #52616B, 0px 1px 0 #52616B, 0px 2px 0 #52616B, 1px -2px 0 #52616B, 1px -1px 0 #52616B, 1px 0px 0 #52616B, 1px 1px 0 #52616B, 1px 2px 0 #52616B, 2px -1px 0 #52616B, 2px 0px 0 #52616B, 2px 1px 0 #52616B;
+}
+.navbar .search-box {
+  padding: 0.624rem 1.2rem;
+}
+.navbar .bi-box-arrow-in-right {
+  vertical-align: middle;
+}
+.navbar #login {
+  font-size: 0.88rem;
+}
+.navbar .roller {
+  width: 1px;
+  height: 24px;
+  background-color: rgba(90, 90, 90, 0.26);
+}
+.navbar #card {
+  font-size: 1.2rem;
+}
+.navbar button {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  background: #EEEEEE;
+}
+
+/*# sourceMappingURL=style.css.map */
