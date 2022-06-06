@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
 @function text-stroke($size: 2, $color: #fff, $correction: 0) {
 	$radius: $size - $correction;
 	$stroke: ();
@@ -34,6 +36,7 @@
 	text-shadow: text-stroke($size, $color, $correction);
 }
 
+
 *,
 *::before,
 *::after {
@@ -44,44 +47,31 @@
 
 body {
   font-family: 'Source Sans Pro' !important;
+  background: rgba(166, 220, 239, 0.507) !important;
 }
 
-.navbar {
-  padding: 0.75rem 0 !important;
-  background: rgba(97, 97, 97, 0.356);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.281);
+.main {
+  background: rgba(166, 220, 239, 0.384);
 
-  #logo {
-    color: #fff;
-    @include text-stroke(1, #52616B);
+  p {
+    font-size: 0.9rem;
   }
 
-  .search-box {
-    padding: .624rem 1.2rem;
+  #login-input:focus {
+    border: none;
+    box-shadow: none !important;
   }
+}
 
-  .bi-box-arrow-in-right {
-    vertical-align: middle
-  }
+h2 {
+  font-family: 'Righteous' !important;
+  font-size: 2.5rem;
+  color: #fff !important;
+  @include text-stroke(2, rgba(105, 128, 158, 0.233));
+}
 
-  #login {
-    font-size: 0.88rem;
-  }
-
-  .roller {
-    width: 1px;
-    height: 24px;
-    background-color: rgb(90 90 90 / 26%);
-  }
-
-  #card {
-    font-size: 1.2rem;
-  }
-
-  [type="button"] {
-    height: 38px;
-    display: flex;
-    align-items: center;
-    background: #EEEEEE;
-  }
+.roller {
+  width: 1px;
+  height: 18px;
+  background-color: rgba(53, 53, 53, 0.329);
 }

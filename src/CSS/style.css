@@ -18,7 +18,7 @@ body {
 }
 .navbar #logo {
   color: #fff;
-  text-shadow: -2px -1px 0 #52616B, -2px 0px 0 #52616B, -2px 1px 0 #52616B, -1px -2px 0 #52616B, -1px -1px 0 #52616B, -1px 0px 0 #52616B, -1px 1px 0 #52616B, -1px 2px 0 #52616B, 0px -2px 0 #52616B, 0px -1px 0 #52616B, 0px 0px 0 #52616B, 0px 1px 0 #52616B, 0px 2px 0 #52616B, 1px -2px 0 #52616B, 1px -1px 0 #52616B, 1px 0px 0 #52616B, 1px 1px 0 #52616B, 1px 2px 0 #52616B, 2px -1px 0 #52616B, 2px 0px 0 #52616B, 2px 1px 0 #52616B;
+  text-shadow: -1px -1px 0 #52616B, -1px 0px 0 #52616B, -1px 1px 0 #52616B, 0px -1px 0 #52616B, 0px 0px 0 #52616B, 0px 1px 0 #52616B, 1px -1px 0 #52616B, 1px 0px 0 #52616B, 1px 1px 0 #52616B;
 }
 .navbar .search-box {
   padding: 0.624rem 1.2rem;
@@ -37,7 +37,7 @@ body {
 .navbar #card {
   font-size: 1.2rem;
 }
-.navbar button {
+.navbar [type=button] {
   height: 38px;
   display: flex;
   align-items: center;
