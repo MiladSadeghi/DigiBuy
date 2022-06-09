@@ -18,12 +18,12 @@
   <title>Login | Register</title>
 </head>
 
-<body>
+<body class="position-relative">
   <div class="container h-100">
     <div class="row h-100 align-items-center justify-content-center">
       <div class="col h-100 d-flex align-items-center justify-content-center">
-        <div class="multi-step-form" data-multi-step>
-          <div data-step id="main1" class="h-50 main1 shadow-lg rounded-3 py-4 px-4">
+        <div class="multi-step-form position-relative" data-multi-step>
+          <div data-step id="main1" class="h-50 main1 shadow-lg rounded-3 py-4 px-4 position-relative">
             <h2 class="text-center">DigiBuy</h2>
             <h5 class="d-flex align-items-center fs-6 mt-3 fw-semibold text-muted">Login<span
                 class="roller mx-2"></span>Register</h5>
@@ -32,11 +32,12 @@
             <input type="text" class="form-control" id="login-input">
             <p id="validation" class="mt-2 text-danger"></p>
             <a href="#" class="btn btn-success d-block mt-3" id="login-btn">Login</a>
+            <div id="loading1" hidden class="loading rounded-3"></div>
           </div>
-          <div data-step id="main2" class="h-50 main1 shadow-lg rounded-3 py-4 px-4">
+          <div data-step id="main2" class="h-50 main1 shadow-lg rounded-3 py-4 px-4 position-relative">
             <h2 class="text-center">DigiBuy</h2>
             <h3 class="">Register</h3>
-            <p id="wlc-msg"></p>
+            <p class="fw-semibold text-muted">Sorry! cant find account with this email or phone number.</p>
             <label for="disp-numb" class="form-label fw-bold">Display Name: <span class="ms-2 register-message text-danger"></span></label>
             <input type="text" class="form-control mb-3" id="display-name" aria-describedby="displayNumberHelp">
             <label for="email" class="form-label fw-bold">Email address: <span class="ms-2 register-message text-danger"></span></label>
@@ -49,16 +50,32 @@
             </div>
             <input type="password" class="form-control mb-3" id="password" aria-describedby="displayNumberHelp">
             <a href="#" class="btn btn-success d-block mt-3" id="register-btn">Register</a>
+            <div id="loading2" hidden class="loading rounded-3"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  <div class="toast align-items-center text-bg-danger border-0 position-absolute" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        You have connection problem. Please fix it!.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="toast align-items-center text-bg-success border-0 position-absolute" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Your Register Complete!. You Fowrward to Main Page
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
   <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
     crossorigin="anonymous"></script>
-  <script async src="/login/src/JS/main.js"></script>
+  <script src="/login/src/JS/main.js"></script>
 </body>
 
 </html>

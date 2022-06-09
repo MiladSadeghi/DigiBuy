@@ -10,6 +10,11 @@ const registerPassword = document.querySelector("#password");
 const registerValdation = document.querySelectorAll(".register-message")
 const registerSubmitButton = document.querySelector("#register-btn");
 const strengthBar = document.querySelector(".strength");
+const loadingLoginPage = document.querySelector("#loading1")
+const loadingRegisterPage = document.querySelector("#loading2")
+const toastElList = document.querySelectorAll('.toast')
+const toastBody = document.querySelector(".toast-body")
+let toastList;
 
 let parameters = {
   count: false,
@@ -17,11 +22,6 @@ let parameters = {
   numbers: false,
   special: false
 }
-
-let email;
-let phoneNumber;
-let password;
-let firstInput;
 
 let currentStep = formSteps.findIndex(step => {
   return step.classList.contains("active")
@@ -129,6 +129,7 @@ function registerBtnVisibility() {
 
 document.addEventListener("DOMContentLoaded", () => {
   registerSubmitButton.classList.add("disabled");
+  toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl))
   loginInput.addEventListener("keyup", () => {
     inputValidate(loginInput, validateP);
   })
@@ -136,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let input = inputValidate(loginInput, validateP);
     if (input) {
       (input === "email") ? (registerEmail.value = loginInput.value, registerEmail.classList.add("correct"), registerEmail.disabled = true) : (registerPhoneNumber.value = loginInput.value, registerPhoneNumber.classList.add("correct"), registerPhoneNumber.disabled = true);
+      loadingLoginPage.removeAttribute('hidden');
       checkLogin();
     }
   })
@@ -207,9 +209,17 @@ function inputValidate(input, validateMessage) {
 
 async function checkLogin(typeOfLogin) {
   let apiGet = "https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json";
-  let response = await fetch(apiGet);
-  let data = await response.json();
-
+  let response, data;
+  try {
+    response = await fetch(apiGet);
+    data = await response.json();
+  } catch (error) {
+    toastList[0].show();
+    console.log(error);
+    loadingLoginPage.setAttribute('hidden', '');
+    return
+  }
+  loadingLoginPage.setAttribute('hidden', '');
   if ((data && data.typeOfLogin)) {
 
   } else {
@@ -250,9 +260,11 @@ async function registerUser(input) {
     "phoneNumber": input[2].value,
     "id": uniqeID
   }
+  loadingRegisterPage.removeAttribute('hidden');
   let apiCreateUserPost = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${uniqeID}.json`;
-  sendDATA(apiCreateUserPost, createUserTable, "PATCH");
+  await sendDATA(apiCreateUserPost, createUserTable, "PATCH");
   let apiValidAccountPost = "https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json";
-  sendDATA(apiValidAccountPost, createValidAccountTable, "POST");
-  console.log(ValidAccountResponse);
+  await sendDATA(apiValidAccountPost, createValidAccountTable, "POST");
+  toastList[1].show();
+  loadingRegisterPage.setAttribute('hidden', '');
 }
