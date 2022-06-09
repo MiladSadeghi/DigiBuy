@@ -48,18 +48,24 @@
 body {
   font-family: 'Source Sans Pro' !important;
   background: rgba(166, 220, 239, 0.507) !important;
+  height: 100vh;
 }
 
-.main {
-  background: rgba(166, 220, 239, 0.384);
+.multi-step-form {
+  overflow: hidden;
+  position: relative;
+  width: 70%;
 
+  .active {
+    animation: slide 250ms 125ms ease-in-out both;
+  }
+}
+
+.main1 {
+  background: rgba(166, 220, 239, 0.384);
+  animation: fade 250ms ease-in-out forwards;
   p {
     font-size: 0.9rem;
-  }
-
-  #login-input:focus {
-    border: none;
-    box-shadow: none !important;
   }
 }
 
@@ -75,3 +81,69 @@ h2 {
   height: 18px;
   background-color: rgba(53, 53, 53, 0.329);
 }
+
+.hide {
+  display: none;
+}
+
+.correct {
+  border: 1px solid rgb(78, 148, 79) !important;
+
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(78, 148, 79, 0.431) !important;
+  }
+}
+
+.not-correct {
+  border: 1px solid rgb(243, 36, 36) !important;
+
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(243, 36, 36, 0.431) !important;
+  }
+}
+
+
+#strength-bar{
+  background-color: #979797;
+  height: 15px;
+  position: relative;
+}
+.strength{
+  width: 0%;
+  display: inline-block;
+  position: relative;
+  height: 100%;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(.75);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .multi-step-form {
+    width: 100%;
+  }
+}
+  
