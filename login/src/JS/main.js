@@ -1,5 +1,5 @@
 const loginInput = document.querySelector('#login-input');
-const loginButton = document.querySelector('#login-btn');
+const checkLoginValid = document.querySelector('#check-acc-btn');
 const validateP = document.querySelector('#validation');
 const multiStepForm = document.querySelector("[data-multi-step]")
 const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
@@ -14,7 +14,11 @@ const loadingLoginPage = document.querySelector("#loading1")
 const loadingRegisterPage = document.querySelector("#loading2")
 const toastElList = document.querySelectorAll('.toast')
 const toastBody = document.querySelector(".toast-body")
+const passwordLoginInput = document.querySelector("#passwordLogin");
+const loginBtn = document.querySelector("#login-btn");
 let toastList;
+let data;
+let user;
 
 let parameters = {
   count: false,
@@ -45,7 +49,6 @@ if (currentStep < 0) {
 
 formSteps.forEach(step => {
   step.addEventListener("animationend", e => {
-    console.log(e);
     formSteps[currentStep].classList.remove("hide")
     e.target.classList.toggle("hide", !e.target.classList.contains("active"))
   })
@@ -53,7 +56,6 @@ formSteps.forEach(step => {
 
 function showCurrentStep() {
   formSteps.forEach((step, index) => {
-    console.log(index, currentStep);
     step.classList.toggle("active", index === currentStep)
   })
 }
@@ -133,12 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
   loginInput.addEventListener("keyup", () => {
     inputValidate(loginInput, validateP);
   })
-  loginButton.addEventListener("click", () => {
+  checkLoginValid.addEventListener("click", () => {
     let input = inputValidate(loginInput, validateP);
     if (input) {
       (input === "email") ? (registerEmail.value = loginInput.value, registerEmail.classList.add("correct"), registerEmail.disabled = true) : (registerPhoneNumber.value = loginInput.value, registerPhoneNumber.classList.add("correct"), registerPhoneNumber.disabled = true);
       loadingLoginPage.removeAttribute('hidden');
-      checkLogin();
+      checkLogin(input);
     }
   })
   displayName.addEventListener("keyup", (e) => {
@@ -180,6 +182,20 @@ document.addEventListener("DOMContentLoaded", () => {
       registerUser(situ);
     }
   })
+  loginBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (loginInput.value === (data.email || data.phoneNumber) && passwordLoginInput.value === user.password) {
+      toastBody.innerHTML = "Login Successful!";
+      toastElList[0].classList.remove("text-bg-danger")
+      toastElList[0].classList.add("text-bg-success")
+      toastList[0].show();
+    } else {
+      toastBody.innerHTML = "Login Failed!";
+      toastElList[0].classList.add("text-bg-danger")
+      toastElList[0].classList.remove("text-bg-success")
+      toastList[0].show();
+    }
+  })
 })
 
 const validateEmail = (email) => {
@@ -209,24 +225,36 @@ function inputValidate(input, validateMessage) {
 
 async function checkLogin(typeOfLogin) {
   let apiGet = "https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json";
-  let response, data;
+  let response, validAccount;
   try {
     response = await fetch(apiGet);
-    data = await response.json();
+    validAccount = await response.json();
   } catch (error) {
+    toastBody.innerHTML = "Something went wrong, please try again later!";
+    toastElList[0].classList.add("text-bg-danger")
+    toastElList[0].classList.remove("text-bg-success")
     toastList[0].show();
-    console.log(error);
     loadingLoginPage.setAttribute('hidden', '');
     return
   }
   loadingLoginPage.setAttribute('hidden', '');
-  if ((data && data.typeOfLogin)) {
-
+  for (const [key, value] of Object.entries(validAccount)) {
+    if (value[`${typeOfLogin}`] === loginInput.value) {
+      data = value;
+    }
+  }
+  if (data) {
+    currentStep = 2;
+    await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${data.id}.json`).then(res => res.json()).then(res => {
+      user = res;
+    })
+    showCurrentStep();
   } else {
     currentStep = 1;
     showCurrentStep();
   }
 }
+
 
 
 
@@ -265,6 +293,9 @@ async function registerUser(input) {
   await sendDATA(apiCreateUserPost, createUserTable, "PATCH");
   let apiValidAccountPost = "https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json";
   await sendDATA(apiValidAccountPost, createValidAccountTable, "POST");
-  toastList[1].show();
+  toastBody.innerHTML = "You have successfully registered!";
+  toastElList[0].classList.remove("text-bg-danger")
+  toastElList[0].classList.add("text-bg-success")
+  toastList[0].show();
   loadingRegisterPage.setAttribute('hidden', '');
 }
