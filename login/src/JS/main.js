@@ -16,6 +16,11 @@ const toastElList = document.querySelectorAll('.toast')
 const toastBody = document.querySelector(".toast-body")
 const passwordLoginInput = document.querySelector("#passwordLogin");
 const loginBtn = document.querySelector("#login-btn");
+
+let date = new Date();
+date.setYear(2080);
+
+let typeOfLogin;
 let toastList;
 let data;
 let user;
@@ -132,7 +137,7 @@ function registerBtnVisibility() {
 document.addEventListener("DOMContentLoaded", () => {
   registerSubmitButton.classList.add("disabled");
   toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl))
-  loginInput.addEventListener("keyup", () => {
+  loginInput.addEventListener("input", () => {
     inputValidate(loginInput, validateP);
   })
   checkLoginValid.addEventListener("click", () => {
@@ -140,10 +145,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (input) {
       (input === "email") ? (registerEmail.value = loginInput.value, registerEmail.classList.add("correct"), registerEmail.disabled = true) : (registerPhoneNumber.value = loginInput.value, registerPhoneNumber.classList.add("correct"), registerPhoneNumber.disabled = true);
       loadingLoginPage.removeAttribute('hidden');
+      typeOfLogin = input;
       checkLogin(input);
     }
   })
-  displayName.addEventListener("keyup", (e) => {
+  displayName.addEventListener("input", (e) => {
     if (e.target.value.length > 2) {
       borderChange(e.target, registerValdation[0]);
       registerBtnVisibility();
@@ -152,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
       classCorrect(e.target, "correct", "not-correct");
     }
   })
-  registerEmail.addEventListener("keyup", (e) => {
+  registerEmail.addEventListener("input", (e) => {
     if (validateEmail(e.target.value)) {
       borderChange(e.target, registerValdation[1]);
       registerBtnVisibility();
@@ -161,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
       classCorrect(e.target, "correct", "not-correct");
     }
   })
-  registerPhoneNumber.addEventListener("keyup", (e) => {
+  registerPhoneNumber.addEventListener("input", (e) => {
     if (e.target.value.length >= 11) {
       borderChange(e.target, registerValdation[2]);
       registerBtnVisibility();
@@ -170,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
       classCorrect(e.target, "correct", "not-correct");
     }
   })
-  registerPassword.addEventListener("keyup", (e) => {
+  registerPassword.addEventListener("input", (e) => {
     if (strengthChecker(e)) {
       registerBtnVisibility();
     }
@@ -189,6 +195,10 @@ document.addEventListener("DOMContentLoaded", () => {
       toastElList[0].classList.remove("text-bg-danger")
       toastElList[0].classList.add("text-bg-success")
       toastList[0].show();
+      document.cookie = `userTable=${data.id};path=/;expires=${date}`;
+      setTimeout(() => {
+        window.location.assign("/");
+      }, 2000);
     } else {
       toastBody.innerHTML = "Login Failed!";
       toastElList[0].classList.add("text-bg-danger")
@@ -223,7 +233,7 @@ function inputValidate(input, validateMessage) {
   }
 }
 
-async function checkLogin(typeOfLogin) {
+async function checkLogin() {
   let apiGet = "https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json";
   let response, validAccount;
   try {
@@ -254,9 +264,6 @@ async function checkLogin(typeOfLogin) {
     showCurrentStep();
   }
 }
-
-
-
 
 async function sendDATA(url, data, methode) {
   let response = await fetch(url, {
@@ -289,13 +296,33 @@ async function registerUser(input) {
     "id": uniqeID
   }
   loadingRegisterPage.removeAttribute('hidden');
+  let checkValidAccount = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json`);
+  let validAccount = await checkValidAccount.json();
+  for (const [key, value] of Object.entries(validAccount)) {
+    if (typeOfLogin === "email" && value["phoneNumber"] === registerPhoneNumber.value) {
+      registerPhoneNumber.innerHTML = "";
+      registerValdation[2].innerHTML = "Enter another phone number!";
+      loadingRegisterPage.setAttribute('hidden', '');
+      return
+    } else if (typeOfLogin === "phoneNumber" && value["email"] === registerEmail.value) {
+      registerEmail.innerHTML = "";
+      registerValdation[1].innerHTML = "Enter another email address!";
+      loadingRegisterPage.setAttribute('hidden', '');
+      return
+    }
+  }
+
   let apiCreateUserPost = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${uniqeID}.json`;
   await sendDATA(apiCreateUserPost, createUserTable, "PATCH");
   let apiValidAccountPost = "https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json";
   await sendDATA(apiValidAccountPost, createValidAccountTable, "POST");
   toastBody.innerHTML = "You have successfully registered!";
+  document.cookie = `userTable=${uniqeID};path=/;expires=${date}`;
   toastElList[0].classList.remove("text-bg-danger")
   toastElList[0].classList.add("text-bg-success")
   toastList[0].show();
   loadingRegisterPage.setAttribute('hidden', '');
+  setTimeout(() => {
+    window.location.assign("/");
+  }, 2000);
 }
