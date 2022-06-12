@@ -283,6 +283,7 @@ async function registerUser(input) {
     "password": input[3].value,
     "type": "user",
     "basket": "",
+    "notification": "",
     "dashboard": {
       "orders": "",
       "wishlist": "",

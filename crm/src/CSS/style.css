@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro" !important;
+  background: #D3DEDC !important;
+}
+
+a,
+a:hover,
+a:visited,
+a:active,
+a:focus {
+  color: inherit;
+}
+
+.bg-blue {
+  background: #398AB9;
+}
+
+.header h1 {
+  font-family: "Righteous" !important;
+  font-size: 1.7rem;
+  color: #fff !important;
+  text-shadow: -2px -1px 0 #1E2022, -2px 0px 0 #1E2022, -2px 1px 0 #1E2022, -1px -2px 0 #1E2022, -1px -1px 0 #1E2022, -1px 0px 0 #1E2022, -1px 1px 0 #1E2022, -1px 2px 0 #1E2022, 0px -2px 0 #1E2022, 0px -1px 0 #1E2022, 0px 0px 0 #1E2022, 0px 1px 0 #1E2022, 0px 2px 0 #1E2022, 1px -2px 0 #1E2022, 1px -1px 0 #1E2022, 1px 0px 0 #1E2022, 1px 1px 0 #1E2022, 1px 2px 0 #1E2022, 2px -1px 0 #1E2022, 2px 0px 0 #1E2022, 2px 1px 0 #1E2022;
+}
+
+.dropdown {
+  position: relative;
+  height: 100%;
+}
+.dropdown .bi-arrow-down::before {
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease-in-out;
+}
+.dropdown .option {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  top: 65px;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.05);
+}
+.dropdown .option::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 68%;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid #fff;
+}
+.dropdown .option div {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.1s ease-in-out;
+}
+.dropdown .option div:hover,
+.dropdown .option div .option::before {
+  background-color: rgba(136, 136, 136, 0.5019607843);
+}
+
+.active {
+  opacity: 1 !important;
+}
+
+.rotateArrow::before {
+  transform: rotate(0deg) !important;
+}
+
+/*# sourceMappingURL=style.css.map */
