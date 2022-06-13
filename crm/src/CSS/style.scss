@@ -2,6 +2,7 @@
 
 $navbar-color: #398AB9;
 $body-bg: #D3DEDC;
+$menu-select-bg: rgba(193, 193, 193, 0.322);
 
 @function text-stroke($size: 2, $color: #fff, $correction: 0) {
 	$radius: $size - $correction;
@@ -78,15 +79,15 @@ a:focus {
 	position: relative;
 	height: 100%;
 
-	.bi-arrow-down::before {
-		transform: rotate(-90deg);
+	.bi-arrow-right::before {
+		transform: rotate(0deg);
 		transition: transform 0.2s ease-in-out;
 	}
 
 	.option {
 		position: absolute;
 		opacity: 0;
-		transition:opacity 0.3s ease-in-out;
+		transition: opacity 0.3s ease-in-out;
 		top: 65px;
 		right: 0;
 		background: #fff;
@@ -124,6 +125,100 @@ a:focus {
 
 .rotateArrow {
 	&::before {
-		transform: rotate(0deg) !important;
+		transform: rotate(90deg) !important;
+	}
+}
+
+.category {
+	left: 0;
+	top: 57px;
+	height: calc(100% - 57px);
+	transition: left 0.4s ease-in-out;
+	background: #398AB9;
+	content: "";
+	width: 25%;
+	position: fixed;
+	overflow: auto;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	transform: translate(0);
+
+	&::-webkit-scrollbar {
+		width: 0px;
+	}
+
+	.on-hover {
+		cursor: pointer;
+		transition: background-color 0.2s ease-in-out;
+
+		&:hover {
+			background-color: $menu-select-bg;
+		}
+	}
+}
+
+.dropdown1 {
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.2s ease-in-out;
+
+	.option1 {
+		div {
+			&:hover {
+				background-color: $menu-select-bg;
+			}
+		}
+	}
+}
+
+.show {
+	background-color: $menu-select-bg;
+	max-height: 200px;
+	overflow: hidden;
+}
+
+.profile-arrow {
+	&::before {
+		transform: rotate(0deg);
+		transition: transform 0.2s ease-in-out;
+	}
+}
+
+.main-body {
+	transition: width 0.4s ease-in-out;
+}
+
+#showMegaMenu {
+	position: absolute;
+	display: block;
+	top: 50%;
+	right: 0;
+	transform: translatey(-50%);
+	z-index: 5;
+	opacity: 0;
+	width: 16%;
+	height: 83%;
+	cursor: pointer;
+}
+
+#showMegaMenuIcon {
+	display: block;
+	position: absolute;
+	top: 50%;
+	transform: translatey(-50%);
+	right: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.first-row {
+	padding-top: 57px !important;
+}
+
+@media screen and (max-width: 768px) {
+	.category {
+		left: -30%;
 	}
 }

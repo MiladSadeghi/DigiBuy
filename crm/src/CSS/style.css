@@ -35,8 +35,8 @@ a:focus {
   position: relative;
   height: 100%;
 }
-.dropdown .bi-arrow-down::before {
-  transform: rotate(-90deg);
+.dropdown .bi-arrow-right::before {
+  transform: rotate(0deg);
   transition: transform 0.2s ease-in-out;
 }
 .dropdown .option {
@@ -75,7 +75,91 @@ a:focus {
 }
 
 .rotateArrow::before {
-  transform: rotate(0deg) !important;
+  transform: rotate(90deg) !important;
+}
+
+.category {
+  left: 0;
+  top: 57px;
+  height: calc(100% - 57px);
+  transition: left 0.4s ease-in-out;
+  background: #398AB9;
+  content: "";
+  width: 25%;
+  position: fixed;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  transform: translate(0);
+}
+.category::-webkit-scrollbar {
+  width: 0px;
+}
+.category .on-hover {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.category .on-hover:hover {
+  background-color: rgba(193, 193, 193, 0.322);
+}
+
+.dropdown1 {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease-in-out;
+}
+.dropdown1 .option1 div:hover {
+  background-color: rgba(193, 193, 193, 0.322);
+}
+
+.show {
+  background-color: rgba(193, 193, 193, 0.322);
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.profile-arrow::before {
+  transform: rotate(0deg);
+  transition: transform 0.2s ease-in-out;
+}
+
+.main-body {
+  transition: width 0.4s ease-in-out;
+}
+
+#showMegaMenu {
+  position: absolute;
+  display: block;
+  top: 50%;
+  right: 0;
+  transform: translatey(-50%);
+  z-index: 5;
+  opacity: 0;
+  width: 16%;
+  height: 83%;
+  cursor: pointer;
+}
+
+#showMegaMenuIcon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translatey(-50%);
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.first-row {
+  padding-top: 57px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .category {
+    left: -30%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
