@@ -187,6 +187,10 @@ nav {
 }
 .product .second-glass {
   background-size: 100% !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  text-align: center;
 }
 .product .glass {
   width: 100%;
@@ -250,7 +254,7 @@ nav {
 .product .pr-ph-ph {
   display: grid;
   grid-area: product-photo-photo;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 0.5rem;
 }

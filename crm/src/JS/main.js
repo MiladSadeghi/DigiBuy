@@ -58,13 +58,50 @@ document.addEventListener("DOMContentLoaded", (e) => {
       e.target.addEventListener("shown.bs.popover", (el) => {
         let button = document.querySelector(`#${el.target.getAttribute("aria-describedby")} button`);
         button.addEventListener("click", (ele) => {
-          e.target.parentElement.style.background = `url(${ele.target.previousElementSibling.value}), #fff`;
+          productPhotoContentType(ele.target.previousElementSibling.value).then(res => {
+            if (res) {
+              e.target.parentElement.style.background = `url(${ele.target.previousElementSibling.value})`;
+              e.target.parentElement.style.backgroundColor = `#fff`;
+            }
+          })
         })
       })
-
+    }
+    if (e.target.classList.contains("add-photo-div")) {
+      let photosList = document.querySelector(".pr-ph-ph");
+      loadPopOver();
+      if (photosList.childElementCount < 6) {
+        photosList.innerHTML += `<div class="glass second-glass w-100 fs-4 rounded shadow-lg align-items-center justify-content-center"><i class="bi bi-dash-circle remove-photo-div"></i><a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a></div>`
+        loadPopOver();
+      } else {
+        loadPopOver();
+      }
+    }
+    if (e.target.classList.contains("remove-photo-div")) {
+        e.target.parentElement.remove();
+        loadPopOver();
     }
   })
 })
+
+function loadPopOver() {
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {
+    container: 'body',
+    title: 'Add Photo Link',
+    html: true,
+    placement: 'bottom',
+    sanitize: false,
+    content() {
+      return document.querySelector('#PopoverContent').innerHTML;
+    }
+  }));
+}
+
+async function productPhotoContentType(get_url) {
+  const response = await fetch(get_url);
+  return response.headers.get('content-type').includes("image") ? true : false;
+}
 
 function productAdd(event) {
   mainBody.innerHTML = `        <div class="product">
@@ -88,15 +125,11 @@ function productAdd(event) {
   </div>
   <div class="d-flex pr-ph">
     <div class="glass pr-ph-main first-glass d-flex fs-2 rounded shadow-lg align-items-center justify-content-evenly">
-      <i data-bs-toggle="popover" class="bi bi-plus-circle"></i>
+    <i class="bi bi-plus-circle add-photo-div"></i>
       <a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a>
     </div>
   </div>
   <div class="pr-ph-ph w-100">
-    <div class="glass second-glass w-100 d-flex fs-4 rounded shadow-lg align-items-center justify-content-evenly">
-      <i  class="bi bi-plus-circle"></i>
-      <a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a>
-    </div>
   </div>
   <div class="d-flex pr-di"><textarea class="form-control shadow-lg" placeholder="Discription"
       style="resize: none;" id="product-discription-add" cols="20" rows="5"></textarea></div>
@@ -154,15 +187,5 @@ function productAdd(event) {
   </div>
   <button id="submit-product" type="button" class="btn btn-success pr-su">Add Product</button>
 </div>`;
-  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {
-    container: 'body',
-    title: 'Add Photo Link',
-    html: true,
-    placement: 'bottom',
-    sanitize: false,
-    content() {
-      return document.querySelector('#PopoverContent').innerHTML;
-    }
-  }));
+  loadPopOver();
 }
