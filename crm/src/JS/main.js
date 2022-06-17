@@ -8,17 +8,15 @@ const showMenu = document.querySelector("#showMegaMenu");
 const category = document.querySelector(".category");
 const mainBody = document.querySelector(".main-body");
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", (e) => {
   dropDownMenu.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('active');
   })
-
   menuBtnArrow.forEach((element, index) => {
     element.addEventListener('click', (e) => {
       profileArrow[index].classList.toggle('rotateArrow');
-      menuBtnDrowDown[index].classList.toggle("show");
-
+      menuBtnDrowDown[index].classList.toggle("show-menu");
     });
   })
 
@@ -33,18 +31,138 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   category.addEventListener("click", (e) => {
-    console.log(e.target.getAttribute("add"));
     switch (e.target.getAttribute("add")) {
       case "user":
         userAdd();
         break;
       case "product":
-        productAdd(e);
+        productAdd();
         break;
+    }
+  })
+
+  mainBody.addEventListener("click", (e) => {
+    if (e.target.classList.contains("product-add-specification")) {
+      e.stopPropagation();
+      let productSpecification = document.querySelector("#product-specification");
+      productSpecification.innerHTML += `<div class="input-group mt-2">
+      <input required type="text" placeholder="title" class="form-control shadow-lg">
+      <input required type="text" placeholder="discription" class="form-control shadow-lg">
+      <button class="btn btn-danger product-remove-specification" type="button"></button>
+      </div>`
+    }
+    if (e.target.classList.contains("product-remove-specification")) {
+      e.target.parentElement.remove();
+    }
+    if (e.target.classList.contains("bi-wrench-adjustable-circle")) {
+      e.target.addEventListener("shown.bs.popover", (el) => {
+        let button = document.querySelector(`#${el.target.getAttribute("aria-describedby")} button`);
+        button.addEventListener("click", (ele) => {
+          e.target.parentElement.style.background = `url(${ele.target.previousElementSibling.value}), #fff`;
+        })
+      })
+
     }
   })
 })
 
 function productAdd(event) {
-  mainBody.innerHTML = `<div class="product"><div class="d-flex pr-na"><input placeholder="Product Name" type="text" class="form-control shadow-lg" id="product-name-add"></div><div class="d-flex pr-mo"><input placeholder="Product Model" type="text" class="form-control shadow-lg" id="product-model-add"></div><div class="d-flex w-100 pr-fe"><ul class="mb-0 list-unstyled w-100"><li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg" id="product-feature-li"></li><li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg" id="product-feature-li"></li><li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg" id="product-feature-li"></li><li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg" id="product-feature-li"></li><li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg" id="product-feature-li"></li></ul></div><div class="d-flex pr-ph"><div class="d-flex fs-2 rounded shadow-lg align-items-center justify-content-evenly"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" fill="currentColor"class="bi bi-plus-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" /><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" /><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" /></svg></div><div class="d-flex fs-2 rounded shadow-lg align-items-center justify-content-evenly"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" fill="currentColor"class="bi bi-plus-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" /><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" /><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" /></svg></div><div class="d-flex fs-2 rounded shadow-lg align-items-center justify-content-evenly"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" /><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" fill="currentColor"class="bi bi-dash-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" /><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" /></svg></div></div><div class="d-flex pr-di"><textarea class="form-control shadow-lg" placeholder="Discription" style="resize: none;" id="product-discription-add" cols="20" rows="5"></textarea></div><div class="d-flex pr-br"><input placeholder="Brand" type="text" class="form-control w-100 shadow-lg" id="product-brand-add"></div><div class="d-flex pr-pr"><input placeholder="Price" type="text" class="form-control w-100 shadow-lg" id="product-price-add"></div></div>`;
+  mainBody.innerHTML = `        <div class="product">
+  <div class="d-flex pr-na"><input placeholder="Product Name" type="text" class="form-control shadow-lg"
+      id="product-name-add"></div>
+  <div class="d-flex pr-mo"><input placeholder="Product Model" type="text" class="form-control shadow-lg"
+      id="product-model-add"></div>
+  <div class="d-flex w-100 pr-fe">
+    <ul class="mb-0 list-unstyled w-100">
+      <li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg h-100"
+          id="product-feature-li"></li>
+      <li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg h-100"
+          id="product-feature-li"></li>
+      <li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg h-100"
+          id="product-feature-li"></li>
+      <li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg h-100"
+          id="product-feature-li"></li>
+      <li class=""><input placeholder="feature" type="text" class="form-control w-100 shadow-lg h-100"
+          id="product-feature-li"></li>
+    </ul>
+  </div>
+  <div class="d-flex pr-ph">
+    <div class="glass pr-ph-main first-glass d-flex fs-2 rounded shadow-lg align-items-center justify-content-evenly">
+      <i data-bs-toggle="popover" class="bi bi-plus-circle"></i>
+      <a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a>
+    </div>
+  </div>
+  <div class="pr-ph-ph w-100">
+    <div class="glass second-glass w-100 d-flex fs-4 rounded shadow-lg align-items-center justify-content-evenly">
+      <i  class="bi bi-plus-circle"></i>
+      <a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a>
+    </div>
+  </div>
+  <div class="d-flex pr-di"><textarea class="form-control shadow-lg" placeholder="Discription"
+      style="resize: none;" id="product-discription-add" cols="20" rows="5"></textarea></div>
+  <div class="d-flex pr-br"><input placeholder="Brand" type="text" class="form-control w-100 shadow-lg"
+      id="product-brand-add"></div>
+  <div class="d-flex pr-pr"><input placeholder="Price" type="text" class="form-control w-100 shadow-lg"
+      id="product-price-add"></div>
+  <div class="pr-sp" id="product-specification">
+    <div class="input-group">
+      <input required type="text" placeholder="title" class="form-control shadow-lg">
+      <input required type="text" placeholder="discription" class="form-control shadow-lg">
+      <button class="btn btn-success product-add-specification" type="button"></button>
+      <button class="btn btn-danger product-remove-specification" disabled type="button"></button>
+    </div>
+  </div>
+  <div class="pr-ca">
+    <select class="form-select" aria-label="Default select example">
+      <option selected>Open this select menu</option>
+      <option value="digital">Accessories</option>
+      <option value="digital">Mobile phone</option>
+      <option value="digital">Smart watch</option>
+      <option value="digital">Computer accessories</option>
+      <option value="digital">Laptop</option>
+      <option value="clothing">Men clothing</option>
+      <option value="clothing">Ladies clothing</option>
+      <option value="clothing">Childish clothing</option>
+      <option value="health">Shampoo</option>
+      <option value="health">Skin cream</option>
+      <option value="health">Oral health</option>
+      <option value="health">Skin care</option>
+      <option value="health">Skin care</option>
+      <option value="health">Face makeup</option>
+      <option value="health">Hairdressing</option>
+      <option value="sport">Men's sportswear</option>
+      <option value="sport">Women's sportswear</option>
+      <option value="sport">Sports watch</option>
+      <option value="sport">Bodybuilding</option>
+      <option value="sport">Mountaineering</option>
+      <option value="sport">Sporting goods</option>
+      <option value="travel">Suitcases and bags</option>
+      <option value="travel">Tent</option>
+      <option value="travel">Underlayment</option>
+      <option value="home">Video and Audio</option>
+      <option value="home">Decorative</option>
+      <option value="home">Carpet</option>
+      <option value="home">Electrical appliances</option>
+      <option value="home">Kitchen</option>
+      <option value="home">Detergents</option>
+      <option value="book">Book and magazine</option>
+      <option value="book">Audio book</option>
+      <option value="book">Paper</option>
+      <option value="stationery">Stationery</option>
+      <option value="stationery">Painting tools</option>
+    </select>
+  </div>
+  <button id="submit-product" type="button" class="btn btn-success pr-su">Add Product</button>
+</div>`;
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {
+    container: 'body',
+    title: 'Add Photo Link',
+    html: true,
+    placement: 'bottom',
+    sanitize: false,
+    content() {
+      return document.querySelector('#PopoverContent').innerHTML;
+    }
+  }));
 }
