@@ -163,13 +163,11 @@ nav {
 .product {
   display: grid;
   grid-gap: 0.5rem;
-  grid-template-rows: 53px 100px 100px 150px;
+  grid-template-rows: 38px 64px 150px;
   grid-template-areas: "product-name product-model product-feature" "product-photos product-photo-photo product-feature" "product-photos product-photo-photo product-feature" "product-discription product-discription product-discription" "product-brand product-brand  product-price" "product-category product-category product-category" "product-special product-special product-special" "product-submit product-submit product-submit";
 }
 .product .pr-na {
   grid-area: product-name;
-  grid-row: 1/2;
-  white-space: nowrap;
 }
 .product .pr-mo {
   grid-area: product-model;
@@ -179,6 +177,7 @@ nav {
 }
 .product .pr-fe ul {
   display: grid;
+  grid-gap: 0.5rem;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(5, 1fr);
 }
@@ -230,8 +229,6 @@ nav {
 }
 .product .pr-ph {
   grid-area: product-photos;
-  grid-row: 2/4;
-  grid-gap: 1rem;
 }
 .product .pr-di {
   grid-area: product-discription;

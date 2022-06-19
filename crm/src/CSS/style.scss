@@ -219,7 +219,7 @@ nav {
 .product {
   display: grid;
   grid-gap: 0.5rem;
-	grid-template-rows: 53px 100px 100px 150px;
+	grid-template-rows: 38px 64px 150px;
   grid-template-areas:
     "product-name product-model product-feature"
     "product-photos product-photo-photo product-feature"
@@ -232,8 +232,6 @@ nav {
 
   .pr-na {
     grid-area: product-name;
-    grid-row: 1/2;
-    white-space: nowrap;
   }
 
   .pr-mo {
@@ -245,6 +243,7 @@ nav {
 
     ul {
       display: grid;
+      grid-gap: 0.5rem;
       grid-template-columns: 1fr;
       grid-template-rows: repeat(5, 1fr);
     }
@@ -308,8 +307,6 @@ nav {
 
   .pr-ph {
     grid-area: product-photos;
-    grid-row: 2/4;
-    grid-gap: 1rem;
 	}
 
   .pr-di {
