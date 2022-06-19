@@ -160,6 +160,7 @@ function addProduct(e) {
     productBrand: document.querySelector("#product-brand-add").value,
     productPrice: document.querySelector("#product-price-add").value,
     productDescription: document.querySelector("#product-description-add").value,
+    productTags: (document.querySelector("#product-add-tag").value).split(",").map(el => el.trim()).filter((a) => a),
     productFeature: [],
     productSpecification: [],
     productPhoto: [],
@@ -210,12 +211,12 @@ function productAdd(event) {
       id="product-model-add"></div>
   <div class=" pr-fe">
     <ul class="mb-0 list-unstyled" id="product-feature">
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="feature" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="feature" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="feature" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="feature" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="feature" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="feature" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
     </ul>
   </div>
   <div class="d-flex pr-ph">
@@ -280,6 +281,7 @@ function productAdd(event) {
       <option value="stationery">Painting tools</option>
     </select>
     </div>
+    <input type="text" id="product-add-tag" placeholder="Tag, Split tag with comma" class="form-control pr-ta">
   <input id="submit-product" value="Add Product" type="submit" class="btn btn-success pr-su"></form>`;
   loadPopOver();
 }
