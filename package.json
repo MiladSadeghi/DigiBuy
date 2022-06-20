@@ -1,0 +1,19 @@
+{
+  "name": "digibuy",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "run": "live-server && sass --watch crm/src/css:crm/src/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiladSadeghi/DigiBuy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MiladSadeghi/DigiBuy/issues"
+  },
+  "homepage": "https://github.com/MiladSadeghi/DigiBuy#readme"
+}
