@@ -197,7 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
       toastList[0].show();
       document.cookie = `userTable=${data.id};path=/;expires=${date}`;
       setTimeout(() => {
-        window.location.assign("/");
+        if(window.location.hostname === 'miladsadeghi.github.io') {
+          window.location = "/DigiBuy/";
+        } else {
+          window.location = '/'
+        }
       }, 2000);
     } else {
       toastBody.innerHTML = "Login Failed!";
@@ -324,6 +328,10 @@ async function registerUser(input) {
   toastList[0].show();
   loadingRegisterPage.setAttribute('hidden', '');
   setTimeout(() => {
-    window.location.assign("/");
+    if(window.location.hostname === 'miladsadeghi.github.io') {
+      window.location = "/DigiBuy/";
+    } else {
+      window.location = '/'
+    }
   }, 2000);
 }

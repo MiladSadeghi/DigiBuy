@@ -2,11 +2,11 @@ import { crmUser } from "../../../JS/main.js";
 
 const template = document.createElement("template");
 template.innerHTML = `
-<link rel="stylesheet" href="/crm/src/components/Product/Add/style.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-<form class="product">
+    ${window.location.hostname === "miladsadeghi.github.io" ? `<link rel="stylesheet" href="src/components/Product/Add/style.css">`: `<link rel="stylesheet" href="/crm/src/components/Product/Add/style.css">`}
+<form class="product position-relative pt-2 px-3">
   <div class="pr-na">
     <input placeholder="Product Name" type="text" class="form-control shadow-lg"id="product-name-add">
   </div>
@@ -71,8 +71,10 @@ template.innerHTML = `
       <option value="stationery">Painting tools</option>
     </select>
   </div>
-  <input type="text" id="product-add-tag" placeholder="Tag, Split tag with comma" class="form-control pr-ta"><input id="submit-product" value="Add Product" type="submit" class="btn btn-success pr-su">
-</form>
+  <input type="text" id="product-add-tag" placeholder="Tag, Split tag with comma" class="form-control pr-ta"><button id="submit-product"  type="submit" class="btn btn-success pr-su mb-3">Add Product</button>
+  <div class="alert alert-success position-fixed w-25 text-center fs-5 fw-bold border border-success shadow-lg" role="alert">Product Add!</div>
+  <div class="alert alert-danger position-fixed w-25 text-center fs-5 fw-bold border border-success shadow-lg" role="alert">Product Added Failed!</div>
+  </form>
 <div id="PopoverContent" class="d-none">
 <div class="input-group">
   <input type="text" class="form-control" placeholder="URL">
@@ -97,6 +99,9 @@ class addProduct extends HTMLElement {
     this.subPhotos = this.shadowRoot.querySelector(".pr-ph-ph");
     this.addPhotoDivBtn = this.shadowRoot.querySelector(".add-photo-div");
     this.productAddForm = this.shadowRoot.querySelector(".product");
+    this.successAlert = this.shadowRoot.querySelector(".alert-success");
+    this.unSuccessAlert = this.shadowRoot.querySelector(".alert-danger");
+    this.submitProductBtn = this.shadowRoot.querySelector("#submit-product");
   }
 
   addSpecification = () => {
@@ -168,12 +173,15 @@ class addProduct extends HTMLElement {
 
   submitForm = (event) => {
     event.preventDefault();
+    this.submitProductBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading...`
+    this.submitProductBtn.classList.toggle("disabled");
     let productCategory = this.shadowRoot.querySelector("#product-category-add");
     let product = {
       timeAddProduct: new Date(),
       userAddProduct: [crmUser.userName, crmUser.profileID],
       productID: this.uniqeID(),
-      comments: "",
+      comments: [],
       productName: this.shadowRoot.querySelector("#product-name-add").value,
       productModel: this.shadowRoot.querySelector("#product-model-add").value,
       productBrand: this.shadowRoot.querySelector("#product-brand-add").value,
@@ -214,15 +222,28 @@ class addProduct extends HTMLElement {
     });
     this.shadowRoot.querySelectorAll(".glass").forEach(element => {
       if (this.detectURLs(element.style.background)) {
+        console.log(this.detectURLs(element.style.background));
         product["productPhoto"].push(this.detectURLs(element.style.background))
       }
     });
-    let apiProduct = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${product.productID}.json`
-    let apiLog = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/log/${productAddLog.logID}.json`
-    this.postProduct(apiProduct, product);
-    this.postProduct(apiLog, productAddLog);
+    let apiProduct = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${product.productID}.json`;
+    let apiLog = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/log/${productAddLog.logID}.json`;
+    (async () => {
+      if (await this.postProduct(apiProduct, product) && await this.postProduct(apiLog, productAddLog)) {
+        this.successAlert.style.right = "16px";
+        setTimeout(() => {
+          this.successAlert.style.right = "-100%";
+        }, 3000);
+      } else {
+        this.unSuccessAlert.style.right = "16px";
+        setTimeout(() => {
+          this.unSuccessAlert.style.right = "-100%";
+        }, 3000);
+      }
+      this.submitProductBtn.innerHTML = `Add Product`
+      this.submitProductBtn.classList.toggle("disabled");
+    })();
   }
-
   uniqeID = () => {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -236,19 +257,24 @@ class addProduct extends HTMLElement {
 
   detectURLs = (message) => {
     let urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-    return String(message.match(urlRegex));
+    let string = message.match(urlRegex);
+    return ((string) !== null)? string[0]: false
   }
 
   postProduct = async (apiLink, body) => {
-    let response = await fetch(apiLink, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-    let result = await response.json();
-    return await result;
+    try {
+      let response = await fetch(apiLink, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      })
+      let result = await response.json();
+      return await result;
+    } catch (error) {
+      return false
+    }
   }
 
   productPhotoContentType = async (get_url) => {

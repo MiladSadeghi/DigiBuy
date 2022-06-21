@@ -25,6 +25,7 @@ a:focus {
   grid-gap: 0.5rem;
   grid-template-rows: 38px 64px 150px;
   grid-template-areas: "product-name product-model product-feature" "product-photos product-photo-photo product-feature" "product-photos product-photo-photo product-feature" "product-discription product-discription product-discription" "product-brand product-brand  product-price" "product-category product-category product-category" "product-special product-special product-special" "product-tag  product-tag product-tag" "product-submit product-submit product-submit";
+  overflow: hidden;
 }
 .product .pr-na {
   grid-area: product-name;
@@ -131,6 +132,10 @@ a:focus {
 }
 .product .pr-ta {
   grid-area: product-tag;
+}
+.product .alert {
+  right: -100%;
+  transition: right 0.4s ease-in-out;
 }
 
 .photos {

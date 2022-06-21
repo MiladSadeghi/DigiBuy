@@ -1,4 +1,4 @@
-import { addProduct } from "/crm/src/components/Product/Add/addProduct.js";
+import { addProduct } from "../components/Product/Add/addProduct.js";
 
 const dropDownMenu = document.querySelector('.dropdown');
 const dropDownMenuOption = document.querySelector('.option');
