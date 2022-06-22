@@ -160,123 +160,20 @@ nav {
   padding-top: 57px !important;
 }
 
-.product {
-  display: grid;
-  grid-gap: 0.5rem;
-  grid-template-rows: 38px 64px 150px;
-  grid-template-areas: "product-name product-model product-feature" "product-photos product-photo-photo product-feature" "product-photos product-photo-photo product-feature" "product-discription product-discription product-discription" "product-brand product-brand  product-price" "product-category product-category product-category" "product-special product-special product-special" "product-tag  product-tag product-tag" "product-submit product-submit product-submit";
-}
-.product .pr-na {
-  grid-area: product-name;
-}
-.product .pr-mo {
-  grid-area: product-model;
-}
-.product .pr-fe {
-  grid-area: product-feature;
-}
-.product .pr-fe ul {
-  display: grid;
-  grid-gap: 0.5rem;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(5, 1fr);
-}
-.product .first-glass {
-  background-size: 70% !important;
-}
-.product .second-glass {
-  background-size: 100% !important;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.should-refesh {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(118, 118, 118, 0.5803921569);
+  width: -webkit-fill-available;
+  height: 100vh;
+  z-index: 80;
+  align-items: center;
   justify-content: center;
-  text-align: center;
-}
-.product .glass {
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-}
-.product .glass .bi {
-  transform: scale(0.8);
-  transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
-  color: rgb(194, 194, 194);
-}
-.product .glass .bi:hover, .product .glass .bi:focus {
-  transform: scale(1);
-  color: red;
-  background-color: red;
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-.product .glass .bi-plus-circle:hover, .product .glass .bi-plus-circle:focus {
-  color: rgba(0, 173, 0, 0.596);
-  background-color: rgba(0, 173, 0, 0.596);
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-.product .glass .bi-wrench-adjustable-circle:hover, .product .glass .bi-wrench-adjustable-circle:focus {
-  color: orange;
-  background-color: orange;
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-.product .pr-ph {
-  grid-area: product-photos;
-}
-.product .pr-di {
-  grid-area: product-discription;
-}
-.product .pr-br {
-  grid-area: product-brand;
-}
-.product .pr-pr {
-  grid-area: product-price;
-}
-.product .pr-sp {
-  grid-area: product-special;
-}
-.product .pr-ca {
-  grid-area: product-category;
-}
-.product .pr-su {
-  grid-area: product-submit;
-}
-.product .pr-ph-ph {
-  display: grid;
-  grid-area: product-photo-photo;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-gap: 0.5rem;
-}
-.product .pr-ta {
-  grid-area: product-tag;
-}
-
-.photos {
-  grid-column: 1/3;
-}
-
-.product-remove-specification::before {
-  content: "\f2e4";
-  font-family: bootstrap-icons !important;
-  vertical-align: -0.125em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.product-add-specification::before {
-  content: "\f4f8";
-  font-family: bootstrap-icons !important;
-  vertical-align: -0.125em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 3rem;
+  font-weight: 700;
+  display: none;
+  color: #fff;
 }
 
 @media screen and (max-width: 768px) {

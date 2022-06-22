@@ -47,15 +47,20 @@ document.addEventListener("DOMContentLoaded", (e) => {
   })
 })
 
-function loadUser() {
+async function loadUser() {
   let userCookie = Object.fromEntries(document.cookie.split('; ').map(v => v.split(/=(.*)/s).map(decodeURIComponent)));
-  (async () => {
+  try {
     let userData = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userCookie.userTable}.json`);
+    if (!userData.ok) {
+      throw new Error();
+    }
     crmUser = await userData.json();
     crmUser["profileID"] = userCookie.userTable;
     profileBtnSpan.innerHTML = crmUser["userName"];
-    console.log(crmUser);
-  })();
+  } catch (error) {
+    document.querySelector(".should-refesh").style.display = "flex";
+  }
+
 }
 
 export { crmUser };

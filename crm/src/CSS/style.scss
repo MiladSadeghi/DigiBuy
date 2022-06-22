@@ -216,6 +216,22 @@ nav {
   padding-top: 57px !important;
 }
 
+.should-refesh {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #76767694;
+  width: -webkit-fill-available;
+  height: 100vh;
+  z-index: 80;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  display: none;
+  color: #fff;
+}
+
 @media screen and (max-width: 768px) {
   .category {
     left: -30%;
