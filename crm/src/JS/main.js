@@ -1,9 +1,10 @@
 import { addProduct } from "../components/Product/Add/addProduct.js";
+import { searchProduct } from "../components/Product/Search/searchProduct.js";
 
 const dropDownMenu = document.querySelector('.dropdown');
 const dropDownMenuOption = document.querySelector('.option');
 const menuBtnArrow = document.querySelectorAll(".show-list");
-const menuBtnDrowDown = document.querySelectorAll(".dropdown1");
+const menuBtnDropDown = document.querySelectorAll(".dropdown1");
 const profileArrow = document.querySelectorAll(".profile-arrow");
 const profileBtn = document.querySelector("#profile-name");
 const profileBtnSpan = document.querySelector("#profile-name span");
@@ -14,6 +15,7 @@ let crmUser;
 document.addEventListener("DOMContentLoaded", (e) => {
   loadUser();
   window.customElements.define('add-product', addProduct);
+  window.customElements.define('search-product', searchProduct);
   dropDownMenu.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('active');
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   menuBtnArrow.forEach((element, index) => {
     element.addEventListener('click', (e) => {
       profileArrow[index].classList.toggle('rotateArrow');
-      menuBtnDrowDown[index].classList.toggle("show-menu");
+      menuBtnDropDown[index].classList.toggle("show-menu");
     });
   })
 
@@ -44,6 +46,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
         mainBody.innerHTML = `<add-product></add-product>`;
         break;
     }
+    switch (e.target.getAttribute("searching")) {
+      case "product":
+        mainBody.innerHTML = `<search-product></search-product>`;
+        break;
+    }
   })
 })
 
@@ -58,7 +65,7 @@ async function loadUser() {
     crmUser["profileID"] = userCookie.userTable;
     profileBtnSpan.innerHTML = crmUser["userName"];
   } catch (error) {
-    document.querySelector(".should-refesh").style.display = "flex";
+    document.querySelector(".should-refresh").style.display = "flex";
   }
 
 }

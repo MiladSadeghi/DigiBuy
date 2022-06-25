@@ -2,10 +2,9 @@ import { crmUser } from "../../../JS/main.js";
 
 const template = document.createElement("template");
 template.innerHTML = `
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    ${window.location.hostname === "miladsadeghi.github.io" ? `<link rel="stylesheet" href="src/components/Product/Add/style.css">`: `<link rel="stylesheet" href="/crm/src/components/Product/Add/style.css">`}
+<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    ${window.location.hostname === "miladsadeghi.github.io" ? `<link rel="stylesheet" href="src/components/Product/Add/style.css">` : `<link rel="stylesheet" href="/crm/src/components/Product/Add/style.css">`}
 <form class="product position-relative pt-2 px-3">
   <div class="pr-na">
     <input placeholder="Product Name" type="text" class="form-control shadow-lg"id="product-name-add">
@@ -13,23 +12,23 @@ template.innerHTML = `
   <div class="pr-mo"><input placeholder="Product Model" type="text" class="form-control shadow-lg"id="product-model-add"></div>
   <div class=" pr-fe">
     <ul class="mb-0 list-unstyled" id="product-feature">
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
-      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="discription" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="description" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="description" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="description" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="description" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="description" type="text" class="form-control"></li>
+      <li class="input-group"><input placeholder="feature" type="text" class="form-control"><input placeholder="description" type="text" class="form-control"></li>
     </ul>
   </div>
   <div class="d-flex pr-ph">
     <div class="glass pr-ph-main first-glass d-flex fs-2 rounded shadow-lg align-items-center justify-content-evenly"><i class="bi bi-plus-circle add-photo-div"></i><a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a></div>
   </div>
   <div class="pr-ph-ph w-100"></div>
-  <div class="d-flex pr-di"><textarea class="form-control shadow-lg" placeholder="Discription"style="resize: none;" id="product-description-add" cols="20" rows="5"></textarea></div>
+  <div class="d-flex pr-di"><textarea class="form-control shadow-lg" placeholder="Description"style="resize: none;" id="product-description-add" cols="20" rows="5"></textarea></div>
   <div class="d-flex pr-br"><input placeholder="Brand" type="text" class="form-control w-100 shadow-lg"id="product-brand-add"></div>
   <div class="d-flex pr-pr"><input placeholder="Price" type="text" class="form-control w-100 shadow-lg"id="product-price-add"></div>
   <div class="pr-sp">
-    <div class="input-group product-specification"><input type="text" placeholder="title" class="form-control shadow-lg"><input type="text" placeholder="discription" class="form-control shadow-lg"><button class="btn btn-success product-add-specification" type="button"></button><button class="btn btn-danger product-remove-specification" disabled type="button"></button></div>
+    <div class="input-group product-specification"><input type="text" placeholder="title" class="form-control shadow-lg"><input type="text" placeholder="Description" class="form-control shadow-lg"><button class="btn btn-success product-add-specification" type="button"></button><button class="btn btn-danger product-remove-specification" disabled type="button"></button></div>
   </div>
   <div class="pr-ca">
     <select class="form-select" aria-label="Default select example" id="product-category-add">
@@ -37,7 +36,7 @@ template.innerHTML = `
       <option value="digital">Accessories</option>
       <option value="digital">Mobile phone</option>
       <option value="digital">Smart watch</option>
-      <option value="digital">Computer accessories</option>
+      <option value="digital">Computer</option>
       <option value="digital">Laptop</option>
       <option value="clothing">Men clothing</option>
       <option value="clothing">Ladies clothing</option>
@@ -45,7 +44,6 @@ template.innerHTML = `
       <option value="health">Shampoo</option>
       <option value="health">Skin cream</option>
       <option value="health">Oral health</option>
-      <option value="health">Skin care</option>
       <option value="health">Skin care</option>
       <option value="health">Face makeup</option>
       <option value="health">Hairdressing</option>
@@ -57,7 +55,7 @@ template.innerHTML = `
       <option value="sport">Sporting goods</option>
       <option value="travel">Suitcases and bags</option>
       <option value="travel">Tent</option>
-      <option value="travel">Underlayment</option>
+      <option value="travel">Underlay</option>
       <option value="home">Video and Audio</option>
       <option value="home">Decorative</option>
       <option value="home">Carpet</option>
@@ -107,7 +105,7 @@ class addProduct extends HTMLElement {
   addSpecification = () => {
     this.productSpecification.insertAdjacentHTML("beforeend", `<div class="input-group mt-2 product-specification">
     <input type="text" placeholder="title" class="form-control shadow-lg">
-    <input type="text" placeholder="discription" class="form-control shadow-lg">
+    <input type="text" placeholder="Description" class="form-control shadow-lg">
     <button class="btn btn-danger product-remove-specification" type="button"></button>
     </div>`);
   }
@@ -180,7 +178,7 @@ class addProduct extends HTMLElement {
     let product = {
       timeAddProduct: new Date(),
       userAddProduct: [crmUser.userName, crmUser.profileID],
-      productID: this.uniqeID(),
+      productID: this.uniqueID(),
       comments: [],
       productName: this.shadowRoot.querySelector("#product-name-add").value,
       productModel: this.shadowRoot.querySelector("#product-model-add").value,
@@ -197,7 +195,7 @@ class addProduct extends HTMLElement {
       time: new Date(),
       user: [crmUser.userName, crmUser.profileID],
       productID: product.productID,
-      logID: this.uniqeID(),
+      logID: this.uniqueID(),
       logType: "add product",
       category: productCategory.value,
       subCategory: productCategory.options[productCategory.selectedIndex].text,
@@ -208,7 +206,7 @@ class addProduct extends HTMLElement {
       if (element.children[0].value !== "" && element.children[1].value !== "") {
         product["productFeature"].push({
           title: element.children[0].value,
-          discription: element.children[1].value
+          description: element.children[1].value
         })
       }
     });
@@ -216,7 +214,7 @@ class addProduct extends HTMLElement {
       if (element.children[0].value !== "" && element.children[1].value !== "") {
         product["productSpecification"].push({
           title: element.children[0].value,
-          discription: element.children[1].value
+          description: element.children[1].value
         })
       }
     });
@@ -244,7 +242,7 @@ class addProduct extends HTMLElement {
       this.submitProductBtn.classList.toggle("disabled");
     })();
   }
-  uniqeID = () => {
+  uniqueID = () => {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let charactersLength = characters.length;
@@ -258,7 +256,7 @@ class addProduct extends HTMLElement {
   detectURLs = (message) => {
     let urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
     let string = message.match(urlRegex);
-    return ((string) !== null)? string[0]: false
+    return ((string) !== null) ? string[0] : false
   }
 
   postProduct = async (apiLink, body) => {

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
 @function text-stroke($size: 2, $color: #fff, $correction: 0) {
 	$radius: $size - $correction;
 	$stroke: ();
@@ -52,8 +52,10 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.281);
 
   #logo {
-    color: #fff;
-    @include text-stroke(1, #52616B);
+    font-family: 'Righteous' !important;
+    font-size: 1.7rem;
+    color: #fff !important;
+    @include text-stroke(2, rgba(105, 128, 158, 0.233));
   }
 
   .search-box {
@@ -78,10 +80,16 @@ body {
     font-size: 1.2rem;
   }
 
+  .btn-outline-secondary:hover {
+    color: #fff !important;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
   [type="button"] {
     height: 38px;
     display: flex;
     align-items: center;
-    background: #EEEEEE;
+    background-color: #eee;
   }
 }
