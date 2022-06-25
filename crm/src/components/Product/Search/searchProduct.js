@@ -42,24 +42,32 @@ class searchProduct extends HTMLElement {
 
   searchFilterChange = (e) => {
     this.searchFilterValue = e.target.value;
+    switch (this.searchFilterValue) {
+      case "productID":
+        this.showByIN()
+        break;
+      case "productName":
+        this.showByIN()
+        break;
+    }
   }
 
   searchProduct = (e) => {
     switch (this.searchFilterValue) {
       case "productID":
-        this.showByID()
+        this.showByIN() // IN = ID and Number
+        break;
+      case "productName":
+        this.showByIN() // IN = ID and Number
         break;
     }
   }
 
-  showByID = () => {
-    let elements = [];
+  showByIN = () => {
     this.showContent.innerHTML = "";
     for (let [key, value] of Object.entries(this.productObject)) {
-      console.log(value);
-      if (value[this.searchFilterValue].includes(this.filterInput.value)) {
-        console.log(value[this.searchFilterValue].includes(this.filterInput.value));
-        this.showContent.innerHTML += (`
+      if (value[this.searchFilterValue].toLowerCase().includes(this.filterInput.value.toLowerCase())) {
+        this.showContent.innerHTML += `
           <div class="card h-100">
             <div class="h-100 d-flex align-items-center justify-content-center">
               <img src="${value.productPhoto[0]}" class="card-img-top p-4">
@@ -71,8 +79,7 @@ class searchProduct extends HTMLElement {
             <div class="card-footer text-center">
               <small class="text-muted">${new Date(value.timeAddProduct)}</small>
             </div>
-          </div>
-        `);
+          </div>`;
       }
     } if(this.filterInput.value === "") {
       this.showContent.innerHTML = "";
