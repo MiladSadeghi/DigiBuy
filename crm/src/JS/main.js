@@ -30,10 +30,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
   showMenu.addEventListener("change", (e) => {
     if (showMenu.checked) {
       category.style.left = "-100%";
-      mainBody.classList.toggle("col-md-9");
+      mainBody.classList.toggle("col-md-10");
     } else {
       category.style.left = "0";
-      mainBody.classList.toggle("col-md-9");
+      mainBody.classList.toggle("col-md-10");
     }
   })
 

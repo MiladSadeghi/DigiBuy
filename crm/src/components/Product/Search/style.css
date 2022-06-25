@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro" !important;
+  background: #d3dedc !important;
+}
+
+a,
+a:hover,
+a:visited,
+a:active,
+a:focus {
+  color: inherit;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.4rem;
+}
+
+.product-animation {
+  animation: product 0.4s ease-in-out;
+}
+
+.card-body h5 {
+  color: #212121;
+}
+
+.card-text {
+  color: #1C7947;
+}
+
+@keyframes product {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

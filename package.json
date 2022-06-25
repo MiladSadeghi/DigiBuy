@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "sass": "sass --watch src/css/:src/css/",
     "liveServer": "live-server",
-    "dev": "concurrently --kill-others \"npm run sass\" \"npm run liveServer\""
+    "sass": "sass --watch crm/src/components/Product/Search:crm/src/components/Product/Search",
+    "dev": "concurrently --kill-others \"npm run liveServer\" \"npm run sass\""
   },
   "repository": {
     "type": "git",
