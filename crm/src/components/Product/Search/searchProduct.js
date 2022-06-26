@@ -31,7 +31,7 @@ class searchProduct extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.searchFilter = this.shadowRoot.querySelector("#search-filter");
     this.searchFilterValue = this.searchFilter.value;
-    this.crmProduct().then(result => {(result.ok?this.productWait.classList.add("d-none"):false); return result.json()}).then(result => {this.productObject = result});
+    this.crmProduct().then(result => { (result.ok ? this.productWait.classList.add("d-none") : false); return result.json() }).then(result => { this.productObject = result });
     this.filterInput = this.shadowRoot.querySelector("#filter-input");
     this.showContent = this.shadowRoot.querySelector(".content");
     this.productWait = this.shadowRoot.querySelector(".product-wait");
@@ -44,13 +44,14 @@ class searchProduct extends HTMLElement {
 
   searchFilterChange = (e) => {
     this.searchFilterValue = e.target.value;
-    this.showByIN();
+    this.showByINUC();
   }
 
-  showByIN = () => {
+  showByINUC = () => {
     this.showContent.innerHTML = "";
+    this.filterInput.type = "text";
     for (let [key, value] of Object.entries(this.productObject)) {
-      if ((Array.isArray(value[this.searchFilterValue]) ? value[this.searchFilterValue][0] : value[this.searchFilterValue]).toLowerCase().includes(this.filterInput.value.toLowerCase())) {
+      if ((Array.isArray(value[this.searchFilterValue]) ? value[this.searchFilterValue][0] : value[this.searchFilterValue]).toLowerCase().includes(this.filterInput.value.toLowerCase()) && this.searchFilterValue !== "timeAddProduct") {
         this.showContent.innerHTML += `
           <div class="card h-100 product-animation">
             <div class="h-100 d-flex align-items-center justify-content-center">
@@ -63,7 +64,26 @@ class searchProduct extends HTMLElement {
             <div class="card-footer text-center">
               <small class="text-muted">${new Date(value.timeAddProduct)}</small>
             </div>
-          </div>`;
+          </div>
+          `;
+      } else if (this.searchFilterValue === "timeAddProduct") {
+        this.filterInput.type = "date";
+        if(new Date(String(value["timeAddProduct"])).toLocaleDateString("en-US") === new Date(this.filterInput.value).toLocaleDateString("en-US")) {
+          this.showContent.innerHTML += `
+          <div class="card h-100 product-animation">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+              <img src="${value.productPhoto[0]}" class="card-img-top p-4">
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title fs-6">${value.productName}</h5>
+              <p class="card-text fw-bold fs-5">$${value.productPrice}</p>
+            </div>
+            <div class="card-footer text-center">
+              <small class="text-muted">${new Date(value.timeAddProduct)}</small>
+            </div>
+          </div>
+          `;
+        }
       }
     } if (this.filterInput.value === "") {
       this.showContent.innerHTML = "";
@@ -72,7 +92,8 @@ class searchProduct extends HTMLElement {
 
   connectedCallback() {
     this.searchFilter.addEventListener("change", this.searchFilterChange);
-    this.filterInput.addEventListener("keyup", this.showByIN);
+    this.filterInput.addEventListener("keyup", this.showByINUC);
+    this.filterInput.addEventListener("change", this.showByINUC);
   }
 }
 
