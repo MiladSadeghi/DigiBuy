@@ -20,11 +20,14 @@ a:focus {
   color: inherit;
 }
 
+.areas {
+  grid-template-areas: "product-name product-model product-feature" "product-photos product-photo-photo product-feature" "product-photos product-photo-photo product-feature" "product-description product-description product-description" "product-brand product-brand  product-price" "product-category product-category product-category" "product-special product-special product-special" "product-tag  product-tag product-tag" "product-submit product-submit product-submit";
+}
+
 .product {
   display: grid;
   grid-gap: 0.5rem;
   grid-template-rows: 38px 64px 150px;
-  grid-template-areas: "product-name product-model product-feature" "product-photos product-photo-photo product-feature" "product-photos product-photo-photo product-feature" "product-description product-description product-description" "product-brand product-brand  product-price" "product-category product-category product-category" "product-special product-special product-special" "product-tag  product-tag product-tag" "product-submit product-submit product-submit";
   overflow: hidden;
 }
 .product .pr-na {
@@ -132,6 +135,9 @@ a:focus {
 }
 .product .pr-ta {
   grid-area: product-tag;
+}
+.product .pr-de {
+  grid-area: product-delete;
 }
 .product .alert {
   right: -100%;

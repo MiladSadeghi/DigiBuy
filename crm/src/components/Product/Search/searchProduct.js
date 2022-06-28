@@ -2,6 +2,7 @@ const template = document.createElement("template");
 template.innerHTML = `
 <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/crm/src/components/Product/Edit/style.css">
 ${window.location.hostname === "miladsadeghi.github.io" ? `<link rel="stylesheet" href="src/components/Product/Search/style.css">` : `<link rel="stylesheet" href="/crm/src/components/Product/Search/style.css">`}
 <div class="main px-3 py-2 position-relative">
   <div class="row m-0 p-0">
@@ -30,7 +31,7 @@ class searchProduct extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.searchFilter = this.shadowRoot.querySelector("#search-filter");
     this.searchFilterValue = this.searchFilter.value;
-    this.crmProduct().then(result => {return result.json() }).then(result => { (result ? this.productWait.classList.add("d-none") : false); this.productObject = result });
+    this.crmProduct().then(result => { return result.json() }).then(result => { (result ? this.productWait.classList.add("d-none") : false); this.productObject = result });
     this.filterInput = this.shadowRoot.querySelector("#filter-input");
     this.showContent = this.shadowRoot.querySelector(".content");
     this.productWait = this.shadowRoot.querySelector(".product-wait");
@@ -51,11 +52,11 @@ class searchProduct extends HTMLElement {
     this.showContent.innerHTML = "";
     this.filterInput.type = "text";
     for (let [key, value] of Object.entries(this.productObject)) {
-      if ((Array.isArray(value[this.searchFilterValue]) ? value[this.searchFilterValue][0] : value[this.searchFilterValue]).toLowerCase().includes(this.filterInput.value.toLowerCase()) && this.searchFilterValue !== "timeAddProduct") {
+      if (this.searchFilterValue !== "timeAddProduct" && (Array.isArray(value[this.searchFilterValue]) ? value[this.searchFilterValue][0] : value[this.searchFilterValue]).toLowerCase().includes(this.filterInput.value.toLowerCase() !== "" ? this.filterInput.value.toLowerCase() : false)) {
         this.showContent.innerHTML += `
-          <div class="card h-100 product-animation">
+          <div class="card h-100">
             <div class="h-100 d-flex align-items-center justify-content-center position-relative top">
-              <img src="${value.productPhoto[0]}" class="card-img-top p-4">
+              <img src="${value.productPhoto? value.productPhoto[0]:false }" class="card-img-top p-4">
               <div class="view">
                 <div class="d-flex justify-content-evenly">
                   <a href="#" product-id="${value.productID}" class="bi bi-pen bg-success fs-5 px-2 py-2 rounded-3 text-white"></a>
@@ -76,9 +77,9 @@ class searchProduct extends HTMLElement {
         this.filterInput.type = "date";
         if (new Date(String(value["timeAddProduct"])).toLocaleDateString("en-US") === new Date(this.filterInput.value).toLocaleDateString("en-US")) {
           this.showContent.innerHTML += `
-          <div class="card h-100 product-animation">
-            <div class="h-100 d-flex align-items-center justify-content-center">
-              <img src="${value.productPhoto[0]}" class="card-img-top p-4">
+          <div class="card h-100">
+            <div class="h-100 d-flex align-items-center justify-content-center position-relative top">
+              <img src="${value.productPhoto? value.productPhoto[0]:false }" class="card-img-top p-4">
               <div class="view">
                 <div class="d-flex justify-content-evenly">
                   <a href="#" product-id="${value.productID}" class="bi bi-pen bg-success fs-5 px-2 py-2 rounded-3 text-white"></a>
@@ -97,8 +98,6 @@ class searchProduct extends HTMLElement {
           `;
         }
       }
-    } if (this.filterInput.value === "") {
-      this.showContent.innerHTML = "";
     }
   }
 

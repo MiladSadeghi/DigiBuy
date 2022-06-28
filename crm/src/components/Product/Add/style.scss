@@ -26,10 +26,8 @@ a:focus {
 }
 
 // ----------<FOR ADD PRODUCT>----------
-.product {
-  display: grid;
-  grid-gap: 0.5rem;
-  grid-template-rows: 38px 64px 150px;
+
+.areas {
   grid-template-areas:
     "product-name product-model product-feature"
     "product-photos product-photo-photo product-feature"
@@ -40,6 +38,12 @@ a:focus {
     "product-special product-special product-special"
     "product-tag  product-tag product-tag"
     "product-submit product-submit product-submit";
+}
+.product {
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-rows: 38px 64px 150px;
+
   overflow: hidden;
   .pr-na {
     grid-area: product-name;
@@ -176,6 +180,10 @@ a:focus {
   }
   .pr-ta {
     grid-area: product-tag;
+  }
+
+  .pr-de {
+    grid-area: product-delete;
   }
 
   .alert {

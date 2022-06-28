@@ -4,8 +4,9 @@ const template = document.createElement("template");
 template.innerHTML = `
 <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/crm/src/components/Product/Edit/style.css">
     ${window.location.hostname === "miladsadeghi.github.io" ? `<link rel="stylesheet" href="src/components/Product/Add/style.css">` : `<link rel="stylesheet" href="/crm/src/components/Product/Add/style.css">`}
-<form class="product position-relative pt-2 px-3">
+<form class="product areas position-relative pt-2 px-3">
   <div class="pr-na">
     <input placeholder="Product Name" type="text" class="form-control shadow-lg" id="product-name-add">
   </div>
@@ -85,7 +86,6 @@ template.innerHTML = `
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
 crossorigin="anonymous"></script>`;
-
 class addProduct extends HTMLElement {
   constructor() {
     super();
@@ -180,7 +180,7 @@ class addProduct extends HTMLElement {
     let product = {
       timeAddProduct: new Date(),
       userAddProduct: [crmUser.userName, crmUser.profileID],
-      productID: this.uniqueID(),
+      productID: addProduct.uniqueID(),
       comments: [],
       productName: this.shadowRoot.querySelector("#product-name-add").value,
       productModel: this.shadowRoot.querySelector("#product-model-add").value,
@@ -197,7 +197,7 @@ class addProduct extends HTMLElement {
       time: new Date(),
       user: [crmUser.userName, crmUser.profileID],
       productID: product.productID,
-      logID: this.uniqueID(),
+      logID: addProduct.uniqueID(),
       logType: "add product",
       category: productCategory.value,
       subCategory: productCategory.options[productCategory.selectedIndex].text,
@@ -221,15 +221,14 @@ class addProduct extends HTMLElement {
       }
     });
     this.shadowRoot.querySelectorAll(".glass").forEach(element => {
-      if (this.detectURLs(element.style.background)) {
-        console.log(this.detectURLs(element.style.background));
-        product["productPhoto"].push(this.detectURLs(element.style.background))
+      if (addProduct.detectURLs(element.style.background)) {
+        product["productPhoto"].push(addProduct.detectURLs(element.style.background))
       }
     });
     let apiProduct = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${product.productID}.json`;
     let apiLog = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/log/${productAddLog.logID}.json`;
     (async () => {
-      if (await this.postProduct(apiProduct, product, "PUT") && await this.postProduct(apiLog, productAddLog, "PUT")) {
+      if (await addProduct.postProduct(apiProduct, product, "PUT") && await addProduct.postProduct(apiLog, productAddLog, "PUT")) {
         this.successAlert.style.right = "16px";
         setTimeout(() => {
           this.successAlert.style.right = "-100%";
