@@ -7,7 +7,7 @@ template.innerHTML = `
     ${window.location.hostname === "miladsadeghi.github.io" ? `<link rel="stylesheet" href="src/components/Product/Add/style.css">` : `<link rel="stylesheet" href="/crm/src/components/Product/Add/style.css">`}
 <form class="product position-relative pt-2 px-3">
   <div class="pr-na">
-    <input placeholder="Product Name" type="text" class="form-control shadow-lg"id="product-name-add">
+    <input placeholder="Product Name" type="text" class="form-control shadow-lg" id="product-name-add">
   </div>
   <div class="pr-mo"><input placeholder="Product Model" type="text" class="form-control shadow-lg"id="product-model-add"></div>
   <div class=" pr-fe">
@@ -32,7 +32,7 @@ template.innerHTML = `
   </div>
   <div class="pr-ca">
     <select class="form-select" aria-label="Default select example" id="product-category-add">
-      <option value="" disabled selected>Open this select menu</option>
+      <option value="" selected>Open this select menu</option>
       <option value="digital">Accessories</option>
       <option value="digital">Mobile phone</option>
       <option value="digital">Smart watch</option>
@@ -72,6 +72,7 @@ template.innerHTML = `
   <input type="text" id="product-add-tag" placeholder="Tag, Split tag with comma" class="form-control pr-ta"><button id="submit-product"  type="submit" class="btn btn-success pr-su mb-3">Add Product</button>
   <div class="alert alert-success position-fixed w-25 text-center fs-5 fw-bold border border-success shadow-lg" role="alert">Product Add!</div>
   <div class="alert alert-danger position-fixed w-25 text-center fs-5 fw-bold border border-success shadow-lg" role="alert">Product Added Failed!</div>
+  <div class="product-wait"><i class="bi bi-gear-wide-connected"></i></div>
   </form>
 <div id="PopoverContent" class="d-none">
 <div class="input-group">
@@ -90,6 +91,7 @@ class addProduct extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadowRoot.querySelector(".product-wait").classList.add("d-none")
     this.productAddSpecification = this.shadowRoot.querySelector(".product-add-specification");
     this.productRemoveSpecification = this.shadowRoot.querySelectorAll(".product-remove-specification");
     this.productSpecification = this.shadowRoot.querySelector(".pr-sp");
@@ -102,21 +104,21 @@ class addProduct extends HTMLElement {
     this.submitProductBtn = this.shadowRoot.querySelector("#submit-product");
   }
 
-  addSpecification = () => {
-    this.productSpecification.insertAdjacentHTML("beforeend", `<div class="input-group mt-2 product-specification">
+  static addSpecification = (event) => {
+    event.insertAdjacentHTML("beforeend", `<div class="input-group mt-2 product-specification">
     <input type="text" placeholder="title" class="form-control shadow-lg">
     <input type="text" placeholder="Description" class="form-control shadow-lg">
     <button class="btn btn-danger product-remove-specification" type="button"></button>
     </div>`);
   }
 
-  removeSpecification = (event) => {
+  static removeSpecification = (event) => {
     if (event.target.classList.contains("product-remove-specification")) {
       event.target.parentElement.remove();
     }
   }
 
-  photoLink = (event) => {
+  static photoLink = (event, root) => {
     if (event.target.classList.contains("bi-wrench-adjustable-circle")) {
       event.target.addEventListener("shown.bs.popover", (el) => {
         let button = document.querySelector(`#${el.target.getAttribute("aria-describedby")} button`);
@@ -132,21 +134,21 @@ class addProduct extends HTMLElement {
     }
   }
 
-  productPhotoContentType = async (get_url) => {
+  static productPhotoContentType = async (get_url) => {
     const response = await fetch(get_url);
     return response.headers.get('content-type').includes("image") ? true : false;
   }
 
-  addPhotoDiv = () => {
-    this.loadPopOver();
-    if (this.subPhotos.childElementCount < 6) {
-      this.subPhotos.insertAdjacentHTML("beforeend", `<div class="glass second-glass w-100 fs-4 rounded shadow-lg align-items-center justify-content-center"><i class="bi bi-dash-circle remove-photo-div"></i><a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a></div>`);
-      this.loadPopOver();
+  static addPhotoDiv = (event, root) => {
+    addProduct.loadPopOver(root);
+    if (event.childElementCount < 6) {
+      event.insertAdjacentHTML("beforeend", `<div class="glass second-glass w-100 fs-4 rounded shadow-lg align-items-center justify-content-center"><i class="bi bi-dash-circle remove-photo-div"></i><a href="#" class="bi bi-wrench-adjustable-circle" data-bs-toggle="popover"></a></div>`);
+      addProduct.loadPopOver(root);
     }
   }
 
-  loadPopOver = () => {
-    const popoverTriggerList = this.shadowRoot.querySelectorAll('[data-bs-toggle="popover"]');
+  static loadPopOver = (event) => {
+    const popoverTriggerList = event.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => {
       if (!popoverTriggerEl.hasAttribute("aria-describedby")) {
         new bootstrap.Popover(popoverTriggerEl, {
@@ -156,14 +158,14 @@ class addProduct extends HTMLElement {
           placement: 'bottom',
           sanitize: false,
           content: () => {
-            return this.shadowRoot.querySelector('#PopoverContent').innerHTML;
+            return event.querySelector('#PopoverContent').innerHTML;
           }
         });
       }
     });
   }
 
-  removePhotoDiv = (event) => {
+  static removePhotoDiv = (event) => {
     if (event.target.classList.contains("remove-photo-div")) {
       event.target.parentElement.remove();
     }
@@ -242,7 +244,7 @@ class addProduct extends HTMLElement {
       this.submitProductBtn.classList.toggle("disabled");
     })();
   }
-  uniqueID = () => {
+  static uniqueID = () => {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let charactersLength = characters.length;
@@ -253,13 +255,13 @@ class addProduct extends HTMLElement {
     return result;
   };
 
-  detectURLs = (message) => {
+  static detectURLs = (message) => {
     let urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
     let string = message.match(urlRegex);
     return ((string) !== null) ? string[0] : false
   }
 
-  postProduct = async (apiLink, body) => {
+  static postProduct = async (apiLink, body) => {
     try {
       let response = await fetch(apiLink, {
         method: "PUT",
@@ -275,21 +277,21 @@ class addProduct extends HTMLElement {
     }
   }
 
-  productPhotoContentType = async (get_url) => {
+  static productPhotoContentType = async (get_url) => {
     const response = await fetch(get_url);
     return response.headers.get('content-type').includes("image") ? true : false;
   }
 
   connectedCallback() {
-    this.loadPopOver();
-    this.productAddSpecification.addEventListener("click", this.addSpecification);
-    this.productSpecification.addEventListener("click", (e) => this.removeSpecification(e));
-    this.mainPhoto.addEventListener("click", (e) => this.photoLink(e));
-    this.subPhotos.addEventListener("click", (e) => this.photoLink(e));
-    this.addPhotoDivBtn.addEventListener("click", this.addPhotoDiv);
-    this.subPhotos.addEventListener("click", (e) => this.removePhotoDiv(e));
+    addProduct.loadPopOver(this.shadowRoot);
+    this.productAddSpecification.addEventListener("click", (e) => addProduct.addSpecification(this.productSpecification));
+    this.productSpecification.addEventListener("click", (e) => addProduct.removeSpecification(e));
+    this.mainPhoto.addEventListener("click", (e) => addProduct.photoLink(e,this.shadowRoot ));
+    this.subPhotos.addEventListener("click", (e) => addProduct.photoLink(e, this.shadowRoot));
+    this.addPhotoDivBtn.addEventListener("click",(e)=> {addProduct.addPhotoDiv(this.subPhotos, this.shadowRoot)});
+    this.subPhotos.addEventListener("click", (e) => addProduct.removePhotoDiv(e));
     this.productAddForm.addEventListener("submit", (e) => this.submitForm(e));
   }
 }
 
-export { addProduct }
+export { addProduct, template}

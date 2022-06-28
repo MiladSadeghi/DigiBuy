@@ -24,7 +24,7 @@ a:focus {
   display: grid;
   grid-gap: 0.5rem;
   grid-template-rows: 38px 64px 150px;
-  grid-template-areas: "product-name product-model product-feature" "product-photos product-photo-photo product-feature" "product-photos product-photo-photo product-feature" "product-discription product-discription product-discription" "product-brand product-brand  product-price" "product-category product-category product-category" "product-special product-special product-special" "product-tag  product-tag product-tag" "product-submit product-submit product-submit";
+  grid-template-areas: "product-name product-model product-feature" "product-photos product-photo-photo product-feature" "product-photos product-photo-photo product-feature" "product-description product-description product-description" "product-brand product-brand  product-price" "product-category product-category product-category" "product-special product-special product-special" "product-tag  product-tag product-tag" "product-submit product-submit product-submit";
   overflow: hidden;
 }
 .product .pr-na {
@@ -92,7 +92,7 @@ a:focus {
   grid-area: product-photos;
 }
 .product .pr-di {
-  grid-area: product-discription;
+  grid-area: product-description;
 }
 .product .pr-br {
   grid-area: product-brand;
@@ -140,6 +140,22 @@ a:focus {
 
 .photos {
   grid-column: 1/3;
+}
+
+.product-wait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 57px);
+  background: rgba(85, 85, 85, 0.322);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-wait .bi {
+  font-size: 15rem;
+  animation: loading 3s linear infinite;
 }
 
 /*# sourceMappingURL=style.css.map */

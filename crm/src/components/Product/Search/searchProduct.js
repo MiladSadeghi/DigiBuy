@@ -1,4 +1,3 @@
-import { crmUser } from "../../../JS/main.js";
 const template = document.createElement("template");
 template.innerHTML = `
 <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -31,10 +30,11 @@ class searchProduct extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.searchFilter = this.shadowRoot.querySelector("#search-filter");
     this.searchFilterValue = this.searchFilter.value;
-    this.crmProduct().then(result => { (result.ok ? this.productWait.classList.add("d-none") : false); return result.json() }).then(result => { this.productObject = result });
+    this.crmProduct().then(result => {return result.json() }).then(result => { (result ? this.productWait.classList.add("d-none") : false); this.productObject = result });
     this.filterInput = this.shadowRoot.querySelector("#filter-input");
     this.showContent = this.shadowRoot.querySelector(".content");
     this.productWait = this.shadowRoot.querySelector(".product-wait");
+    this.main = this.shadowRoot.querySelector(".main");
   }
 
   async crmProduct() {
@@ -54,8 +54,14 @@ class searchProduct extends HTMLElement {
       if ((Array.isArray(value[this.searchFilterValue]) ? value[this.searchFilterValue][0] : value[this.searchFilterValue]).toLowerCase().includes(this.filterInput.value.toLowerCase()) && this.searchFilterValue !== "timeAddProduct") {
         this.showContent.innerHTML += `
           <div class="card h-100 product-animation">
-            <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="h-100 d-flex align-items-center justify-content-center position-relative top">
               <img src="${value.productPhoto[0]}" class="card-img-top p-4">
+              <div class="view">
+                <div class="d-flex justify-content-evenly">
+                  <a href="#" product-id="${value.productID}" class="bi bi-pen bg-success fs-5 px-2 py-2 rounded-3 text-white"></a>
+                  <a href="#" class="bi bi-eye bg-primary fs-5 px-2 py-2 rounded-3 text-white"></a>
+                </div>
+              </div>
             </div>
             <div class="card-body text-center">
               <h5 class="card-title fs-6">${value.productName}</h5>
@@ -68,11 +74,17 @@ class searchProduct extends HTMLElement {
           `;
       } else if (this.searchFilterValue === "timeAddProduct") {
         this.filterInput.type = "date";
-        if(new Date(String(value["timeAddProduct"])).toLocaleDateString("en-US") === new Date(this.filterInput.value).toLocaleDateString("en-US")) {
+        if (new Date(String(value["timeAddProduct"])).toLocaleDateString("en-US") === new Date(this.filterInput.value).toLocaleDateString("en-US")) {
           this.showContent.innerHTML += `
           <div class="card h-100 product-animation">
             <div class="h-100 d-flex align-items-center justify-content-center">
               <img src="${value.productPhoto[0]}" class="card-img-top p-4">
+              <div class="view">
+                <div class="d-flex justify-content-evenly">
+                  <a href="#" product-id="${value.productID}" class="bi bi-pen bg-success fs-5 px-2 py-2 rounded-3 text-white"></a>
+                  <a href="#" class="bi bi-eye bg-primary fs-5 px-2 py-2 rounded-3 text-white"></a>
+                </div>
+              </div>
             </div>
             <div class="card-body text-center">
               <h5 class="card-title fs-6">${value.productName}</h5>
@@ -90,10 +102,17 @@ class searchProduct extends HTMLElement {
     }
   }
 
+  shadowRootClick = (e) => {
+    if (e.target.classList.contains("bi-pen")) {
+      this.shadowRoot.innerHTML = `<edit-product product-id="${e.target.getAttribute("product-id")}"></edit-product>`;
+    }
+  }
+
   connectedCallback() {
     this.searchFilter.addEventListener("change", this.searchFilterChange);
     this.filterInput.addEventListener("keyup", this.showByINUC);
     this.filterInput.addEventListener("change", this.showByINUC);
+    this.shadowRoot.addEventListener("click", this.shadowRootClick)
   }
 }
 

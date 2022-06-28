@@ -1,5 +1,6 @@
 import { addProduct } from "../components/Product/Add/addProduct.js";
 import { searchProduct } from "../components/Product/Search/searchProduct.js";
+import { editProduct } from "../components/Product/Edit/editProduct.js";
 
 const dropDownMenu = document.querySelector('.dropdown');
 const dropDownMenuOption = document.querySelector('.option');
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   loadUser();
   window.customElements.define('add-product', addProduct);
   window.customElements.define('search-product', searchProduct);
+  window.customElements.define('edit-product', editProduct);
   dropDownMenu.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('active');
@@ -67,7 +69,6 @@ async function loadUser() {
   } catch (error) {
     document.querySelector(".should-refresh").style.display = "flex";
   }
-
 }
 
 export { crmUser };

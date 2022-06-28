@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$navbar-color: #398ab9;
+$body-bg: #d3dedc;
+$menu-select-bg: rgba(193, 193, 193, 0.322);
+
+body {
+  font-family: "Source Sans Pro" !important;
+  background: $body-bg !important;
+}
+
+a,
+a:hover,
+a:visited,
+a:active,
+a:focus {
+  color: inherit;
+}
+
+.product-wait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 57px);
+  background: rgba(85, 85, 85, 0.322);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .bi {
+    font-size: 15rem;
+    animation: loading 3s linear infinite;
+  }
+}
+
+
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

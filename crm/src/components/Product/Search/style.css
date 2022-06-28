@@ -35,7 +35,7 @@ a:focus {
 }
 
 .card-text {
-  color: #1C7947;
+  color: #1c7947;
 }
 
 .product-wait {
@@ -54,7 +54,57 @@ a:focus {
   animation: loading 3s linear infinite;
 }
 
+.top .view {
+  transition: ease-in-out 0.3s;
+  transition-delay: 0.4s;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  position: absolute;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.top .view div {
+  position: absolute;
+  left: 0%;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  transition-delay: 0s;
+  width: 0%;
+}
+.top .view div .bi::before {
+  transition: all 0.5s ease-in-out;
+}
+.top .view div .bi:hover::before {
+  transform: scale(1.3);
+}
+.top:hover .view {
+  opacity: 1;
+  background: rgba(157, 157, 157, 0.67);
+  transition: ease-in-out 0.3s;
+}
+.top:hover .view div {
+  width: 100%;
+  opacity: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.5s ease-in-out;
+  transition-delay: 0.3s;
+}
+
 @keyframes product {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes product-reverse {
   0% {
     opacity: 0;
   }

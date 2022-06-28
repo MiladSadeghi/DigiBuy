@@ -189,3 +189,23 @@ a:focus {
 }
 
 // ----------<FOR ADD PRODUCT>----------
+
+
+// ----------<FOR EDIT PRODUCT>----------
+.product-wait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 57px);
+  background: rgba(85, 85, 85, 0.322);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .bi {
+    font-size: 15rem;
+    animation: loading 3s linear infinite;
+  }
+}
+// ----------<FOR EDIT PRODUCT>----------
