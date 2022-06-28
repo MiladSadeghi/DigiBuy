@@ -229,7 +229,7 @@ class addProduct extends HTMLElement {
     let apiProduct = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${product.productID}.json`;
     let apiLog = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/log/${productAddLog.logID}.json`;
     (async () => {
-      if (await this.postProduct(apiProduct, product) && await this.postProduct(apiLog, productAddLog)) {
+      if (await this.postProduct(apiProduct, product, "PUT") && await this.postProduct(apiLog, productAddLog, "PUT")) {
         this.successAlert.style.right = "16px";
         setTimeout(() => {
           this.successAlert.style.right = "-100%";
@@ -261,10 +261,10 @@ class addProduct extends HTMLElement {
     return ((string) !== null) ? string[0] : false
   }
 
-  static postProduct = async (apiLink, body) => {
+  static postProduct = async (apiLink, body, method) => {
     try {
       let response = await fetch(apiLink, {
-        method: "PUT",
+        method: method,
         headers: {
           "Content-Type": "application/json"
         },
