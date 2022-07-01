@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "liveServer": "live-server",
-    "sass": "sass --watch crm/src/components/Product/Edit:crm/src/components/Product/Edit",
-    "dev": "concurrently --kill-others \"npm run liveServer\" \"npm run sass\""
+    "sass": "sass --watch product/src/CSS:product/src/CSS",
+    "dev": "concurrently \"npm run liveServer\" \"npm run sass\""
   },
   "repository": {
     "type": "git",
