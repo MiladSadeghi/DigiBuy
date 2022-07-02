@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
 *,
 *::before,
 *::after {
@@ -13,17 +13,19 @@ body {
 
 .navbar {
   padding: 0.75rem 0 !important;
-  background: rgba(97, 97, 97, 0.356);
   border-bottom: 1px solid rgba(0, 0, 0, 0.281);
 }
 .navbar #logo {
   font-family: "Righteous" !important;
-  font-size: 1.7rem;
-  color: #fff !important;
-  text-shadow: -2px -1px 0 rgba(105, 128, 158, 0.233), -2px 0px 0 rgba(105, 128, 158, 0.233), -2px 1px 0 rgba(105, 128, 158, 0.233), -1px -2px 0 rgba(105, 128, 158, 0.233), -1px -1px 0 rgba(105, 128, 158, 0.233), -1px 0px 0 rgba(105, 128, 158, 0.233), -1px 1px 0 rgba(105, 128, 158, 0.233), -1px 2px 0 rgba(105, 128, 158, 0.233), 0px -2px 0 rgba(105, 128, 158, 0.233), 0px -1px 0 rgba(105, 128, 158, 0.233), 0px 0px 0 rgba(105, 128, 158, 0.233), 0px 1px 0 rgba(105, 128, 158, 0.233), 0px 2px 0 rgba(105, 128, 158, 0.233), 1px -2px 0 rgba(105, 128, 158, 0.233), 1px -1px 0 rgba(105, 128, 158, 0.233), 1px 0px 0 rgba(105, 128, 158, 0.233), 1px 1px 0 rgba(105, 128, 158, 0.233), 1px 2px 0 rgba(105, 128, 158, 0.233), 2px -1px 0 rgba(105, 128, 158, 0.233), 2px 0px 0 rgba(105, 128, 158, 0.233), 2px 1px 0 rgba(105, 128, 158, 0.233);
+  font-size: 2rem;
+  color: #384AEB !important;
 }
 .navbar .search-box {
   padding: 0.624rem 1.2rem;
+  transition: all 0.2s ease-in-out;
+}
+.navbar .search-box:hover {
+  --bs-bg-opacity: 1 ;
 }
 .navbar .bi-box-arrow-in-right {
   vertical-align: middle;
@@ -39,16 +41,10 @@ body {
 .navbar #card {
   font-size: 1.2rem;
 }
-.navbar .btn-outline-secondary:hover {
-  color: #fff !important;
-  background-color: #6c757d !important;
-  border-color: #6c757d !important;
-}
 .navbar [type=button] {
   height: 38px;
   display: flex;
   align-items: center;
-  background-color: #eee;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="An open source project, which can be used as shoppping website with CRM.">
+  <meta name="description" content="An open source project, which can be used as shopping website with CRM.">
   <meta name="keywords" content="shopping, shop, crm">
   <meta name="robots" content="index, follow">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -19,21 +19,26 @@
 
 <body>
   <nav class="navbar">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row w-100 align-items-center">
         <div class="col-auto d-flex">
-          <h1 id="logo">DigiBuy</h1>
+          <h1 id="logo" class="mb-0">DigiBuy</h1>
         </div>
-        <div id="search" class="col-8 d-flex me-auto">
-          <div class="search-box w-75 bg-secondary bg-opacity-75 rounded-3 text-light">
+        <div id="search" class="col-7 d-flex">
+          <div class="search-box w-75 bg-primary bg-opacity-50 rounded-3 text-light">
             <i class="bi bi-search"></i>
             <span class="ms-2">Search...</span>
           </div>
         </div>
-        <div class="col-auto d-flex align-items-center">
-          <a id="login" type="button" href="./login/" class="btn btn-outline-secondary fw-semibold py-0"><i style="font-size: 1.5rem;" class="bi bi-box-arrow-in-right"></i>&nbsp;&nbsp; Login&nbsp; | &nbsp;Register</a>
+        <div class="col-auto d-flex align-items-center ms-auto">
+          <div class="user-check">
+            <button class="btn btn-primary" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span class="visually-hidden">Loading...</span>
+            </button>
+          </div>
           <span class="roller mx-3"></span>
-          <a id="card" type="button" class="btn btn-outline-secondary fw-semibold"><i class="bi bi-cart"></i></a>
+          <a id="card" type="button" class="btn btn-primary"><i class="bi bi-cart"></i></a>
         </div>
       </div>
     </div>
@@ -41,7 +46,7 @@
 
 
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./src/JS/main.js"></script>
+  <script src="src/JS/main.js"></script>
 </body>
 
 </html>
