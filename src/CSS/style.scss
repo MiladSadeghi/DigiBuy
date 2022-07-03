@@ -1,38 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+$paragraph-margin-bottom: 0rem;
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 @function text-stroke($size: 2, $color: #fff, $correction: 0) {
-	$radius: $size - $correction;
-	$stroke: ();
+  $radius: $size - $correction;
+  $stroke: ();
 
-	@for $i from -$size through $size {
-		@for $k from -$size through $size {
+  @for $i from -$size through $size {
+    @for $k from -$size through $size {
+      $x: $k;
+      $y: $i;
 
-			$x: $k;
-			$y: $i;
+      @if $k > 0 {
+        $x: $k - 0.5;
+      } @else if $k < 0 {
+        $x: $k + 0.5;
+      }
 
-			@if $k > 0 {
-				$x: $k - 0.5;
-			} @else if $k < 0 {
-				$x: $k + 0.5;
-			}
+      @if $i > 0 {
+        $y: $i - 0.5;
+      } @else if $i < 0 {
+        $y: $i + 0.5;
+      }
 
-			@if $i > 0 {
-				$y: $i - 0.5;
-			} @else if $i < 0 {
-				$y: $i + 0.5;
-			}
+      @if ($x * $x + $y * $y <= $radius * $radius) {
+        $stroke: append($stroke, $i * 1px $k * 1px 0 $color, comma);
+      }
+    }
+  }
 
-			@if ($x*$x + $y*$y <= $radius*$radius) {
-				$stroke: append($stroke, $i*1px $k*1px 0 $color, comma);
-			}
-		}
-	}
-
-	@return $stroke;
+  @return $stroke;
 }
 
 @mixin text-stroke($size: 2, $color: #fff, $correction: 0) {
-	text-shadow: text-stroke($size, $color, $correction);
+  text-shadow: text-stroke($size, $color, $correction);
 }
 
 *,
@@ -44,7 +48,15 @@
 }
 
 body {
-  font-family: 'Source Sans Pro' !important;
+  font-family: "Source Sans Pro" !important;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
 }
 
 .navbar {
@@ -53,22 +65,125 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.281);
 
   #logo {
-    font-family: 'Righteous' !important;
+    font-family: "Righteous" !important;
     font-size: 2rem;
-    color: #384AEB !important;
+    color: #384aeb !important;
     // @include text-stroke(1, rgb(33, 33, 33));
   }
 
   .search-box {
-    padding: .624rem 1.2rem;
-    transition: all .2s ease-in-out;
-    &:hover {
-      --bs-bg-opacity: 1 ;
+    .searchbar-div {
+      padding: 0.624rem 1.2rem;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        --bs-bg-opacity: 1;
+      }
+    }
+    .searchbar-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease-in-out;
+
+      input {
+        padding: 0.624rem 1.2rem;
+        position: relative;
+        z-index: 12;
+        border: none !important;
+        width: 99%;
+        height: 97%;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .searching-result {
+      border: 1px solid;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      padding-top: 0px;
+      transition: padding 0.4s ease-in-out, max-height 0.4s ease-in-out;
+      z-index: 11;
+      .res {
+        .by-result {
+          height: auto;
+          width: auto;
+          overflow-x: scroll;
+          display: flex;
+          scroll-behavior: smooth;
+          align-content: center;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+      .by-tag {
+        div:first-child {
+          padding-top: 0rem !important;
+        }
+      }
+
+      .b-c {
+        p {
+          font-size: 0.8rem !important;
+        }
+      }
+
+      .right-arrow {
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        &::before {
+          font-size: 1.4rem;
+          content: "\F134";
+          border-radius: 50%;
+          box-shadow: 0px 0px 5px rgb(0 0 0 / 52%);
+          font-family: bootstrap-icons !important;
+          background: #fff;
+        }
+      }
+      .left-arrow {
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        &::before {
+          font-size: 1.4rem;
+          content: "\F12A";
+          border-radius: 50%;
+          box-shadow: 0px 0px 5px rgb(0 0 0 / 52%);
+          font-family: bootstrap-icons !important;
+          background: #fff;
+        }
+      }
+    }
+
+    .search-product {
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      p {
+        display: -webkit-box;
+        width: 140px;
+        font-size: 0.83rem;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.97;
+      }
     }
   }
-
   .bi-box-arrow-in-right {
-    vertical-align: middle
+    vertical-align: middle;
   }
 
   #login {

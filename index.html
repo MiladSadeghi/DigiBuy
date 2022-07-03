@@ -25,9 +25,25 @@
           <h1 id="logo" class="mb-0">DigiBuy</h1>
         </div>
         <div id="search" class="col-7 d-flex">
-          <div class="search-box w-75 bg-primary bg-opacity-50 rounded-3 text-light">
-            <i class="bi bi-search"></i>
-            <span class="ms-2">Search...</span>
+          <div class="search-box w-75 text-light position-relative">
+            <div class="searchbar-div rounded-3 bg-primary bg-opacity-50">
+              <i class="bi bi-search"></i>
+              <span class="ms-2">Search...</span>
+            </div>
+            <div class="searchbar-input">
+              <input type="text" placeholder="Search..." class="form-control">
+              <div class="bg-white rounded text-black border-primary searching-result px-2 mh-100">
+                <div class="res position-relative">
+                  <div class="by-result"></div>
+                  <div class="position-absolute right-arrow d-none"></div>
+                  <div class="position-absolute left-arrow d-none"></div>
+                </div>
+                <hr>
+                <div class="by-category"></div>
+                <hr>
+                <div class="by-tag"></div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-auto d-flex align-items-center ms-auto">
