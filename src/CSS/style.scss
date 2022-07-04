@@ -1,10 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
 
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
-$paragraph-margin-bottom: 0rem;
-@import "../../node_modules/bootstrap/scss/bootstrap";
-
 @function text-stroke($size: 2, $color: #fff, $correction: 0) {
   $radius: $size - $correction;
   $stroke: ();
@@ -59,6 +54,10 @@ a {
   }
 }
 
+p {
+  margin-bottom: 0 !important;
+}
+
 .navbar {
   padding: 0.75rem 0 !important;
   // background: rgba(97, 97, 97, 0.356);
@@ -70,7 +69,22 @@ a {
     color: #384aeb !important;
     // @include text-stroke(1, rgb(33, 33, 33));
   }
+  .navbar-res {
+    display: grid;
+    grid-template-columns: 10% 50% 50%;
+    grid-template-areas: 
+    "logo searchbar login";
 
+    .le-ga {
+      grid-area: logo;
+    }
+    #search {
+      grid-area: searchbar;
+    }
+    .lo-bt {
+      grid-area: login;
+    }
+  }
   .search-box {
     .searchbar-div {
       padding: 0.624rem 1.2rem;
@@ -111,7 +125,7 @@ a {
       width: 100%;
       top: 0;
       padding-top: 0px;
-      transition: padding 0.4s ease-in-out, max-height 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
       z-index: 11;
       .res {
         .by-result {
@@ -196,7 +210,53 @@ a {
     background-color: rgb(90 90 90 / 26%);
   }
 
-  #card {
+  #basket {
+    font-size: 1.2rem;
+  }
+
+  .user-menu-btn {
+    left: 0;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+
+  .user-menu {
+    width: 250px;
+    background: #fff;
+    top: 38.6px;
+    right: 0;
+    border: 1px solid;
+    a {
+      color: rgb(26 26 26 / 82%);
+      transition: background 0.18s ease-in-out;
+      position: relative;
+      &:hover {
+        background: rgb(227, 227, 227);
+      }
+    }
+
+    .btm-b {
+      &::after {
+        position: absolute;
+        bottom: 0;
+        left: 40px;
+        width: 83%;
+        height: 1px;
+        content: "";
+        background: rgb(205, 205, 205);
+      }
+    }
+
+    .bi-bag, .bi-suit-heart, .bi-chat-left-text, .bi-box-arrow-left {
+      &:before {
+        font-weight: bolder !important;
+      }
+    }
+  }
+
+  .bi-person {
     font-size: 1.2rem;
   }
 
@@ -204,6 +264,5 @@ a {
     height: 38px;
     display: flex;
     align-items: center;
-    // background-color: #eee;
   }
 }

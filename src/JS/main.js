@@ -23,7 +23,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     if(e.target !== searchBarInput) {
       searchBar.style.opacity = "0";
     }
+    if(e.target.classList.contains("log-out-btn")) {
+      logOut();
+    }
   }, true)
+  document.addEventListener("change", (e)=> {
+    if(e.target.classList.contains("user-menu-btn")) {
+      let userMenu = document.querySelector(".user-menu");
+      userMenu.classList.toggle("d-none");
+    }
+  })
 
   searchBarInput.addEventListener("keyup", searching)
   searchByResult.addEventListener("scroll", (e) => {
@@ -59,7 +68,8 @@ async function loadUser() {
     }
     user = await userData.json();
     user["profileID"] = userCookie.userTable;
-    showUserBtn.innerHTML = `<a id="login" type="button" href="#" class="btn btn-primary py-0">${user.userName} <i class="bi bi-arrow-right ms-2"></i></a>`;
+    showUserBtn.innerHTML = `<a id="login" type="button" href="#" class="btn btn-primary py-0"><i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i><input class="position-absolute user-menu-btn" type="checkbox"></a><div class="rounded position-absolute user-menu d-none border-primary fw-bold"><a href="#" class="d-flex p-4 rounded">${user.userName} <i class="ms-auto bi bi-chevron-right"></i></a><hr class="m-0">
+    <a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-bag me-2"></i>Orders</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-suit-heart me-2"></i></i>Favorites</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-chat-left-text me-2"></i>Comments</a><a href="#" class="log-out-btn d-flex px-3 py-3 rounded-bottom"><i class="bi bi-box-arrow-left me-2"></i>Log Out</a></div></div>`;
   } catch (error) {
     showUserBtn.innerHTML = `<a id="login" type="button" href="./login/" class="btn btn-primary py-0"><i style="font-size: 1.5rem;" class="bi bi-box-arrow-in-right"></i>&nbsp;&nbsp; Login&nbsp; | &nbsp;Register</a>`
   }
@@ -103,4 +113,9 @@ function searching(e) {
   } else {
     rightArrow.classList.remove("d-none");
   }
+}
+
+function logOut() {
+  document.cookie = "userTable=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  window.location.reload();
 }
