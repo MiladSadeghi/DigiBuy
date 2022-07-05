@@ -71,9 +71,8 @@ p {
   }
   .navbar-res {
     display: grid;
-    grid-template-columns: 10% 50% 50%;
-    grid-template-areas: 
-    "logo searchbar login";
+    grid-template-columns: 0.7fr 3.1fr 1fr;
+    grid-template-areas: "logo searchbar login";
 
     .le-ga {
       grid-area: logo;
@@ -111,7 +110,7 @@ p {
         z-index: 12;
         border: none !important;
         width: 99%;
-        height: 97%;
+        height: 96%;
 
         &:focus {
           box-shadow: none;
@@ -249,7 +248,10 @@ p {
       }
     }
 
-    .bi-bag, .bi-suit-heart, .bi-chat-left-text, .bi-box-arrow-left {
+    .bi-bag,
+    .bi-suit-heart,
+    .bi-chat-left-text,
+    .bi-box-arrow-left {
       &:before {
         font-weight: bolder !important;
       }
@@ -264,5 +266,49 @@ p {
     height: 38px;
     display: flex;
     align-items: center;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
+  .navbar .navbar-res {
+    grid-template-columns: 1.8fr 5fr 0.8fr;
+  }
+}
+
+@media screen and (max-width: 767.98px) {
+  .navbar #logo {
+    font-size: 1.7rem;
+  }
+  .navbar .navbar-res:has(.yes-login) .navbar .navbar-res   {
+    grid-template-columns: 3.3fr 1fr;
+  }
+  .navbar .navbar-res {
+    grid-template-columns: 1.3fr 1fr;
+    grid-gap: 1rem;
+    grid-template-areas:
+      "logo logo"
+      "searchbar login";
+    .le-ga {
+      margin: 0 auto;
+    }
+    .search-box {
+      width: 100% !important;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .navbar .navbar-res {
+    grid-template-columns: auto;
+    grid-template-areas:
+      "logo"
+      "searchbar"
+      "login";
+  }
+  .lo-bt {
+    margin-left: 0 !important;
+  }
+  .navbar .user-menu {
+    left: 0;
   }
 }
