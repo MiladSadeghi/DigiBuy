@@ -14,7 +14,7 @@ const category = document.querySelector(".category");
 const hamburgerMenu = document.querySelector(".hamburger-menu");
 const navBar = document.querySelector(".navbar");
 const navbarResponsive = document.querySelector(".navbar-sm")
-const body = document.querySelector("body");
+const bgLoad = document.querySelector(".bg-load");
 let user;
 let product;
 
@@ -134,14 +134,14 @@ function logOut() {
   window.location.reload();
 }
 
-function responsiveCategory(e) {
+export function responsiveCategory(e) {
   var w = document.documentElement.clientWidth;
   var h = document.documentElement.clientHeight;
   navbarResponsive.innerHTML = "";
   if (w >= 1024) {
     category.innerHTML = `<div class="container sc2 d-none">
-    <div class="w-100 position-relative">
-      <div class="position-absolute w-100">
+    <div class="w-100 position-relative" style="z-index: 2;">
+      <div class="position-absolute w-100 bg-white rounded-bottom" style="height: 70vh;">
         <div class="d-flex w-100">
           <div class="category-items">
             <div class="category-item" category="digital">
@@ -271,9 +271,13 @@ function responsiveCategory(e) {
     categoryHead.addEventListener("mouseenter", (e) => {
       subCategory.classList.toggle("d-none", subCategory.classList.contains("d-flex"));
       subCategory.classList.toggle("d-flex", subCategory.classList.contains("d-none"));
+      bgLoad.style.opacity = 1;
+      bgLoad.style.zIndex = 1;
     }, false);
     subCategory.addEventListener("mouseleave", (e) => {
       subCategory.classList.toggle("d-none", !subCategory.classList.contains("d-none"));
+      bgLoad.style.opacity = 0;
+      bgLoad.style.zIndex = 0;
     });
   } else if (w < 1024) {
     category.innerHTML = "";

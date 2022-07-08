@@ -1,3 +1,4 @@
+import {responsiveCategory} from "../../../src/JS/main.js";
 const productID = new URLSearchParams(window.location.search).get('product');
 const productImage = document.querySelector('.product-image img');
 const productName = document.querySelector('.product-name');

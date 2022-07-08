@@ -64,3 +64,14 @@ p {
     display: none;
   }
 }
+
+.bg-load {
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.372);
+  content: "";
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+}
