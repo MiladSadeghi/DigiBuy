@@ -17,13 +17,14 @@
   <title>DigiBuy</title>
 </head>
 
-<body>
-  <nav class="navbar">
-    <div class="container-md">
+<body class="position-relative">
+  <nav class="navbar position-relative">
+    <div class="container-md position-relative">
       <div class="navbar-res w-100 align-items-center">
         <div class="d-flex le-ga">
           <h1 id="logo" class="mb-0">DigiBuy</h1>
         </div>
+        <i class="bi bi-list text-muted hamburger-menu"></i>
         <div id="search" class="d-flex">
           <div class="search-box w-75 text-light position-relative">
             <div class="searchbar-div rounded-3 bg-primary bg-opacity-50">
@@ -56,10 +57,14 @@
           <span class="roller mx-3"></span>
           <a id="basket" type="button" class="btn btn-primary"><i class="bi bi-cart"></i></a>
         </div>
+        <div class="mt-2 position-relative category-head">
+          <h2 class="">Category</h2>
+        </div>
       </div>
     </div>
   </nav>
-
+  <div class="navbar-sm border-end border-3"></div>
+  <div class="category"></div>
 
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="src/JS/main.js"></script>

@@ -24,7 +24,7 @@ p {
 }
 
 .navbar {
-  padding: 0.75rem 0 !important;
+  padding: 0.75rem 0 0 !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.281);
 }
 .navbar #logo {
@@ -39,6 +39,15 @@ p {
 }
 .navbar .navbar-res .le-ga {
   grid-area: logo;
+}
+.navbar .navbar-res .bi-list {
+  position: absolute;
+  display: none;
+  font-size: 1.7rem;
+  cursor: pointer;
+  left: 12px;
+  top: 0px;
+  content: "";
 }
 .navbar .navbar-res #search {
   grid-area: searchbar;
@@ -201,33 +210,88 @@ p {
   align-items: center;
 }
 
-@media screen and (max-width: 991.98px) {
-  .navbar .navbar-res {
-    grid-template-columns: 1.8fr 5fr 0.8fr;
-  }
+.category-head h2 {
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
-@media screen and (max-width: 767.98px) {
+.category-head h2::before {
+  content: "\f479";
+  font-family: "bootstrap-icons" !important;
+  margin: auto 0;
+  margin-right: 0.4rem;
+}
+
+.bi-chevron-right {
+  font-size: 0.7rem;
+}
+
+.category-items {
+  min-width: 200px;
+}
+.category-items .category-item:hover {
+  color: #384aeb;
+  background: rgba(220, 220, 220, 0.3803921569);
+}
+
+.category-item {
+  padding: 0.6rem 0.5rem;
+  font-weight: 600;
+}
+
+.category-list {
+  position: relative;
+}
+.category-list li a {
+  margin-left: 0.5rem;
+}
+.category-list li::before {
+  position: absolute;
+  content: "";
+  width: 2px;
+  height: 80%;
+  top: 0.25rem;
+  background: #384aeb;
+}
+
+.navbar-sm {
+  position: absolute;
+  content: "";
+  background: #fff;
+  left: -100%;
+  transition: left 0.4s ease-in-out;
+  top: 0;
+  width: 311px;
+  height: 100vh;
+}
+
+.accordion {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar {
+    padding: 0.75rem 0 !important;
+  }
   .navbar #logo {
     font-size: 1.7rem;
   }
-  .navbar .navbar-res:has(.yes-login) .navbar .navbar-res {
-    grid-template-columns: 3.3fr 1fr;
+  .navbar .navbar-res .bi-list {
+    display: block;
   }
-  .navbar .navbar-res {
-    grid-template-columns: 1.3fr 1fr;
-    grid-gap: 1rem;
-    grid-template-areas: "logo logo" "searchbar login";
+  .category-head {
+    display: none;
   }
-  .navbar .navbar-res .le-ga {
-    margin: 0 auto;
-  }
-  .navbar .navbar-res .search-box {
+  .search-box {
     width: 100% !important;
   }
-}
-@media screen and (max-width: 576px) {
+  .le-ga {
+    margin: 0 auto;
+  }
   .navbar .navbar-res {
     grid-template-columns: auto;
+    grid-gap: 1rem;
     grid-template-areas: "logo" "searchbar" "login";
   }
   .lo-bt {
