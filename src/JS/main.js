@@ -82,10 +82,10 @@ async function loadUser() {
     }
     user = await userData.json();
     user["profileID"] = userCookie.userTable;
-    showUserBtn.innerHTML = `<a id="login" type="button" href="#" class="yes-login btn btn-primary py-0"><i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i><input class="position-absolute user-menu-btn" type="checkbox"></a><div class="rounded position-absolute user-menu d-none border-primary fw-bold"><a href="#" class="d-flex p-4 rounded">${user.userName} <i class="ms-auto bi bi-chevron-right"></i></a><hr class="m-0">
+    showUserBtn.innerHTML = `<a id="/login" type="button" href="#" class="yes-login btn btn-primary py-0"><i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i><input class="position-absolute user-menu-btn" type="checkbox"></a><div class="rounded position-absolute user-menu d-none border-primary fw-bold"><a href="#" class="d-flex p-4 rounded">${user.userName} <i class="ms-auto bi bi-chevron-right"></i></a><hr class="m-0">
     <a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-bag me-2"></i>Orders</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-suit-heart me-2"></i></i>Favorites</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-chat-left-text me-2"></i>Comments</a><a href="#" class="log-out-btn d-flex px-3 py-3 rounded-bottom"><i class="bi bi-box-arrow-left me-2"></i>Log Out</a></div></div>`;
   } catch (error) {
-    showUserBtn.innerHTML = `<a id="login" type="button" href="./login/" class="no-login btn btn-primary py-0"><i style="font-size: 1.5rem;" class="bi bi-box-arrow-in-right"></i>&nbsp;&nbsp; Login&nbsp; | &nbsp;Register</a>`
+    showUserBtn.innerHTML = `<a id="login" type="button" href="/login/" class="no-login btn btn-primary py-0"><i style="font-size: 1.5rem;" class="bi bi-box-arrow-in-right"></i>&nbsp;&nbsp; Login&nbsp; | &nbsp;Register</a>`
   }
 }
 
@@ -269,15 +269,17 @@ export function responsiveCategory(e) {
       })
     })
     categoryHead.addEventListener("mouseenter", (e) => {
+      console.log(e.target);
       subCategory.classList.toggle("d-none", subCategory.classList.contains("d-flex"));
       subCategory.classList.toggle("d-flex", subCategory.classList.contains("d-none"));
       bgLoad.style.opacity = 1;
       bgLoad.style.zIndex = 1;
     }, false);
     subCategory.addEventListener("mouseleave", (e) => {
+      console.log(e.target);
       subCategory.classList.toggle("d-none", !subCategory.classList.contains("d-none"));
       bgLoad.style.opacity = 0;
-      bgLoad.style.zIndex = 0;
+      bgLoad.style.zIndex = -1;
     });
   } else if (w < 1024) {
     category.innerHTML = "";

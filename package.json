@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "liveServer": "live-server",
-    "sass": "sass --watch src/CSS/:src/CSS/",
+    "sass": "sass --watch product/src/CSS/:product/src/CSS/",
     "dev": "concurrently \"npm run liveServer\" \"npm run sass\""
   },
   "repository": {
