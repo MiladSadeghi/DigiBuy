@@ -1,4 +1,4 @@
-import { responsiveCategory } from "../../../src/JS/main.js";
+import { navBarLg } from "/src/components/navbar.js";
 const productID = new URLSearchParams(window.location.search).get('product');
 const productImage = document.querySelector('.product-image img');
 const productName = document.querySelector('.product-name');
@@ -11,10 +11,19 @@ const descriptionBody = document.querySelector("#description");
 const specificationBody = document.querySelector("#specification");
 const productBodyTabs = document.querySelectorAll('.product-stuff-tab');
 const breadCrumb = document.querySelector('.breadcrumb');
+const body = document.querySelector("body");
 let html = "";
 document.addEventListener("DOMContentLoaded", async () => {
   let product = await getProduct(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${productID}.json`);
+  window.customElements.define("navbar-lg", navBarLg);
+  body.insertAdjacentHTML("afterbegin", "<navbar-lg></navbar-lg>");
   console.log(product);
+  document.addEventListener("click", (e) => {
+    const navbar = document.querySelector("navbar-lg");
+    if(!navbar.contains(e.target)) {
+      navbar.shadowRoot.querySelector(".navbar-sm").style.left = "-100%"
+    }
+  })
   productSubPhoto.innerHTML = product.productPhoto.map((photo, index) => `<div class="p-1 d-flex align-items-center justify-content-center"><img class="w-100" src="${photo.replace(`")`, "")}"></div>`).join("");
   mainPhoto.innerHTML = product.productPhoto.map(photo => `<img class="w-100" src="${photo.replace(`")`, "")}">`).join("");
   productSubPhoto.innerHTML += '<div DONT class="slider border-primary"></div>';
