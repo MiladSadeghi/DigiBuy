@@ -1,4 +1,4 @@
-
+import {basket} from "./basket.js"
 const template = document.createElement('template');
 template.innerHTML = `
 <nav class="navbar position-relative">
@@ -38,7 +38,7 @@ template.innerHTML = `
         </button>
       </div>
       <span class="roller mx-3"></span>
-      <a id="basket" type="button" class="btn btn-primary"><i class="bi bi-cart"></i></a>
+      <a id="basket" type="button" class="btn btn-primary position-relative"><i class="bi bi-cart"></i></a>
     </div>
     <div class="mt-2 position-relative category-head">
       <h2 class="">Category</h2>
@@ -214,6 +214,7 @@ class navBarLg extends HTMLElement {
     this.hamburgerMenu = this.shadowRoot.querySelector(".hamburger-menu");
     this.bgLoad = this.shadowRoot.querySelector(".bg-load");
     this.navbarSm = this.shadowRoot.querySelector(".navbar-sm");
+    this.basket = this.shadowRoot.querySelector("#basket");
     this.user;
     this.product;
   }
@@ -264,8 +265,15 @@ class navBarLg extends HTMLElement {
       this.user["profileID"] = userCookie.userTable;
       this.showUserBtn.innerHTML = `<a id="/login" type="button" href="#" class="yes-login btn btn-primary py-0"><i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i><input class="position-absolute user-menu-btn" type="checkbox"></a><div class="rounded position-absolute user-menu d-none border-primary fw-bold"><a href="#" class="d-flex p-4 rounded">${this.user.userName} <i class="ms-auto bi bi-chevron-right"></i></a><hr class="m-0">
       <a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-bag me-2"></i>Orders</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-suit-heart me-2"></i></i>Favorites</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-chat-left-text me-2"></i>Comments</a><a href="#" class="log-out-btn d-flex px-3 py-3 rounded-bottom"><i class="bi bi-box-arrow-left me-2"></i>Log Out</a></div></div>`;
+      this.shadowRoot.querySelector(".user-menu-btn").addEventListener("change", (e) => {
+        let userMenu = this.shadowRoot.querySelector(".user-menu");
+        userMenu.classList.toggle("d-none");
+      })
+      this.shadowRoot.querySelector(".log-out-btn").addEventListener("click", (e) => {
+        this.logOut();
+      })
     } catch (error) {
-      this.showUserBtn.innerHTML = `<a id="login" type="button" href="/login/" class="no-login btn btn-primary py-0"><i style="font-size: 1.5rem;" class="bi bi-box-arrow-in-right"></i>&nbsp;&nbsp; Login&nbsp; | &nbsp;Register</a>`
+      this.showUserBtn.innerHTML = `<a id="login" type="button" href="/login/" class="no-login btn btn-primary py-0"><i style="font-size: 1.5rem;" class="bi bi-box-arrow-in-right"></i>&nbsp;&nbsp; Login&nbsp; | &nbsp;Register</a>`;
     }
   }
 
@@ -282,6 +290,11 @@ class navBarLg extends HTMLElement {
   async connectedCallback() {
     await this.loadUser();
     await this.loadProduct();
+    console.log(this.user);
+    let basketClass = new basket((this.user?.userName || null), this.basket);
+    basketClass.createGuestCookie();
+    basketClass.basketElementID = this.shadowRoot.querySelector("#basket");
+    basketClass.getBasket();
     this.searchBox.addEventListener("click", (e) => {
       this.searchBar.style.opacity = "1";
       this.searchBarInput.focus();
@@ -294,13 +307,6 @@ class navBarLg extends HTMLElement {
         this.navbarSm.style.left = "-100%";
       }
     }, true)
-    this.shadowRoot.querySelector(".user-menu-btn").addEventListener("change", (e) => {
-      let userMenu = this.shadowRoot.querySelector(".user-menu");
-      userMenu.classList.toggle("d-none");
-    })
-    this.shadowRoot.querySelector(".log-out-btn").addEventListener("click", (e) => {
-      this.logOut();
-    })
     this.searchBarInput.addEventListener("keyup", this.searching)
     this.searchByResult.addEventListener("scroll", (e) => {
       if (this.searchByResult.scrollLeft !== 0) {
