@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const navbar = document.querySelector("navbar-lg");
     basketClass.addToCardBtn = addToCardBtn;
     basketClass.basketElementID = navbar.shadowRoot.querySelector("#basket");
-    basketClass.createGuestCookie();
+    basketClass.getUser();
     basketClass.addToBasket(product.productID);
   });
   imageSlider();

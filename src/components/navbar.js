@@ -292,7 +292,7 @@ class navBarLg extends HTMLElement {
     await this.loadProduct();
     console.log(this.user);
     let basketClass = new basket((this.user?.userName || null), this.basket);
-    basketClass.createGuestCookie();
+    basketClass.getUser();
     basketClass.basketElementID = this.shadowRoot.querySelector("#basket");
     basketClass.getBasket();
     this.searchBox.addEventListener("click", (e) => {

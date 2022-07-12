@@ -8,7 +8,7 @@ class basket{
     this.date.setYear(2080);
   }
 
-  createGuestCookie() {
+  getUser() {
     let userCookie = Object.fromEntries(document.cookie.split('; ').map(v => v.split(/=(.*)/s).map(decodeURIComponent)));
     let id = this.uniqueID();
     if(!userCookie.guestID && !userCookie.userTable) {
@@ -20,6 +20,7 @@ class basket{
     } else if(userCookie.userTable) {
       this.userID = userCookie.userTable;
       this.db = "users";
+      this.moveGuestBasket(userCookie.guestID, userCookie.userTable);
     }
   }
 
@@ -64,6 +65,27 @@ class basket{
     }
     return result;
   };
+
+  async moveGuestBasket(guestID, userID) {
+    let getGuestDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${guestID}/basket.json`)).json();
+    let getUserDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userID}/basket.json`)).json() || [];
+    if(getGuestDB !== null) {
+      getGuestDB.forEach((item)=> {
+        console.log(getGuestDB);
+        if(!getUserDB.includes(item)) {
+          getUserDB.push(item);
+        }
+      })
+    }
+    let postUserDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userID}/basket.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(getUserDB)
+    });
+    let postGuestDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${guestID}/basket.json`, {method: "DELETE"})
+  }
 }
 
 export { basket }
