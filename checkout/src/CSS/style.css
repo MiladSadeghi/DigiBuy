@@ -60,9 +60,6 @@ a:focus {
 .pr-st .bi {
   margin-right: 0.7rem;
 }
-.pr-st .bi::before {
-  font-weight: 700 !important;
-}
 
 .qua-ch {
   border: 2px solid #398ab9;
@@ -71,6 +68,26 @@ a:focus {
 .qua-ch .bi::before {
   color: #398ab9;
   font-weight: 700 !important;
+}
+
+.empty-basket {
+  height: 300px;
+}
+.empty-basket .ebc {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.empty-basket .ebc img {
+  width: 130px;
+}
+
+.bi::before {
+  font-weight: 700 !important;
+}
+
+.lg-txt {
+  font-size: 0.83rem !important;
 }
 
 /*# sourceMappingURL=style.css.map */

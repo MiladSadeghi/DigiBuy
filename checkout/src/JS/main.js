@@ -3,6 +3,9 @@ import { basket } from "/src/components/basket.js";
 const body = document.querySelector("body");
 const productList = document.querySelector(".pr-du-out");
 const productCounter = document.querySelectorAll(".product-counter");
+const emptyBasketDiv = document.querySelector(".empty-basket");
+const shouldLogin = document.querySelector(".you-most-login");
+const nonEmptyBasketDiv = document.querySelector(".non-empty-basket");
 let basketProduct;
 let products;
 let basketList = [];
@@ -65,12 +68,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       let remove = basketClass.removeFromBasket(e.target.parentElement.parentElement.parentElement.getAttribute("product-id"));
       if (remove) {
         removeProduct(e.target.parentElement.parentElement.parentElement);
+        basketStatus();
       }
     }
     if(e.target.classList.contains("rm-a")) {
       let remove = basketClass.removeFromBasket("all");
       if (remove) {
         removeProduct("all");
+        basketStatus();
       }
     }
   })
@@ -79,13 +84,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   basketClass.getUser();
   basketClass.basketElementID = document.querySelector("navbar-lg").shadowRoot.querySelector("#basket");
   basketProduct = await basketClass.getBasket();
+  basketStatus();
   showProduct(basketProduct);
   console.log(products);
 })
 
 function showProduct(basketProduct) {
   productCounter.forEach((element, index) => {
-    element.innerHTML = basketProduct.length;
+    element.innerHTML = (basketProduct?.length || 0);
   })
   basketProduct.forEach((item, index) => {
     basketList.push(`
@@ -132,4 +138,17 @@ function removeProduct(productID) {
 
 function moneyFormat(num) {
   return Number(num).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+function basketStatus() {
+  console.log(basketProduct);
+  if(basketProduct.length !== 0) {
+    nonEmptyBasketDiv.classList.remove("d-none");
+    shouldLogin.classList.add("d-none");
+    emptyBasketDiv.classList.add("d-none");
+  } else {
+    nonEmptyBasketDiv.classList.add("d-none");
+    shouldLogin.classList.remove("d-none");
+    emptyBasketDiv.classList.remove("d-none");
+  }
 }

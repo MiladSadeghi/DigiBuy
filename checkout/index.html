@@ -26,7 +26,13 @@
       </div>
       <hr class="mt-2 m-0">
       <div class="col-lg-9 mt-2 br-col rounded-3 px-4 py-3">
-        <div class="row">
+        <div class="empty-basket position-relative">
+          <div class="position-absolute ebc text-center">
+            <img src="./src/IMG/shopping-bag.png" alt="empty-basket">
+            <p class="fw-normal fs-4">Your shopping cart is empty!</p>
+          </div>
+        </div>
+        <div class="row non-empty-basket d-none">
           <div class="d-flex justify-content-between">
             <div class="d-flex flex-column">
               <p class="fw-bold mb-0 mb-2">Your Shopping Cart</p>
@@ -42,7 +48,16 @@
         </div>
         <div class="row mt-2 pr-du-out"></div>
       </div>
-      <div class="col-lg-3"></div>
+      <div class="col-lg-3">
+        <a href="/login" target="_blank" class="you-most-login br-col rounded-3 mt-2 px-3 py-3 d-flex">
+          <i class="bi bi-box-arrow-in-right me-3 fs-4 text-warning"></i>
+          <div class="d-flex flex-column">
+            <p class="fw-bold m-0 fs-5 mb-2">Sign in</p>
+            <p class="lg-txt mb-0">Log in to view the products you have previously added to your shopping cart.</p>
+          </div>
+          <i class="bi bi-chevron-right ms-auto fs-6"></i>
+        </a>
+      </div>
     </div>
   </div>
   <div id="PopoverContent" class="d-none">
