@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An open source project, which can be used as shopping website with CRM.">
+  <meta name="keywords" content="shopping, shop, crm">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="English">
+  <meta name="author" content="Milad Sadeghi">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="src/CSS/style.css">
+  <title>DigiBuy - Checkout</title>
+</head>
+
+<body>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="d-flex align-items-center aft-bt">
+        <span class="fw-bold fs-4 text-primary card-text">Card</span>
+        <span class="badge bg-primary product-counter fs-6 ms-2">0</span>
+      </div>
+      <hr class="mt-2 m-0">
+      <div class="col-lg-9 mt-2 br-col rounded-3 px-4 py-3">
+        <div class="row">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              <p class="fw-bold mb-0 mb-2">Your Shopping Cart</p>
+              <p class="text-muted fs-6 mb-0"><span class="product-counter me-1">0</span>Item</p>
+            </div>
+            <div>
+              <a href="#">
+                <i class="bi bi-three-dots-vertical fs-5 text-muted" data-bs-container="body" data-bs-toggle="popover"
+                  data-bs-placement="top" data-bs-content="Top popover"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2 pr-du-out"></div>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+  </div>
+  <div id="PopoverContent" class="d-none">
+    <a href="#" class="text rm-a"><i class="bi bi-trash me-2 fs-6"></i>Delete All Products</a>
+  </div>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="src/JS/main.js"></script>
+</body>
+
+</html>

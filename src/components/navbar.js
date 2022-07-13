@@ -182,7 +182,7 @@ template.innerHTML = `
 </div>
 </div>
 <div class="content position-relative">
-<div class="bg-load"></div>
+<div class="bg-load position-absolute"></div>
 </div>
 `;
 
@@ -407,11 +407,14 @@ class navBarLg extends HTMLElement {
     this.categoryHead.addEventListener("mouseenter", (e) => {
       this.subCategory.classList.toggle("d-none", this.subCategory.classList.contains("d-flex"));
       this.subCategory.classList.toggle("d-flex", this.subCategory.classList.contains("d-none"));
+      this.bgLoad.style.height = document.documentElement.getBoundingClientRect().height + "px";
+      
       this.bgLoad.style.opacity = 1;
       this.bgLoad.style.zIndex = 1;
     }, false);
     this.subCategory.addEventListener("mouseleave", (e) => {
       this.subCategory.classList.toggle("d-none", !this.subCategory.classList.contains("d-none"));
+      this.bgLoad.style.height = "0px";
       this.bgLoad.style.opacity = 0;
       this.bgLoad.style.zIndex = -1;
     });

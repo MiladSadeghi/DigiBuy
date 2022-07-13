@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro" !important;
+}
+
+a,
+a:hover,
+a:visited,
+a:active,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+.aft-bt {
+  position: relative;
+}
+.aft-bt::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  display: flex;
+  width: 8%;
+  height: 5px;
+  border-radius: 10px 10px 0 0;
+  background: #398ab9;
+}
+
+.br-col {
+  border: 1.5px solid #c8c9ca;
+}
+
+.pr-du-in {
+  display: grid;
+  grid-template-columns: 116px 1fr;
+  grid-gap: 1.5rem;
+}
+.pr-du-in hr {
+  grid-column: span 2;
+}
+
+.pr-im img {
+  width: 114px;
+  height: 114px;
+}
+
+.pr-st p {
+  font-size: 0.9rem !important;
+  display: flex;
+  align-items: center;
+}
+.pr-st .bi {
+  margin-right: 0.7rem;
+}
+.pr-st .bi::before {
+  font-weight: 700 !important;
+}
+
+.qua-ch {
+  border: 2px solid #398ab9;
+  border-radius: 0.4rem;
+}
+.qua-ch .bi::before {
+  color: #398ab9;
+  font-weight: 700 !important;
+}
+
+/*# sourceMappingURL=style.css.map */
