@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     basketClass.getUser();
     basketClass.addToBasket(product.productID);
   });
+  
   imageSlider();
 
   productBodyTabs.forEach((element, index) => {

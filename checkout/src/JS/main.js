@@ -6,9 +6,15 @@ const productCounter = document.querySelectorAll(".product-counter");
 const emptyBasketDiv = document.querySelector(".empty-basket");
 const shouldLogin = document.querySelector(".you-most-login");
 const nonEmptyBasketDiv = document.querySelector(".non-empty-basket");
+const checkOut = document.querySelector(".checkout");
+const productPrices = document.querySelectorAll(".pr-prc");
+const totalProduct = document.querySelector(".total-product");
+const checkoutBtn = document.querySelector(".checkout-btn");
+let basketClass;
 let basketProduct;
 let products;
 let basketList = [];
+let prices = 0;
 
 window.customElements.define("navbar-lg", navBarLg);
 body.insertAdjacentHTML("afterbegin", "<navbar-lg></navbar-lg>");
@@ -40,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       let priceElement = document.querySelectorAll(".pr-prc p")[e.target.getAttribute("item")];
       let price = Number(products[basketProduct[e.target.getAttribute("item")]].productPrice);
       let first = e.target.parentElement.children[0];
+      prices += price;
       if (first.classList.contains("bi-trash3")) {
         first.classList.remove("bi-trash3");
         first.classList.add("bi-dash-lg");
@@ -47,31 +54,52 @@ document.addEventListener("DOMContentLoaded", async () => {
       quantity.innerHTML = Number(quantity.innerHTML) + 1;
       price = Number(quantity.innerHTML) * price;
       priceElement.innerHTML = `$${moneyFormat(price)}`;
+      productPrices.forEach((element) => {
+        element.innerHTML = `$${moneyFormat(prices)}`;
+      })
+      totalProduct.innerHTML = Number(totalProduct.innerHTML) + 1;
     }
     if (e.target.classList.contains("bi-dash-lg")) {
       if (e.target.parentElement.children[1].innerHTML > 1) {
         let quantity = e.target.parentElement.children[1];
         let priceElement = document.querySelectorAll(".pr-prc p")[e.target.getAttribute("item")];
         let price = Number(products[basketProduct[e.target.getAttribute("item")]].productPrice);
+        prices -= price;
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         price = Number(quantity.innerHTML) * price;
         priceElement.innerHTML = `$${moneyFormat(price)}`;
+        productPrices.forEach((element) => {
+          element.innerHTML = `$${moneyFormat(prices)}`;
+        })
+        totalProduct.innerHTML = Number(totalProduct.innerHTML) - 1;
       }
       if (e.target.parentElement.children[1].innerHTML == 1) {
         let first = e.target.parentElement.children[0];
-        console.log(first);
         first.classList.remove("bi-dash-lg");
         first.classList.add("bi-trash3");
       }
+      productPrices.forEach((element) => {
+        element.innerHTML = `$${moneyFormat(prices)}`;
+      })
     }
     if (e.target.classList.contains("bi-trash3")) {
       let remove = basketClass.removeFromBasket(e.target.parentElement.parentElement.parentElement.getAttribute("product-id"));
+      let price = Number(products[basketProduct[e.target.getAttribute("item")]].productPrice);
+      let quantity = e.target.parentElement.children[1];
       if (remove) {
+        prices -= price;
+        productPrices.forEach((element) => {
+          element.innerHTML = `$${moneyFormat(prices)}`;
+        })
+        totalProduct.innerHTML = Number(totalProduct.innerHTML) - 1;
         removeProduct(e.target.parentElement.parentElement.parentElement);
         basketStatus();
+        productPrices.forEach((element) => {
+          element.innerHTML = `$${moneyFormat(prices)}`;
+        })
       }
     }
-    if(e.target.classList.contains("rm-a")) {
+    if (e.target.classList.contains("rm-a")) {
       let remove = basketClass.removeFromBasket("all");
       if (remove) {
         removeProduct("all");
@@ -80,13 +108,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   })
 
-  let basketClass = new basket();
+  basketClass = new basket();
   basketClass.getUser();
   basketClass.basketElementID = document.querySelector("navbar-lg").shadowRoot.querySelector("#basket");
   basketProduct = await basketClass.getBasket();
   basketStatus();
   showProduct(basketProduct);
-  console.log(products);
+
+  productPrices.forEach((element) => {
+    element.innerHTML = `$${moneyFormat(prices)}`;
+  })
+
+  checkoutBtn.addEventListener("click", () => {
+    if(basketClass.db === "guest") {
+      checkoutBtn.href = "/login";
+      checkoutBtn.target = "_blank";
+    } else {
+      submitOrder();
+    }
+  })
 })
 
 function showProduct(basketProduct) {
@@ -94,11 +134,13 @@ function showProduct(basketProduct) {
     element.innerHTML = (basketProduct?.length || 0);
   })
   basketProduct.forEach((item, index) => {
+    totalProduct.innerHTML = Number(totalProduct.innerHTML) + 1
+    prices += Number(products[item].productPrice);
     basketList.push(`
       <div class="pr-du-in mt-2" product-id="${products[item].productID}">
-        <div class="pr-im">
+        <a target="_blank" href="/product/?product=${products[item].productID}" class="pr-im">
           <img src="${products[item].productPhoto[0].replace(`")`, "")}" alt="">
-        </div>
+        </a>
         <div class="pr-st">
           <h5 class="fw-bold fs-6 mb-3">${products[item].productName}</h5>
           <p class="text-muted mb-1"><i class="bi bi-shield-check d-flex"></i><span>Guarantee of product authenticity and health</span></p>
@@ -126,7 +168,7 @@ function showProduct(basketProduct) {
 function removeProduct(productID) {
   let productsID = document.querySelectorAll("[product-id]");
   productsID.forEach((element) => {
-    if(productID === element || productID === "all") {
+    if (productID === element || productID === "all") {
       element.remove();
       basketProduct.splice(basketProduct.indexOf(productID, 1));
     }
@@ -141,14 +183,55 @@ function moneyFormat(num) {
 }
 
 function basketStatus() {
-  console.log(basketProduct);
-  if(basketProduct.length !== 0) {
+  if (basketProduct.length !== 0) {
     nonEmptyBasketDiv.classList.remove("d-none");
+    checkOut.classList.remove("d-none");
     shouldLogin.classList.add("d-none");
     emptyBasketDiv.classList.add("d-none");
   } else {
     nonEmptyBasketDiv.classList.add("d-none");
+    checkOut.classList.add("d-none");
     shouldLogin.classList.remove("d-none");
     emptyBasketDiv.classList.remove("d-none");
+  }
+}
+
+async function submitOrder() {
+  let userOrder = {
+    userID: basketClass.userID,
+    orderDate: new Date().toLocaleDateString(),
+    orderTime: new Date().toLocaleTimeString(),
+    orderStatus: "pending",
+    orderTotal: prices,
+    orderID: basketClass.uniqueID(),
+  }
+  let quantity = document.querySelectorAll(".quantity");
+  let orderProduct = [];
+  quantity.forEach((element, index) => {
+    orderProduct.push({product:basketProduct[index], quantity: element.innerHTML})
+  })
+  userOrder["orderProduct"] = orderProduct;
+  let confirmOrder = confirm("You Want To Submit This Order?");
+  console.log(confirmOrder);
+  if(confirmOrder) {
+    let response = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userOrder.userID}/dashboard/orders/${userOrder.orderID}.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userOrder)
+    })
+    let response1 = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/orders/${userOrder.orderID}.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userOrder)
+    });
+    console.log(response, response1);
+    await basketClass.removeFromBasket("all");
+    basketProduct = [];
+    await basketClass.getBasket();
+    basketStatus();
   }
 }

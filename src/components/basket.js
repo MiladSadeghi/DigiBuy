@@ -27,12 +27,14 @@ class basket{
   async getBasket() {
     let response = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/${this.db}/${this.userID}/basket.json`);
     let data = await response.json();
+    console.log(data);
     if((data !== null? data.length:0) > 0) {
-      this.basketElementID.innerHTML += `<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+      this.basketElementID.innerHTML = `<i class="bi bi-cart"></i><span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle rnd-cb">
       <span class="visually-hidden">New alerts</span>
     </span>`
       return data;
     }
+    this.basketElementID.innerHTML = `<i class="bi bi-cart"></i>`;
     return [];
   }
 
@@ -70,21 +72,22 @@ class basket{
   async moveGuestBasket(guestID, userID) {
     let getGuestDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${guestID}/basket.json`)).json();
     let getUserDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userID}/basket.json`)).json() || [];
+    console.log(getGuestDB, getUserDB);
     if(getGuestDB !== null) {
       getGuestDB.forEach((item)=> {
         if(!getUserDB.includes(item)) {
           getUserDB.push(item);
         }
       })
+      let postUserDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userID}/basket.json`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(getUserDB)
+      });
+      let postGuestDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${guestID}/basket.json`, {method: "DELETE"})
     }
-    let postUserDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userID}/basket.json`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(getUserDB)
-    });
-    let postGuestDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${guestID}/basket.json`, {method: "DELETE"})
   }
 
   async removeFromBasket(productID) {

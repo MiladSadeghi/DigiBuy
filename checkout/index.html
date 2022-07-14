@@ -32,21 +32,24 @@
             <p class="fw-normal fs-4">Your shopping cart is empty!</p>
           </div>
         </div>
-        <div class="row non-empty-basket d-none">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex flex-column">
-              <p class="fw-bold mb-0 mb-2">Your Shopping Cart</p>
-              <p class="text-muted fs-6 mb-0"><span class="product-counter me-1">0</span>Item</p>
-            </div>
-            <div>
-              <a href="#">
-                <i class="bi bi-three-dots-vertical fs-5 text-muted" data-bs-container="body" data-bs-toggle="popover"
-                  data-bs-placement="top" data-bs-content="Top popover"></i>
-              </a>
+        <div class="non-empty-basket d-none">
+          <div class="row ">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-column">
+                <p class="fw-bold mb-0 mb-2">Your Shopping Cart</p>
+                <p class="text-muted fs-6 mb-0"><span class="product-counter me-1">0</span>Item</p>
+              </div>
+              <div>
+                <a href="#">
+                  <i class="bi bi-three-dots-vertical fs-5 text-muted" data-bs-container="body" data-bs-toggle="popover"
+                    data-bs-placement="top" data-bs-content="Top popover"></i>
+                </a>
+              </div>
             </div>
           </div>
+          <div class="row mt-2 pr-du-out"></div>
+
         </div>
-        <div class="row mt-2 pr-du-out"></div>
       </div>
       <div class="col-lg-3">
         <a href="/login" target="_blank" class="you-most-login br-col rounded-3 mt-2 px-3 py-3 d-flex">
@@ -57,6 +60,19 @@
           </div>
           <i class="bi bi-chevron-right ms-auto fs-6"></i>
         </a>
+        <div class="checkout br-col rounded-3 mt-2 px-3 py-3 d-none">
+          <div class="d-flex text-muted mb-1" style="font-size: 0.85rem;">
+            <p class="mb-0">Product Prices</p>
+            <p class="ms-1 mb-0">(<span class="total-product">0</span>)</p>
+            <p class="pr-prc ms-auto mb-0"></p>
+          </div>
+          <div class="d-flex mb-3" style="font-size: 0.85rem;">
+            <p class="mb-0">Total shopping cart</p>
+            <p class="pr-prc ms-auto mb-0"></p>
+          </div>
+          <p class="text-muted" style="font-size: .8rem;">The shipping cost is calculated based on the address, delivery time, weight and volume of your shipment</p>
+          <a href="#" class="btn btn-primary w-100 checkout-btn text-white">Continue</a>
+        </div>
       </div>
     </div>
   </div>

@@ -38,7 +38,7 @@ template.innerHTML = `
         </button>
       </div>
       <span class="roller mx-3"></span>
-      <a id="basket" type="button" class="btn btn-primary position-relative"><i class="bi bi-cart"></i></a>
+      <button id="basket" type="button" class="btn btn-primary position-relative"><i class="bi bi-cart"></i></button>
     </div>
     <div class="mt-2 position-relative category-head">
       <h2 class="">Category</h2>
