@@ -10,6 +10,7 @@ const checkOut = document.querySelector(".checkout");
 const productPrices = document.querySelectorAll(".pr-prc");
 const totalProduct = document.querySelector(".total-product");
 const checkoutBtn = document.querySelector(".checkout-btn");
+const basketDiv = document.querySelector(".bs-sh");
 let basketClass;
 let basketProduct;
 let products;
@@ -188,11 +189,15 @@ function basketStatus() {
     checkOut.classList.remove("d-none");
     shouldLogin.classList.add("d-none");
     emptyBasketDiv.classList.add("d-none");
+    basketDiv.classList.add("col-lg-9");
   } else {
     nonEmptyBasketDiv.classList.add("d-none");
     checkOut.classList.add("d-none");
-    shouldLogin.classList.remove("d-none");
     emptyBasketDiv.classList.remove("d-none");
+    if(basketClass.db !== "guest") {
+      shouldLogin.classList.add("d-none");
+      basketDiv.classList.remove("col-lg-9");
+    }
   }
 }
 

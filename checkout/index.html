@@ -18,14 +18,16 @@
 </head>
 
 <body>
-  <div class="container mt-4">
+  <div class="container my-4">
     <div class="row">
       <div class="d-flex align-items-center aft-bt">
         <span class="fw-bold fs-4 text-primary card-text">Card</span>
         <span class="badge bg-primary product-counter fs-6 ms-2">0</span>
       </div>
       <hr class="mt-2 m-0">
-      <div class="col-lg-9 mt-2 br-col rounded-3 px-4 py-3">
+    </div>
+    <div class="row flex-column-reverse flex-lg-row">
+      <div class="col-lg-9 col-12 mt-2 br-col rounded-3 px-4 py-3 bs-sh">
         <div class="empty-basket position-relative">
           <div class="position-absolute ebc text-center">
             <img src="./src/IMG/shopping-bag.png" alt="empty-basket">
@@ -41,8 +43,8 @@
               </div>
               <div>
                 <a href="#">
-                  <i class="bi bi-three-dots-vertical fs-5 text-muted" data-bs-container="body" data-bs-toggle="popover"
-                    data-bs-placement="top" data-bs-content="Top popover"></i>
+                  <i class="bi bi-three-dots-vertical fs-5 text-muted" data-bs-container="body"
+                    data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover"></i>
                 </a>
               </div>
             </div>
@@ -51,7 +53,8 @@
 
         </div>
       </div>
-      <div class="col-lg-3">
+
+      <div class="col-lg-3 col-12 px-lg-2 p-0">
         <a href="/login" target="_blank" class="you-most-login br-col rounded-3 mt-2 px-3 py-3 d-flex">
           <i class="bi bi-box-arrow-in-right me-3 fs-4 text-warning"></i>
           <div class="d-flex flex-column">
@@ -70,7 +73,8 @@
             <p class="mb-0">Total shopping cart</p>
             <p class="pr-prc ms-auto mb-0"></p>
           </div>
-          <p class="text-muted" style="font-size: .8rem;">The shipping cost is calculated based on the address, delivery time, weight and volume of your shipment</p>
+          <p class="text-muted" style="font-size: .8rem;">The shipping cost is calculated based on the address,
+            delivery time, weight and volume of your shipment</p>
           <a href="#" class="btn btn-primary w-100 checkout-btn text-white">Continue</a>
         </div>
       </div>
