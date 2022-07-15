@@ -1,163 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="An open source project, which can be used as shopping website with CRM."
-    />
-    <meta name="keywords" content="shopping, shop, crm" />
-    <meta name="robots" content="index, follow" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="language" content="English" />
-    <meta name="author" content="Milad Sadeghi" />
-    <link
-      rel="stylesheet"
-      href="/node_modules/bootstrap/dist/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="/node_modules/bootstrap-icons/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="src/CSS/style.css" />
-    <title></title>
-  </head>
 
-  <body>
-    <div class="content position-relative">
-      <div class="position-absolute bg-load"></div>
-      <div class="container">
-        <div class="product-main py-3">
-          <div class="row">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-              </ol>
-            </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An open source project, which can be used as shopping website with CRM." />
+  <meta name="keywords" content="shopping, shop, crm" />
+  <meta name="robots" content="index, follow" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="language" content="English" />
+  <meta name="author" content="Milad Sadeghi" />
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="src/CSS/style.css" />
+  <title></title>
+</head>
+
+<body>
+  <div class="content position-relative">
+    <div class="position-absolute bg-load"></div>
+    <div class="container">
+      <div class="product-main py-3">
+        <div class="row">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <div class="product-image d-flex flex-column align-items-center justify-content-center">
+              <div class="photo-slide d-flex align-items-center">
+                <div class="main-photo"></div>
+              </div>
+              <div class="images d-flex w-100"></div>
+            </div>
           </div>
-          <div class="row">
-            <div class="col-lg-6 col-12">
-              <div
-                class="product-image d-flex flex-column align-items-center justify-content-center"
-              >
-                <div class="photo-slide d-flex align-items-center">
-                  <div class="main-photo"></div>
-                </div>
-                <div class="images d-flex w-100"></div>
-              </div>
+          <div class="col-lg-5 col-12 d-flex flex-column justify-content-center offset-lg-1">
+            <h2 class="product-name fs-4 fw-bolder">Product Name</h2>
+            <p class="product-price fs-4 fw-bolder"></p>
+            <p class="product-category"></p>
+            <hr class="first-hr" />
+            <div class="product-feature">
+              <ul class="mb-0"></ul>
             </div>
-            <div
-              class="col-lg-5 col-12 d-flex flex-column justify-content-center offset-lg-1"
-            >
-              <h2 class="product-name fs-4 fw-bolder">Product Name</h2>
-              <p class="product-price fs-4 fw-bolder"></p>
-              <p class="product-category"></p>
-              <hr class="first-hr" />
-              <div class="product-feature">
-                <ul class="mb-0"></ul>
-              </div>
-              <hr />
-              <button class="btn btn-primary add-to-card">Add to Card</button>
-            </div>
+            <hr />
+            <button class="btn btn-primary add-to-card">Add to Card</button>
           </div>
         </div>
-        <div class="product-stuff my-4 rounded-top bg-info bg-opacity-25">
-          <div class="row product-stuff-head mx-0 rounded-top text-center">
-            <div
-              class="col product-stuff-tab active-tab py-2 rounded-top fs-5 fw-normal"
-              show="#description"
-            >
-              Description
-            </div>
-            <div
-              show="#specification"
-              class="col product-stuff-tab productBodyTabs py-2 fs-5 fw-normal"
-            >
-              Specification
-            </div>
-            <div
-              show="#comment"
-              class="col product-stuff-tab productBodyTabs py-2 fs-5 fw-normal"
-            >
-              Comment
-            </div>
+      </div>
+      <div class="product-stuff my-4 rounded-top bg-info bg-opacity-25">
+        <div class="row product-stuff-head mx-0 rounded-top text-center">
+          <div class="col product-stuff-tab active-tab py-2 rounded-top fs-5 fw-normal" show="#description">
+            Description
           </div>
-          <div class="product-stuff-body d-flex">
-            <div id="description" class="d-none bg-white m-2 p-2"></div>
-            <div id="specification" class="d-none bg-white m-2 p-2 w-100"></div>
-            <div id="comment" class="bg-white m-2 p-2 w-100">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="over-all">
-                        <h5 class="text-center m-0 ff-osw">OverAll</h5>
-                        <h4 class="over-all-counter text-center fw-bold text-primary ff-osw">0</h4>
-                        <h6 class="text-center m-0 fs-6">(<span class="review-counter me-2">0</span>Reviews)</h6>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <p class="ff-osw fw-bold lh-1" style="font-size: 1.1rem;">Based on <span class="review-counter me-1">0</span> Reviews</p>
-                      <ul class="list-unstyled stars d-flex flex-column">
-                        <li class="d-flex">
-                          <p class="me-3 mb-0">5 Star</p>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <span class="ms-1 mb-0 star-counter">0</span>
-                        </li>
-                        <li class="d-flex">
-                          <p class="me-3 mb-0">4 Star</p>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <span class="ms-1 mb-0 star-counter">0</span>
-                        </li>
-                        <li class="d-flex">
-                          <p class="me-3 mb-0">3 Star</p>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <span class="ms-1 mb-0 star-counter">0</span>
-                        </li>
-                        <li class="d-flex">
-                          <p class="me-3 mb-0">2 Star</p>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <span class="ms-1 mb-0 star-counter">0</span>
-                        </li>
-                        <li class="d-flex">
-                          <p class="me-3 mb-0">1 Star</p>
-                          <i class="bi bi-star-fill me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <i class="bi bi-star me-1 text-warning"></i>
-                          <span class="ms-1 mb-0 star-counter">0</span>
-                        </li>
-                      </ul>
+          <div show="#specification" class="col product-stuff-tab productBodyTabs py-2 fs-5 fw-normal">
+            Specification
+          </div>
+          <div show="#comment" class="col product-stuff-tab productBodyTabs py-2 fs-5 fw-normal">
+            Comment
+          </div>
+        </div>
+        <div class="product-stuff-body d-flex">
+          <div id="description" class="d-none bg-white m-2 p-2"></div>
+          <div id="specification" class="d-none bg-white m-2 p-2 w-100"></div>
+          <div id="comment" class="bg-white m-2 p-2 w-100">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="over-all rounded">
+                      <h5 class="text-center m-0 ff-osw">OverAll</h5>
+                      <h4 class="over-all-counter text-center fw-bold text-primary ff-osw">
+                        0
+                      </h4>
+                      <h6 class="text-center m-0 fs-6">
+                        (<span class="review-counter me-2">0</span>Reviews)
+                      </h6>
                     </div>
                   </div>
+                  <div class="col-6">
+                    <p class="ff-osw fw-bold lh-1" style="font-size: 1.1rem">
+                      Based on
+                      <span class="review-counter me-1">0</span> Reviews
+                    </p>
+                    <ul class="list-unstyled stars d-flex flex-column">
+                      <li class="d-flex">
+                        <p class="me-3 mb-0">5 Star</p>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <span class="ms-1 mb-0 star-counter">0</span>
+                      </li>
+                      <li class="d-flex">
+                        <p class="me-3 mb-0">4 Star</p>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <span class="ms-1 mb-0 star-counter">0</span>
+                      </li>
+                      <li class="d-flex">
+                        <p class="me-3 mb-0">3 Star</p>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <span class="ms-1 mb-0 star-counter">0</span>
+                      </li>
+                      <li class="d-flex">
+                        <p class="me-3 mb-0">2 Star</p>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <span class="ms-1 mb-0 star-counter">0</span>
+                      </li>
+                      <li class="d-flex">
+                        <p class="me-3 mb-0">1 Star</p>
+                        <i class="bi bi-star-fill me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <i class="bi bi-star me-1 text-warning"></i>
+                        <span class="ms-1 mb-0 star-counter">0</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-                <div class="col-lg-6"></div>
+              </div>
+              <div class="col-lg-6">
+                <div class="denNLog rounded-3 d-flex flex-column align-items-center justify-content-center">
+                  <img src="src/IMG/denied.png" class="w-25 mb-3" alt="">
+                  <h5 class="text-center fw-bold">Login to your account for submit comment!.</h5>
+                  <a target="_blank" href="/login">login | Register</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="src/JS/main.js"></script>
-  </body>
+  </div>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="src/JS/main.js"></script>
+</body>
+
 </html>

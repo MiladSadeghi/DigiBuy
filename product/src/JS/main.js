@@ -14,6 +14,7 @@ const productBodyTabs = document.querySelectorAll('.product-stuff-tab');
 const breadCrumb = document.querySelector('.breadcrumb');
 const body = document.querySelector("body");
 const addToCardBtn = document.querySelector('.add-to-card');
+const loginForSubmitComment = document.querySelector('.denNLog');
 let html = "";
 document.addEventListener("DOMContentLoaded", async () => {
   let product = await getProduct(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${productID}.json`);
@@ -21,6 +22,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   window.customElements.define("navbar-lg", navBarLg);
   body.insertAdjacentHTML("afterbegin", "<navbar-lg></navbar-lg>");
+  const navbar = document.querySelector("navbar-lg");
+  let basketClass = new basket();
+  basketClass.addToCardBtn = addToCardBtn;
+  basketClass.basketElementID = navbar.shadowRoot.querySelector("#basket");
+  basketClass.getUser();
 
   document.addEventListener("click", (e) => {
     const navbar = document.querySelector("navbar-lg");
@@ -47,11 +53,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     .join('');
   
   addToCardBtn.addEventListener("click", ()=> {
-    let basketClass = new basket();
-    const navbar = document.querySelector("navbar-lg");
-    basketClass.addToCardBtn = addToCardBtn;
-    basketClass.basketElementID = navbar.shadowRoot.querySelector("#basket");
-    basketClass.getUser();
     basketClass.addToBasket(product.productID);
   });
   
@@ -82,6 +83,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   specificationBody.innerHTML = html;
   
   breadCrumb.innerHTML += `<li class="breadcrumb-item text-capitalize"><a href="#">${product.productCategory}</a></li><li class="breadcrumb-item active text-capitalize">${product.productName}</li>`
+
+  if(basketClass.db !== "guest") {
+    loginForSubmitComment.classList.add("d-none");
+  }
 })
 
 async function getProduct(api) {
