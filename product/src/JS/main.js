@@ -15,7 +15,6 @@ const breadCrumb = document.querySelector('.breadcrumb');
 const body = document.querySelector("body");
 const addToCardBtn = document.querySelector('.add-to-card');
 let html = "";
-let product;
 document.addEventListener("DOMContentLoaded", async () => {
   let product = await getProduct(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${productID}.json`);
   console.log(product);
@@ -80,8 +79,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     ${product.productSpecification.length - 1 !== index ? "<hr>" : ""}`;
     }
   );
-
   specificationBody.innerHTML = html;
+  
   breadCrumb.innerHTML += `<li class="breadcrumb-item text-capitalize"><a href="#">${product.productCategory}</a></li><li class="breadcrumb-item active text-capitalize">${product.productName}</li>`
 })
 

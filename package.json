@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "liveServer": "live-server",
-    "sass": "sass --watch checkout/src/CSS/:checkout/src/CSS/",
+    "sass": "sass --watch product/src/CSS/:product/src/CSS/",
     "dev": "concurrently \"npm run liveServer\" \"npm run sass\""
   },
   "repository": {
@@ -20,6 +20,6 @@
   "homepage": "https://github.com/MiladSadeghi/DigiBuy#readme",
   "dependencies": {
     "bootstrap": "^5.1.3",
-    "bootstrap-icons": "^1.8.3"
+    "bootstrap-icons": "^1.9.0"
   }
 }
