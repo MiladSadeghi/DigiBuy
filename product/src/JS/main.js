@@ -22,12 +22,14 @@ const cmSubmitSuccessAlert = document.querySelector('#scSCtch');
 const cmSubmitDangerAlert = document.querySelector('#dnGCtch');
 const showCommentDiv = document.querySelector('.comments');
 const noCommentDiv = document.querySelector('.no-cm');
+const reviewCounter = document.querySelectorAll('.review-counter');
+const starCounter = document.querySelectorAll('.star-counter');
+const overAll = document.querySelector('.over-all-counter');
 let html = "";
 let rate = 5;
 document.addEventListener("DOMContentLoaded", async () => {
-  let product = await getProduct(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${productID}.json`);
+  let product = await (await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${productID}.json`)).json());
   let comments = await (await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/comments.json`)).json());
-  console.log(product);
   let users = await (await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users.json`)).json());
   
   window.customElements.define("navbar-lg", navBarLg);
@@ -118,9 +120,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   })
 
   let productComment = [];
+  let productStar = [0, 0, 0, 0, 0];
+  let productOverAll = [];
   if(comments) {
     for(let [key, value] of Object.entries(comments)) {
       if(value.productID === product.productID && value.show === true) {
+        reviewCounter.forEach((element, index) => {
+          element.innerHTML = Number(element.innerHTML) + 1;
+        });
+        productStar[value.rate - 1] += 1;
+        productOverAll.push(Number(value.rate));
         noCommentDiv.classList.add("d-none");
         productComment.push(`
           <div class="comment-item d-flex flex-column p-3">
@@ -129,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <div>
                   <h5 class="ff-osw mb-1 fs-6">${users[value.userID].userName}</h5>
                   <div class="d-flex">
-                    ${( ()=> {
+                    ${(()=> {
                       let string = "";
                       for (let index = 1; index <= 5; index++) {
                         if(index <= value.rate) {
@@ -148,23 +157,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         `);
       }
     }
+    productStar.reverse();
+    starCounter.forEach((element, index) => {
+      element.innerHTML = productStar[index];
+    })
+    overAll.innerHTML = (productOverAll.reduce((a, b) => a + b) / productOverAll.length).toFixed(1);
     showCommentDiv.insertAdjacentHTML("afterbegin", productComment.join(""));
   }
 })
-
-async function getProduct(api) {
-  let response = await fetch("https://cors.miladsdgh.ir/", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      urlToGet: api,
-      Params: "none"
-    })
-  });
-  return response.json();
-}
 
 function imageSlider() {
   const productPhotos = document.querySelectorAll('.images div')
