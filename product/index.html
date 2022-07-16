@@ -179,16 +179,47 @@
                       <div class="d-flex">
                         <p class="me-3">Your Rating:</p>
                         <ul class="rating list-unstyled d-flex">
-                          <li class="rating-item fill-star me-1" data-rate="1"></li>
-                          <li class="rating-item fill-star me-1" data-rate="2"></li>
-                          <li class="rating-item fill-star me-1" data-rate="3"></li>
-                          <li class="rating-item fill-star me-1" data-rate="4"></li>
-                          <li class="rating-item fill-star me-1" data-rate="5"></li>
+                          <li
+                            class="rating-item fill-star me-1"
+                            data-rate="1"
+                          ></li>
+                          <li
+                            class="rating-item fill-star me-1"
+                            data-rate="2"
+                          ></li>
+                          <li
+                            class="rating-item fill-star me-1"
+                            data-rate="3"
+                          ></li>
+                          <li
+                            class="rating-item fill-star me-1"
+                            data-rate="4"
+                          ></li>
+                          <li
+                            class="rating-item fill-star me-1"
+                            data-rate="5"
+                          ></li>
                         </ul>
                         <p class="ms-2">Outstanding</p>
                       </div>
-                      <textarea class="form-control mb-2" placeholder="Enter Message" id="comment-text" cols="30" rows="7" style="resize: none;"></textarea>
-                      <button class="btn btn-primary w-100" id="submit-comment">Submit Comment</button>
+                      <textarea
+                        required
+                        class="form-control mb-2"
+                        placeholder="Enter Message"
+                        id="comment-text"
+                        cols="30"
+                        rows="7"
+                        style="resize: none"
+                      ></textarea>
+                      <div class="alert alert-success d-none" id="scSCtch" role="alert">
+                        Thanks for the comment. After confirmation, it will be displayed
+                      </div>
+                      <div class="alert alert-secondary d-none" id="dnGCtch" role="alert">
+                        Sorry, something went wrong, try again later.
+                      </div>
+                      <button class="btn btn-primary w-100" id="submit-comment">
+                        Submit Comment
+                      </button>
                     </div>
                   </div>
                 </div>

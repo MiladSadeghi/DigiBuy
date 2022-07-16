@@ -16,8 +16,10 @@ const body = document.querySelector("body");
 const addToCardBtn = document.querySelector('.add-to-card');
 const loginForSubmitComment = document.querySelector('.denNLog');
 const ratingList = document.querySelector('.rating');
-const commentMessage = document.querySelector('.comment-text');
-const commentSubmit = document.querySelector('.comment-submit');
+const commentMessage = document.querySelector('#comment-text');
+const commentSubmitBtn = document.querySelector('#submit-comment');
+const cmSubmitSuccessAlert = document.querySelector('#scSCtch');
+const cmSubmitDangerAlert = document.querySelector('#dnGCtch');
 let html = "";
 let rate = 5;
 document.addEventListener("DOMContentLoaded", async () => {
@@ -98,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       let rateValue = event.target.getAttribute("data-rate");
       rate = rateValue;
       for (let index = 1; index <= 5; index++) {
-        if(index <= rate) {
+        if(index <= rateValue) {
           ratingList.innerHTML += `<li class="rating-item fill-star me-1" data-rate="${index}"></li>`;
         } else {
           ratingList.innerHTML += `<li class="rating-item empty-star me-1" data-rate="${index}"></li>`;
@@ -106,6 +108,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   })
+
+  commentSubmitBtn.addEventListener("click", (e)=> {
+    commentSubmit(product, basketClass);
+  })
+
 })
 
 async function getProduct(api) {
@@ -136,3 +143,43 @@ function imageSlider() {
   })
 }
 
+async function commentSubmit(product, basketClass) {
+  if(commentMessage.value.length > 5) {
+    commentSubmitBtn.classList.add("disabled");
+    commentSubmitBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
+    try {
+      let commentObj = {
+        productID: product.productID,
+        userID: basketClass.userID,
+        comment: commentMessage.value,
+        rate: rate,
+        commentID: basketClass.uniqueID(),
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        show: false,
+        checked: false
+      }
+      let response = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/comments/${commentObj.commentID}.json`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(commentObj)
+      });
+      if(response.ok) {
+        commentSubmitBtn.classList.remove("disabled");
+        commentSubmitBtn.innerHTML = `Submit Comment`;
+        cmSubmitSuccessAlert.classList.remove("d-none");
+
+        setTimeout(() => {
+          cmSubmitSuccessAlert.classList.add("d-none");
+        }, 5000);
+      }
+    } catch (error) {
+      cmSubmitDangerAlert.classList.remove("d-none");
+      setTimeout(() => {
+        cmSubmitDangerAlert.classList.add("d-none");
+      }, 5000);
+    }
+  }
+}
