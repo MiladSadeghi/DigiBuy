@@ -20,11 +20,15 @@ const commentMessage = document.querySelector('#comment-text');
 const commentSubmitBtn = document.querySelector('#submit-comment');
 const cmSubmitSuccessAlert = document.querySelector('#scSCtch');
 const cmSubmitDangerAlert = document.querySelector('#dnGCtch');
+const showCommentDiv = document.querySelector('.comments');
+const noCommentDiv = document.querySelector('.no-cm');
 let html = "";
 let rate = 5;
 document.addEventListener("DOMContentLoaded", async () => {
   let product = await getProduct(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${productID}.json`);
+  let comments = await (await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/comments.json`)).json());
   console.log(product);
+  let users = await (await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users.json`)).json());
   
   window.customElements.define("navbar-lg", navBarLg);
   body.insertAdjacentHTML("afterbegin", "<navbar-lg></navbar-lg>");
@@ -113,6 +117,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     commentSubmit(product, basketClass);
   })
 
+  let productComment = [];
+  if(comments) {
+    for(let [key, value] of Object.entries(comments)) {
+      if(value.productID === product.productID && value.show === true) {
+        noCommentDiv.classList.add("d-none");
+        productComment.push(`
+          <div class="comment-item d-flex flex-column p-3">
+            <div class="lh-1 mb-2 d-flex align-items-center">
+              <img width="60px" class="me-2" src="src/IMG/user-avatar.png">
+                <div>
+                  <h5 class="ff-osw mb-1 fs-6">${users[value.userID].userName}</h5>
+                  <div class="d-flex">
+                    ${( ()=> {
+                      let string = "";
+                      for (let index = 1; index <= 5; index++) {
+                        if(index <= value.rate) {
+                          string +=`<div class="fill-star me-1"></div>`;
+                        } else {
+                          string +=`<div class="empty-star me-1"></div>`;
+                        }
+                      }
+                      return string;
+                    })()}
+                  </div>
+              </div>
+            </div>
+            <p class="mb-0">${value.comment}</p>
+          </div>
+        `);
+      }
+    }
+    showCommentDiv.insertAdjacentHTML("afterbegin", productComment.join(""));
+  }
 })
 
 async function getProduct(api) {

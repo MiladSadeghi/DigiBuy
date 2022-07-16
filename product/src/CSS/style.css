@@ -132,6 +132,24 @@ p {
   cursor: pointer;
 }
 
+.comment-item {
+  background: #f1f6f7;
+}
+.comment-item img {
+  opacity: 0.6;
+}
+
+.no-cm {
+  min-height: 180px;
+  width: 100%;
+  background: #f1f6f7;
+}
+
+.comments {
+  display: grid;
+  grid-gap: 1rem;
+}
+
 @media screen and (max-width: 768px) {
   .photo-slide {
     width: 100%;
