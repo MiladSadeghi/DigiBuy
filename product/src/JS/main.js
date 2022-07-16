@@ -15,7 +15,11 @@ const breadCrumb = document.querySelector('.breadcrumb');
 const body = document.querySelector("body");
 const addToCardBtn = document.querySelector('.add-to-card');
 const loginForSubmitComment = document.querySelector('.denNLog');
+const ratingList = document.querySelector('.rating');
+const commentMessage = document.querySelector('.comment-text');
+const commentSubmit = document.querySelector('.comment-submit');
 let html = "";
+let rate = 5;
 document.addEventListener("DOMContentLoaded", async () => {
   let product = await getProduct(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product/${productID}.json`);
   console.log(product);
@@ -87,6 +91,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   if(basketClass.db !== "guest") {
     loginForSubmitComment.classList.add("d-none");
   }
+
+  ratingList.addEventListener("click", (event)=> {
+    if(event.target.classList.contains("rating-item")) {
+      ratingList.innerHTML = "";
+      let rateValue = event.target.getAttribute("data-rate");
+      rate = rateValue;
+      for (let index = 1; index <= 5; index++) {
+        if(index <= rate) {
+          ratingList.innerHTML += `<li class="rating-item fill-star me-1" data-rate="${index}"></li>`;
+        } else {
+          ratingList.innerHTML += `<li class="rating-item empty-star me-1" data-rate="${index}"></li>`;
+        }
+      }
+    }
+  })
 })
 
 async function getProduct(api) {

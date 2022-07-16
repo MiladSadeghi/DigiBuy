@@ -123,6 +123,22 @@ p {
   background: #f1f6f7;
 }
 
+.fill-star {
+  &::before {
+    content: "\F586";
+    font-family: "bootstrap-icons" !important;
+    color: #ffc107;
+  }
+}
+
+.empty-star {
+  &::before {
+    content: "\F588";
+    font-family: "bootstrap-icons" !important;
+    color: #ffc107;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .photo-slide {
     width: 100%;
