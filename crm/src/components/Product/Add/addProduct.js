@@ -163,6 +163,7 @@ class addProduct extends HTMLElement {
   }
 
   static removePhotoDiv = (event) => {
+    console.log(event.target);
     if (event.target.classList.contains("remove-photo-div")) {
       event.target.parentElement.remove();
     }

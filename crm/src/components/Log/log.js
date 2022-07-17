@@ -23,27 +23,31 @@ class logReview extends HTMLElement {
 
     let logBody = this.shadowRoot.querySelector(".main");
     let string = "";
+    let logArray = [];
     for(let [key, value] of Object.entries(logs)) {
-      console.log(value);
-      switch (value.logType) {
+      logArray.push(value);
+    }
+    logArray.sort((a,b) =>  new Date(b.time) - new Date(a.time));
+    logArray.forEach(item => {
+      switch (item.logType) {
         case "add product":
           string = `<div class="fw-bold log-item bg-success w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-success">
-            ${users[value.user[1]].userName} added a new product on ${value.category}/${value.subCategory} category with id <u>${value.productID}</u> in ${new Date(value.time).toLocaleTimeString()} of ${new Date(value.time).toLocaleDateString()}.
+            ${users[item.user[1]].userName} added a new product on ${item.category}/${item.subCategory} category with id <u>${item.productID}</u> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
         case "change product":
-          string = `<div class="fw-bold log-item bg-warning w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-warning">
-            ${users[value.user[1]].userName} edited a product on ${value.category}/${value.subCategory} category with id <u>${value.productID}</u> in ${new Date(value.time).toLocaleTimeString()} of ${new Date(value.time).toLocaleDateString()}.
+          string = `<div class="fw-bold log-item bg-warning w-100 py-2 px-3 mb-2 rounded bg-opacity-25" style="color: #664d03;">
+            ${users[item.user[1]].userName} edited a product on ${item.category}/${item.subCategory} category with id <u>${item.productID}</u> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
           case "delete product":
           string = `<div class="fw-bold log-item bg-danger w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-danger">
-            ${users[value.user[1]].userName} delete a product on ${value.category}/${value.subCategory} category with id <u>${value.productID}</u> in ${new Date(value.time).toLocaleTimeString()} of ${new Date(value.time).toLocaleDateString()}.
+            ${users[item.user[1]].userName} delete a product on ${item.category}/${item.subCategory} category with id <u>${item.productID}</u> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
       }
       logBody.innerHTML += string;
-    }
+    });
   }
 }
 

@@ -177,6 +177,9 @@ class editProduct extends HTMLElement {
     await this.crmProduct().then(result => { return result.json() }).then(result => { this.productObject = result });
     let product = await this.productObject[String(this.productIDAttribute)];
     this.loadProduct(product);
+    this.mainPhoto.addEventListener("click", (e) => addProduct.photoLink(e,this.shadowRoot ));
+    this.subPhotos.addEventListener("click", (e) => addProduct.photoLink(e, this.shadowRoot));
+    this.subPhotos.addEventListener("click", (e) => addProduct.removePhotoDiv(e));
     this.productAddForm.addEventListener("submit", (e) => this.submitForm(e, product));
     this.deleteProductBtn.addEventListener("click", (e) => this.deleteProduct(e, product));
   }
