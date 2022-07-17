@@ -29,20 +29,26 @@ class logReview extends HTMLElement {
     }
     logArray.sort((a,b) =>  new Date(b.time) - new Date(a.time));
     logArray.forEach(item => {
+      console.log(item);
       switch (item.logType) {
         case "add product":
           string = `<div class="fw-bold log-item bg-success w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-success">
-            ${users[item.user[1]].userName} added a new product on ${item.category}/${item.subCategory} category with id <u>${item.productID}</u> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+            ${users[item.user[1]].userName} added a new <a target="_blank" href="/product/?product=${item.productID}">product</a> on ${item.category}/${item.subCategory} category at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
         case "change product":
           string = `<div class="fw-bold log-item bg-warning w-100 py-2 px-3 mb-2 rounded bg-opacity-25" style="color: #664d03;">
-            ${users[item.user[1]].userName} edited a product on ${item.category}/${item.subCategory} category with id <u>${item.productID}</u> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+            ${users[item.user[1]].userName} edited this <a target="_blank" href="/product/?product=${item.productID}">product</a> on ${item.category}/${item.subCategory} category at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
           case "delete product":
           string = `<div class="fw-bold log-item bg-danger w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-danger">
-            ${users[item.user[1]].userName} delete a product on ${item.category}/${item.subCategory} category with id <u>${item.productID}</u> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+            ${users[item.user[1]].userName} delete this <a target="_blank" href="/product/?product=${item.productID}">product</a> on ${item.category}/${item.subCategory} category at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+          </div>`
+          break;
+          case "comment":
+          string = `<div class="fw-bold log-item bg-primary w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-primary">
+            ${users[item.user[1]].userName} ${item.logMessage} a comment on this <a target="_blank" href="/product/?product=${item.productID}">product</a> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
       }

@@ -93,7 +93,7 @@ class commentReview extends HTMLElement {
         time: new Date(),
         user: [crmUser.userName, crmUser.profileID]
       }
-      await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/${log.logID}.json`, {
+      await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/log/${log.logID}.json`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"

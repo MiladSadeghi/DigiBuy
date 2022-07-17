@@ -60,8 +60,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   productCategory.innerHTML = `<strong>Category: </strong><p class="ms-2 d-inline text-muted">${product.productCategory}, ${product.productSubCategory}</p>`;
 
+  console.log(product.productFeature);
   productFeatureList.innerHTML = product.productFeature.map((feature, index) =>
-    `<li class="${index !== 0 ? "mt-2" : ""}"><div class="d-flex"><p class="fw-bold fs-6">${feature.title}:</p><p class="ms-2 fs-6 text-muted">${feature.discription}</p></div></li>`)
+    `<li class="${index !== 0 ? "mt-2" : ""}"><div class="d-flex"><p class="fw-bold fs-6">${feature.title}:</p><p class="ms-2 fs-6 text-muted">${feature.discription || feature.description}</p></div></li>`)
     .join('');
   
   addToCardBtn.addEventListener("click", ()=> {
