@@ -6,6 +6,7 @@ class basket{
     this.db = db;
     this.date = new Date();
     this.date.setYear(2080);
+    this.guestID;
   }
 
   getUser() {
@@ -18,6 +19,7 @@ class basket{
       this.userID = userCookie.guestID;
       this.db = "guest"
     } else if(userCookie.userTable) {
+      this.guestID = userCookie.guestID;
       this.userID = userCookie.userTable;
       this.db = "users";
       this.moveGuestBasket(userCookie.guestID, userCookie.userTable);
@@ -27,7 +29,6 @@ class basket{
   async getBasket() {
     let response = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/${this.db}/${this.userID}/basket.json`);
     let data = await response.json();
-    console.log(data);
     if((data !== null? data.length:0) > 0) {
       this.basketElementID.innerHTML = `<i class="bi bi-cart"></i><span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle rnd-cb">
       <span class="visually-hidden">New alerts</span>
@@ -72,7 +73,6 @@ class basket{
   async moveGuestBasket(guestID, userID) {
     let getGuestDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${guestID}/basket.json`)).json();
     let getUserDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userID}/basket.json`)).json() || [];
-    console.log(getGuestDB, getUserDB);
     if(getGuestDB !== null) {
       getGuestDB.forEach((item)=> {
         if(!getUserDB.includes(item)) {

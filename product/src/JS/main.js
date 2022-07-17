@@ -52,6 +52,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if(basketClass.db === "guest") {
     productSide.innerHTML = "";
+    guestLastSeen(basketClass);
+  } else {
+    userLastSeen(basketClass);
   }
 
   if(users[basketClass.userID]?.dashboard.wishlist.includes(`${productID}`)) {
@@ -262,5 +265,37 @@ async function commentSubmit(product, basketClass) {
         cmSubmitDangerAlert.classList.add("d-none");
       }, 5000);
     }
+  }
+}
+
+async function guestLastSeen(basketClass) {
+  let getSeen = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${basketClass.userID}/dashboard/recentlyViewed
+  .json`)).json() || [];
+  if(getSeen) {
+    getSeen.push(productID);
+    await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${basketClass.userID}/recentlyViewed.json`, {
+      method: "PUT",
+      body: JSON.stringify(getSeen)
+    });
+  }
+}
+
+async function userLastSeen(basketClass) {
+  let getGuestDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${basketClass.guestID}/recentlyViewed.json`)).json();
+  let getUserDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${basketClass.userID}/dashboard/recentlyViewed.json`)).json() || [];
+  if(getGuestDB !== null) {
+    getGuestDB.forEach((item)=> {
+      if(!getUserDB.includes(item)) {
+        getUserDB.push(item);
+      }
+    })
+    let postUserDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${basketClass.userID}/dashboard/recentlyViewed.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(getUserDB)
+    });
+    let postGuestDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${basketClass.guestID}/recentlyViewed.json`, {method: "DELETE"})
   }
 }
