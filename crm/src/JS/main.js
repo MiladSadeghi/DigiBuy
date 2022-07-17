@@ -1,7 +1,8 @@
 import { addProduct } from "../components/Product/Add/addProduct.js";
 import { searchProduct } from "../components/Product/Search/searchProduct.js";
 import { editProduct } from "../components/Product/Edit/editProduct.js";
-import { logReview } from "../components/Log/log.js"
+import { logReview } from "../components/Log/log.js";
+import { commentReview } from "../components/Comment/comment.js";
 
 const dropDownMenu = document.querySelector('.dropdown');
 const dropDownMenuOption = document.querySelector('.option');
@@ -21,9 +22,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
   window.customElements.define('search-product', searchProduct);
   window.customElements.define('edit-product', editProduct);
   window.customElements.define('log-review', logReview);
-  dropDownMenu.addEventListener('click', (element) => {
+  window.customElements.define('comments-review', commentReview);
+  profileBtn.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
-    dropDownMenuOption.classList.toggle('active');
+    dropDownMenuOption.classList.toggle('d-none');
+    setTimeout(() => {
+      dropDownMenuOption.classList.toggle('active');
+    }, 50);
   })
   menuBtnArrow.forEach((element, index) => {
     element.addEventListener('click', (e) => {
@@ -54,6 +59,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
     switch (e.target.getAttribute("searching")) {
       case "product":
         mainBody.innerHTML = `<search-product></search-product>`;
+        break;
+    }
+    switch (e.target.getAttribute("review")) {
+      case "comment":
+        mainBody.innerHTML = `<comments-review></comments-review>`;
         break;
     }
   })

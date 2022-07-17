@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro" !important;
+  background: #d3dedc !important;
+}
+
+a,
+a:hover,
+a:visited,
+a:active,
+a:focus {
+  color: inherit;
+}
+
+.fill-star::before {
+  content: "\f586";
+  font-family: "bootstrap-icons" !important;
+  color: #ffc107;
+}
+
+.empty-star::before {
+  content: "\f588";
+  font-family: "bootstrap-icons" !important;
+  color: #ffc107;
+}
+
+.comment-box {
+  background: #f1f6f7;
+}
+.comment-box img {
+  opacity: 0.6;
+}
+
+.wait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 57px);
+  background: rgba(85, 85, 85, 0.322);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wait .bi {
+  font-size: 15rem;
+  animation: loading 3s linear infinite;
+}
+
+.no-cm {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(100vh - 57px);
+  background: rgba(85, 85, 85, 0.322);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
