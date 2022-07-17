@@ -25,6 +25,9 @@ const noCommentDiv = document.querySelector('.no-cm');
 const reviewCounter = document.querySelectorAll('.review-counter');
 const starCounter = document.querySelectorAll('.star-counter');
 const overAll = document.querySelector('.over-all-counter');
+const productSide = document.querySelector(".product-side");
+const productLike = document.querySelector('.like');
+const productUnLike = document.querySelector('.unlike');
 let html = "";
 let rate = 5;
 document.addEventListener("DOMContentLoaded", async () => {
@@ -46,6 +49,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       navbar.shadowRoot.querySelector(".navbar-sm").style.left = "-100%"
     }
   })
+
+  if(basketClass.db === "guest") {
+    productSide.innerHTML = "";
+  }
+
+  if(users[basketClass.userID]?.dashboard.wishlist.includes(`${productID}`)) {
+    productLike.classList.add("d-none");
+    productUnLike.classList.remove("d-none");
+  }
+
   productSubPhoto.innerHTML = product.productPhoto.map((photo, index) => `<div class="p-1 d-flex align-items-center justify-content-center"><img class="w-100" src="${photo.replace(`")`, "")}"></div>`).join("");
 
   mainPhoto.innerHTML = product.productPhoto.map(photo => `<img class="w-100" src="${photo.replace(`")`, "")}">`).join("");
@@ -60,7 +73,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   productCategory.innerHTML = `<strong>Category: </strong><p class="ms-2 d-inline text-muted">${product.productCategory}, ${product.productSubCategory}</p>`;
 
-  console.log(product.productFeature);
   productFeatureList.innerHTML = product.productFeature.map((feature, index) =>
     `<li class="${index !== 0 ? "mt-2" : ""}"><div class="d-flex"><p class="fw-bold fs-6">${feature.title}:</p><p class="ms-2 fs-6 text-muted">${feature.discription || feature.description}</p></div></li>`)
     .join('');
@@ -89,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   descriptionBody.innerHTML = product.productDescription;
   product.productSpecification.forEach((element, index) => {
-    html += `<div class="d-flex"><p class="fw-bold fs-6">${element.title}:</p><p class="ms-2 fs-6 text-muted">${element.discription}</p></div>
+    html += `<div class="d-flex"><p class="fw-bold fs-6">${element.title}:</p><p class="ms-2 fs-6 text-muted">${element.description || element.discription}</p></div>
     ${product.productSpecification.length - 1 !== index ? "<hr>" : ""}`;
     }
   );
@@ -162,8 +174,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     starCounter.forEach((element, index) => {
       element.innerHTML = productStar[index];
     })
-    overAll.innerHTML = (productOverAll.reduce((a, b) => a + b) / productOverAll.length).toFixed(1);
+    if (productOverAll.length !== 0) {
+      overAll.innerHTML = (productOverAll.reduce((a, b) => a + b) / productOverAll.length).toFixed(1);
+    }
     showCommentDiv.insertAdjacentHTML("afterbegin", productComment.join(""));
+
+    productLike.addEventListener("click", async (element)=> {
+        let getLikedProduct = await(await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${basketClass.userID}/dashboard/wishlist.json`)).json() || [];
+        if(!getLikedProduct.includes(`${basketClass.userID}`)) {
+          getLikedProduct.push(`${productID}`);
+          let postLikedProduct = (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${basketClass.userID}/dashboard/wishlist.json`, {
+            method: "PUT",
+            body: JSON.stringify(getLikedProduct)
+          }));
+          if(postLikedProduct) {
+            productUnLike.classList.remove("d-none");
+            productLike.classList.add("d-none");
+          }
+        }
+      })
+      productUnLike.addEventListener("click", async (element)=> {
+        let getLikedProduct = await(await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${basketClass.userID}/dashboard/wishlist.json`)).json() || [];
+        if(getLikedProduct.includes(`${productID}`)) {
+          getLikedProduct.splice(getLikedProduct.indexOf(`${productID}`),1);
+          let postLikedProduct = (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${basketClass.userID}/dashboard/wishlist.json`, {
+            method: "PUT",
+            body: JSON.stringify(getLikedProduct)
+          }));
+          if(postLikedProduct) {
+            productUnLike.classList.add("d-none");
+            productLike.classList.remove("d-none");
+          }
+        }
+    })
   }
 })
 
