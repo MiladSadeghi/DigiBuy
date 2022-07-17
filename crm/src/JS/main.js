@@ -1,6 +1,7 @@
 import { addProduct } from "../components/Product/Add/addProduct.js";
 import { searchProduct } from "../components/Product/Search/searchProduct.js";
 import { editProduct } from "../components/Product/Edit/editProduct.js";
+import { logReview } from "../components/Log/log.js"
 
 const dropDownMenu = document.querySelector('.dropdown');
 const dropDownMenuOption = document.querySelector('.option');
@@ -12,12 +13,14 @@ const profileBtnSpan = document.querySelector("#profile-name span");
 const showMenu = document.querySelector("#showMegaMenu");
 const category = document.querySelector(".category");
 const mainBody = document.querySelector(".main-body");
+const logBtn = document.querySelector("#log");
 let crmUser;
 document.addEventListener("DOMContentLoaded", (e) => {
   loadUser();
   window.customElements.define('add-product', addProduct);
   window.customElements.define('search-product', searchProduct);
   window.customElements.define('edit-product', editProduct);
+  window.customElements.define('log-review', logReview);
   dropDownMenu.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('active');
@@ -53,6 +56,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
         mainBody.innerHTML = `<search-product></search-product>`;
         break;
     }
+  })
+  logBtn.addEventListener("click", (e) => {
+    mainBody.innerHTML = `<log-review></log-review>`
   })
 })
 
