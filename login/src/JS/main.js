@@ -36,7 +36,7 @@ let currentStep = formSteps.findIndex(step => {
   return step.classList.contains("active")
 })
 
-const uniqeID = (() => {
+const uniqueID = (() => {
   var result = '';
   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var charactersLength = characters.length;
@@ -285,6 +285,7 @@ async function registerUser(input) {
     "email": input[1].value,
     "phoneNumber": input[2].value,
     "password": input[3].value,
+    "userID": uniqueID,
     "type": "user",
     "basket": "",
     "notification": "",
@@ -298,7 +299,7 @@ async function registerUser(input) {
   let createValidAccountTable = {
     "email": input[1].value,
     "phoneNumber": input[2].value,
-    "id": uniqeID
+    "id": uniqueID
   }
   loadingRegisterPage.removeAttribute('hidden');
   let checkValidAccount = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json`);
@@ -317,12 +318,12 @@ async function registerUser(input) {
     }
   }
 
-  let apiCreateUserPost = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${uniqeID}.json`;
+  let apiCreateUserPost = `https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${uniqueID}.json`;
   await sendDATA(apiCreateUserPost, createUserTable, "PATCH");
   let apiValidAccountPost = "https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/validAcc.json";
   await sendDATA(apiValidAccountPost, createValidAccountTable, "POST");
   toastBody.innerHTML = "You have successfully registered!";
-  document.cookie = `userTable=${uniqeID};path=/;expires=${date}`;
+  document.cookie = `userTable=${uniqueID};path=/;expires=${date}`;
   toastElList[0].classList.remove("text-bg-danger")
   toastElList[0].classList.add("text-bg-success")
   toastList[0].show();

@@ -3,8 +3,8 @@ import { searchProduct } from "../components/Product/Search/searchProduct.js";
 import { editProduct } from "../components/Product/Edit/editProduct.js";
 import { logReview } from "../components/Log/log.js";
 import { commentReview } from "../components/Comment/comment.js";
+import { userSearch } from "../components/User/Search/userSearch.js";
 
-const dropDownMenu = document.querySelector('.dropdown');
 const dropDownMenuOption = document.querySelector('.option');
 const menuBtnArrow = document.querySelectorAll(".show-list");
 const menuBtnDropDown = document.querySelectorAll(".dropdown1");
@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   window.customElements.define('edit-product', editProduct);
   window.customElements.define('log-review', logReview);
   window.customElements.define('comments-review', commentReview);
+  window.customElements.define('search-user', userSearch);
   profileBtn.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('d-none');
@@ -49,9 +50,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   category.addEventListener("click", (e) => {
     switch (e.target.getAttribute("add")) {
-      case "user":
-        userAdd();
-        break;
       case "product":
         mainBody.innerHTML = `<add-product></add-product>`;
         break;
@@ -59,6 +57,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
     switch (e.target.getAttribute("searching")) {
       case "product":
         mainBody.innerHTML = `<search-product></search-product>`;
+        break;
+        case "user":
+        mainBody.innerHTML = `<search-user></search-user>`;
         break;
     }
     switch (e.target.getAttribute("review")) {
