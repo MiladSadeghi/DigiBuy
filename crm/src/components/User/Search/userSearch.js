@@ -34,7 +34,7 @@ class userSearch extends HTMLElement {
     this.searchFilterValue = this.searchFilter.value;
   }
 
-  makeContentTemplate = (username, type) => {
+  makeContentTemplate = (username, type, id) => {
     return `
     <div class="card">
       <div class="p-2 d-flex align-items-center justify-content-center">
@@ -43,7 +43,7 @@ class userSearch extends HTMLElement {
       <div class="card-body">
         <h5 class="card-title">${username}</h5>
         <p class="card-text">User type: ${type}</p>
-        <button class="btn btn-primary text-white w-100">Watch Detail</button>
+        <button manage-user="${id}" class="btn btn-primary text-white w-100">Watch Detail</button>
       </div>
     </div>
     `
@@ -55,14 +55,14 @@ class userSearch extends HTMLElement {
       for (let [key, value] of Object.entries(users)) {
         if (value[this.searchFilterValue].toLowerCase() === inputValue.toLowerCase() ||
           value[this.searchFilterValue].toLowerCase().replace(/\s/g, '') === inputValue.toLowerCase()) {
-          this.content.innerHTML += this.makeContentTemplate(value.userName, value.type);
+          this.content.innerHTML += this.makeContentTemplate(value.userName, value.type, value.userID);
         }
       }
     } else {
       for (let [key, value] of Object.entries(users)) {
         if (value["userID"].toLowerCase().replace(/\s/g, '').includes(inputValue.toLowerCase()) || value["userID"].toLowerCase().includes(inputValue.toLowerCase()) || value["userName"].toLowerCase().replace(/\s/g, '').includes(inputValue.toLowerCase()) || value["userName"].toLowerCase().includes(inputValue.toLowerCase())
         ) {
-          this.content.innerHTML += this.makeContentTemplate(value.userName, value.type);
+          this.content.innerHTML += this.makeContentTemplate(value.userName, value.type, value.userID);
         }
       }
     }

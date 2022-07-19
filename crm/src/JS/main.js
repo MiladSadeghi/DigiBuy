@@ -4,6 +4,7 @@ import { editProduct } from "../components/Product/Edit/editProduct.js";
 import { logReview } from "../components/Log/log.js";
 import { commentReview } from "../components/Comment/comment.js";
 import { userSearch } from "../components/User/Search/userSearch.js";
+import { userManage } from "../components/User/Manage/userManage.js";
 
 const dropDownMenuOption = document.querySelector('.option');
 const menuBtnArrow = document.querySelectorAll(".show-list");
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   window.customElements.define('log-review', logReview);
   window.customElements.define('comments-review', commentReview);
   window.customElements.define('search-user', userSearch);
+  window.customElements.define('manage-user', userManage);
   profileBtn.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('d-none');
@@ -70,6 +72,18 @@ document.addEventListener("DOMContentLoaded", (e) => {
   })
   logBtn.addEventListener("click", (e) => {
     mainBody.innerHTML = `<log-review></log-review>`
+  })
+  
+  document.addEventListener("click", (e)=> {
+    if(e.target.tagName === "SEARCH-USER") {
+      e.target.shadowRoot.addEventListener("click", (e2) => {
+        e2.stopPropagation();
+        if(e2.target.hasAttribute("manage-user")) {
+          let userID = e2.target.getAttribute("manage-user");
+          mainBody.innerHTML = `<manage-user user-id="${userID}"></manage-user>`;
+        }
+      });
+    }
   })
 })
 
