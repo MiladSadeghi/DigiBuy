@@ -45,6 +45,7 @@ class userManage extends HTMLElement {
     this.reviewsDiv = this.shadowRoot.querySelector("#reviews");
     this.lastSeenDiv = this.shadowRoot.querySelector("#lastSeen");
     this.user;
+    this.products;
   }
 
   get userIDAttribute() {
@@ -53,6 +54,9 @@ class userManage extends HTMLElement {
 
   getUser = async () => {
     this.user = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${this.userIDAttribute}.json`)).json();
+  }
+  getProducts = async () => {
+    this.products = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product.json`)).json();
   }
 
   tabs = () => {
@@ -151,14 +155,52 @@ class userManage extends HTMLElement {
     })
   }
 
+  userOrders = (user, products) => {
+    console.log(user.dashboard["orders"]);
+    for (let [key, value] of Object.entries(user.dashboard["orders"])) {
+      this.userOrderDiv.innerHTML += `
+        <div class="order-item d-flex flex-column border-1 border rounded-3 p-2 mb-2">
+          <div class="order-item-header d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+              <p class="mb-0 text-muted">${value.orderDate}</p>
+              <i class="bi bi-dot mx-2"></i>
+              <p class="mb-0"><span class="text-muted">Product ID</span> ${value.orderID}</p>
+              <i class="bi bi-dot mx-2"></i>
+              <p class="mb-0"><span class="text-muted">Price</span> $${this.moneyFormat(value.orderTotal)}</p>
+              <i class="bi bi-dot mx-2"></i>
+              <p class="mb-0"><span class="text-muted text-capitalize">status</span> ${value.orderStatus}</p>
+            </div>
+          </div>
+          <div class="d-flex gx-2 mt-3">
+            ${(() => {
+              let string = "";
+              value.orderProduct.forEach((item, index) => {
+                console.log(this.products[item.product].productPhoto[0].replace(`")`, ""));
+                string += `<div class="position-relative me-3"><img width="80px" src="${this.products[item.product].productPhoto[0].replace(`")`, "")}" alt="">
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">${item.quantity}<span class="visually-hidden">unread messages</span></span>
+                </div>`;
+              });
+              return string;
+            })()}
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  moneyFormat = (num) => {
+    return Number(num).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  }
+
   async connectedCallback() {
     await this.getUser();
+    await this.getProducts();
     this.loading.classList.add("d-none");
     this.tabs();
     this.tabElements[0].innerHTML = this.user.userName;
     this.userSetting(this.user);
-    console.log(this.user);
-    
+    this.userOrders(this.user, this.products);
+    console.log(this.user, this.products);
   }
 }
 
