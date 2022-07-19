@@ -1,3 +1,5 @@
+import { crmUser } from "/crm/src/JS/main.js";
+import { addProduct } from "../../Product/Add/addProduct.js";
 const template = document.createElement("template");
 template.innerHTML = `<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css" />
@@ -120,9 +122,10 @@ class userManage extends HTMLElement {
     this.shadowRoot.querySelector("#usId").value = user.userID;
 
     this.shadowRoot.querySelector("#submit-user-information").addEventListener("click", async (e) => {
+      e.stopPropagation();
       e.target.classList.toggle("disabled");
       e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...`;
-      let user = {
+      let userObj = {
         userName: userNameInput.value,
         email: userEmailInput.value,
         password: userPasswordInput.value,
@@ -134,9 +137,24 @@ class userManage extends HTMLElement {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(userObj)
       });
       if(sendUser.ok) {
+        let log = {
+          userID: user.userID,
+          userName: user.userName,
+          logID: addProduct.uniqueID(),
+          logType: "update user",
+          time: new Date(),
+          user: [crmUser.userName, crmUser.userID]
+        };
+        await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/log/${log.logID}.json`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(log)
+        });
         alert("User Updated");
         e.target.classList.toggle("disabled");
         e.target.innerHTML = "Update";
@@ -169,7 +187,6 @@ class userManage extends HTMLElement {
               ${(() => {
                 let string = "";
                 value.orderProduct.forEach((item, index) => {
-                  console.log(this.products[item.product].productPhoto[0].replace(`")`, ""));
                   string += `<div class="position-relative me-3"><img width="80px" src="${this.products[item.product].productPhoto[0].replace(`")`, "")}" alt="">
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">${item.quantity}<span class="visually-hidden">unread messages</span></span>
                   </div>`;
@@ -225,14 +242,32 @@ class userManage extends HTMLElement {
       let showCheckboxes = this.shadowRoot.querySelectorAll(".show-comment");
       showCheckboxes.forEach((item, index) => {
         item.addEventListener("change", async (e)=> {
-          let send = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/comments/${e.target.getAttribute("comment-id")}.json`, {
+          var commentID = e.target.getAttribute("comment-id");
+          var element = e.target;
+          let send = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/comments/${commentID}.json`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({show: e.target.checked})
+            body: JSON.stringify({show: e.target.checked, checked: true})
           });
           if(send.ok) {
+            let log = {
+              commentID: commentID,
+              logMessage: (element.checked? "Show": "Hide"),
+              productID: this.comments[commentID].productID,
+              logID: addProduct.uniqueID(),
+              logType: "update comment",
+              time: new Date(),
+              user: [crmUser.userName, crmUser.userID]
+            };
+            await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/log/${log.logID}.json`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(log)
+            });
             alert("Comment Updated");
             await this.getComments();
             this.userComments();
@@ -255,7 +290,6 @@ class userManage extends HTMLElement {
     this.userSetting(this.user);
     this.userOrders(this.user, this.products);
     this.userComments(this.user, this.products);
-    console.log(this.user, this.products);
   }
 }
 

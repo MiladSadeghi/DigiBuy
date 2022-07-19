@@ -29,7 +29,6 @@ class logReview extends HTMLElement {
     }
     logArray.sort((a,b) =>  new Date(b.time) - new Date(a.time));
     logArray.forEach(item => {
-      console.log(item);
       switch (item.logType) {
         case "add product":
           string = `<div class="fw-bold log-item bg-success w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-success">
@@ -41,15 +40,25 @@ class logReview extends HTMLElement {
             ${users[item.user[1]].userName} edited this <a target="_blank" href="/product/?product=${item.productID}">product</a> on ${item.category}/${item.subCategory} category at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
-          case "delete product":
+        case "delete product":
           string = `<div class="fw-bold log-item bg-danger w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-danger">
-            ${users[item.user[1]].userName} delete this <a target="_blank" href="/product/?product=${item.productID}">product</a> on ${item.category}/${item.subCategory} category at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+          ${users[item.user[1]].userName} delete this <a target="_blank" href="/product/?product=${item.productID}">product</a> on ${item.category}/${item.subCategory} category at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
           break;
-          case "comment":
+        case "comment":
           string = `<div class="fw-bold log-item bg-primary w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-primary">
             ${users[item.user[1]].userName} ${item.logMessage} a comment on this <a target="_blank" href="/product/?product=${item.productID}">product</a> in ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`
+          break;
+        case "update user":
+          string = `<div class="fw-bold log-item bg-secondary w-100 py-2 px-3 mb-2 rounded bg-opacity-25 text-secondary">
+          ${users[item.user[1]].userName} update a user with id ${item.userID} and username ${item.userName} at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+          </div>`;
+          break;
+        case "update comment":
+          string = `<div class="fw-bold log-item w-100 py-2 px-3 mb-2 rounded bg-opacity-25" style="background: rgba(13, 202, 240, 0.5); color: rgba(7, 137, 163, 1);">
+          ${users[item.user[1]].userName} put a comment status as ${item.logMessage} with id ${item.logID} on this <a href="/product/?product=${item.productID}">product</a> at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+          </div>`;
           break;
       }
       logBody.innerHTML += string;
