@@ -52,6 +52,10 @@ a:focus {
   cursor: pointer;
 }
 
+.comment-box {
+  background: #f1f6f7;
+}
+
 @keyframes loading {
   0% {
     transform: rotate(0deg);
