@@ -60,6 +60,11 @@ class logReview extends HTMLElement {
           ${users[item.user[1]].userName} put a comment status as ${item.logMessage} with id ${item.logID} on this <a href="/product/?product=${item.productID}">product</a> at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
           </div>`;
           break;
+        case "update order":
+          string = `<div class="fw-bold log-item w-100 py-2 px-3 mb-2 rounded bg-opacity-25" style="background: rgba(199,21,133, 0.3); color: rgba(199,21,133, 1);">
+          ${users[item.user[1]].userName} update order with id ${item.orderID} at ${new Date(item.time).toLocaleTimeString()} of ${new Date(item.time).toLocaleDateString()}.
+          </div>`;
+          break;
       }
       logBody.innerHTML += string;
     });

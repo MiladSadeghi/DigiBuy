@@ -6,6 +6,7 @@ import { commentReview } from "../components/Comment/comment.js";
 import { userSearch } from "../components/User/Search/userSearch.js";
 import { userManage } from "../components/User/Manage/userManage.js";
 import { orderSearch } from "../components/Order/Search/orderSearch.js";
+import { orderManage } from "../components/Order/Manage/orderManage.js";
 
 const dropDownMenuOption = document.querySelector('.option');
 const menuBtnArrow = document.querySelectorAll(".show-list");
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   window.customElements.define('search-user', userSearch);
   window.customElements.define('manage-user', userManage);
   window.customElements.define('search-order', orderSearch);
+  window.customElements.define('manage-order', orderManage);
   profileBtn.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('d-none');
@@ -86,6 +88,16 @@ document.addEventListener("DOMContentLoaded", (e) => {
         if(e2.target.hasAttribute("manage-user")) {
           let userID = e2.target.getAttribute("manage-user");
           mainBody.innerHTML = `<manage-user user-id="${userID}"></manage-user>`;
+        }
+      });
+    }
+    if(e.target.tagName === "SEARCH-ORDER") {
+      e.target.shadowRoot.addEventListener("click", (e2) => {
+        console.log(e2.target);
+        e2.stopPropagation();
+        if(e2.target.hasAttribute("manage-order")) {
+          let orderID = e2.target.getAttribute("manage-order");
+          mainBody.innerHTML = `<manage-order order-id="${orderID}"></manage-order>`;
         }
       });
     }
