@@ -209,6 +209,7 @@ async function submitOrder() {
     orderStatus: "pending",
     orderTotal: prices,
     orderID: basketClass.uniqueID(),
+    checked: false,
   }
   let quantity = document.querySelectorAll(".quantity");
   let orderProduct = [];

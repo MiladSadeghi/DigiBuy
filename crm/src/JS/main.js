@@ -5,6 +5,7 @@ import { logReview } from "../components/Log/log.js";
 import { commentReview } from "../components/Comment/comment.js";
 import { userSearch } from "../components/User/Search/userSearch.js";
 import { userManage } from "../components/User/Manage/userManage.js";
+import { orderSearch } from "../components/Order/Search/orderSearch.js";
 
 const dropDownMenuOption = document.querySelector('.option');
 const menuBtnArrow = document.querySelectorAll(".show-list");
@@ -26,6 +27,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   window.customElements.define('comments-review', commentReview);
   window.customElements.define('search-user', userSearch);
   window.customElements.define('manage-user', userManage);
+  window.customElements.define('search-order', orderSearch);
   profileBtn.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('d-none');
@@ -60,8 +62,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
       case "product":
         mainBody.innerHTML = `<search-product></search-product>`;
         break;
-        case "user":
+      case "user":
         mainBody.innerHTML = `<search-user></search-user>`;
+        break;
+      case "order":
+        mainBody.innerHTML = `<search-order></search-order>`;
         break;
     }
     switch (e.target.getAttribute("review")) {
