@@ -22,10 +22,9 @@ template.innerHTML = `
               <div class="position-absolute right-arrow d-none"></div>
               <div class="position-absolute left-arrow d-none"></div>
             </div>
-            <hr>
             <div class="by-category"></div>
-            <hr>
             <div class="by-tag"></div>
+            <div style="height: 80px;" class="ntf bg-secondary d-none d-flex align-items-center justify-content-center">Nothing Found</div>
           </div>
         </div>
       </div>
@@ -52,77 +51,77 @@ template.innerHTML = `
       <label for="digital">Digital</label>
       <input type="radio" id="digital" name="accordion">
       <div class="content">
-        <a href="#">Accessories</a>
-        <a href="#">Mobile Phone</a>
-        <a href="#">Smart Watch</a>
-        <a href="#">Computer</a>
-        <a href="#">Laptop</a>
+        <a href="/search/?q=productCategory&value=Accessories" target="_blank">Accessories</a>
+        <a href="/search/?q=productCategory&value=Mobile Phone" target="_blank">Mobile Phone</a>
+        <a href="/search/?q=productCategory&value=Smart watch" target="_blank">Smart Watch</a>
+        <a href="/search/?q=productCategory&value=Computer" target="_blank">Computer</a>
+        <a href="/search/?q=productCategory&value=Laptop" target="_blank">Laptop</a>
       </div>
     </li>
     <li>
       <label for="clothing">Clothing</label>
       <input type="radio" id="clothing" name="accordion">
       <div class="content">
-        <a href="#">Men</a>
-        <a href="#">Women</a>
-        <a href="#">Kids</a>
+        <a href="/search/?q=productCategory&value=Men" target="_blank">Men</a>
+        <a href="/search/?q=productCategory&value=Women" target="_blank">Women</a>
+        <a href="/search/?q=productCategory&value=Kids" target="_blank">Kids</a>
       </div>
     </li>
     <li>
       <label for="health">Health</label>
       <input type="radio" id="health" name="accordion">
       <div class="content">
-        <a href="#">Shampoo</a>
-        <a href="#">Skin Cream</a>
-        <a href="#">Skin Care</a>
-        <a href="#">Face Makeup</a>
-        <a href="#">Hairdressing</a>
+        <a href="/search/?q=productCategory&value=Shampoo" target="_blank">Shampoo</a>
+        <a href="/search/?q=productCategory&value=Skin cream" target="_blank">Skin Cream</a>
+        <a href="/search/?q=productCategory&value=Skin care" target="_blank">Skin Care</a>
+        <a href="/search/?q=productCategory&value=Face makeup" target="_blank">Face Makeup</a>
+        <a href="/search/?q=productCategory&value=Hairdressing" target="_blank">Hairdressing</a>
       </div>
     </li>
     <li>
       <label for="sport">Sport</label>
       <input type="radio" id="sport" name="accordion">
       <div class="content">
-        <a href="#">Sports Watch</a>
-        <a href="#">Bodybuilding</a>
-        <a href="#">Mountaineering</a>
-        <a href="#">Sporting Goods</a>
+        <a href="/search/?q=productCategory&value=Sports watch" target="_blank">Sports Watch</a>
+        <a href="/search/?q=productCategory&value=Bodybuilding" target="_blank">Bodybuilding</a>
+        <a href="/search/?q=productCategory&value=Mountaineering" target="_blank">Mountaineering</a>
+        <a href="/search/?q=productCategory&value=Sporting goods" target="_blank">Sporting Goods</a>
       </div>
     </li>
     <li>
       <label for="travel">Travel</label>
       <input type="radio" id="travel" name="accordion">
       <div class="content">
-        <a href="#">Suitcases and Bags</a>
-        <a href="#">Tent</a>
-        <a href="#">Underlay</a>
+        <a href="/search/?q=productCategory&value=Suitcases and bags" target="_blank">Suitcases and Bags</a>
+        <a href="/search/?q=productCategory&value=Tent" target="_blank">Tent</a>
+        <a href="/search/?q=productCategory&value=Underlay" target="_blank">Underlay</a>
       </div>
     </li>
     <li>
       <label for="home">Home</label>
       <input type="radio" id="home" name="accordion">
       <div class="content">
-        <a href="#">Video and Audio</a>
-        <a href="#">Decorative</a>
-        <a href="#">Electrical Appliances</a>
-        <a href="#">Kitchen</a>
-        <a href="#">Detergents</a>
+        <a href="/search/?q=productCategory&value=Video and Audio" target="_blank">Video and Audio</a>
+        <a href="/search/?q=productCategory&value=Decorative" target="_blank">Decorative</a>
+        <a href="/search/?q=productCategory&value=Electrical appliances" target="_blank">Electrical Appliances</a>
+        <a href="/search/?q=productCategory&value=Kitchen" target="_blank">Kitchen</a>
+        <a href="/search/?q=productCategory&value=Detergents" target="_blank">Detergents</a>
       </div>
     </li>
     <li>
       <label for="book">Book</label>
       <input type="radio" id="book" name="accordion">
       <div class="content">
-        <a href="#">Book and Magazine</a>
-        <a href="#">Audio Book</a>
+        <a href="/search/?q=productCategory&value=Book and magazine" target="_blank">Book and Magazine</a>
+        <a href="/search/?q=productCategory&value=Audio book" target="_blank">Audio Book</a>
       </div>
     </li>
     <li>
       <label for="stationery">Stationery</label>
       <input type="radio" id="stationery" name="accordion">
       <div class="content">
-        <a href="#">Stationery</a>
-        <a href="#">Painting Tools</a>
+        <a href="/search/?q=productCategory&value=Stationery" target="_blank">Stationery</a>
+        <a href="/search/?q=productCategory&value=Painting tools" target="_blank">Painting Tools</a>
       </div>
     </li>
   </ul>
@@ -215,12 +214,19 @@ class navBarLg extends HTMLElement {
     this.bgLoad = this.shadowRoot.querySelector(".bg-load");
     this.navbarSm = this.shadowRoot.querySelector(".navbar-sm");
     this.basket = this.shadowRoot.querySelector("#basket");
+    this.searchBarNotFound = this.shadowRoot.querySelector(".ntf");
     this.user;
     this.product;
   }
 
   searching = (e) => {
     let searchValue = e.target.value.toLowerCase();
+    if(searchValue === "") {
+      this.searchResult.classList.add("d-none");
+      return
+    } else {
+      this.searchResult.classList.remove("d-none");
+    }
     let [tagProduct, tagProduct1, subCategoryProduct, productElement, subProductElement, tagProductElement] = [[], [], [], [], [], [], []];
     for (let [key, value] of Object.entries(this.product)) {
       for (let [tag] in value.productTags) {
@@ -234,17 +240,30 @@ class navBarLg extends HTMLElement {
       }
     }
     tagProduct.forEach(item => {
-      productElement.push(`<div class="d-flex py-2 px-1 me-3 rounded justify-content-center search-product border border-secondary-50"><img class="me-2" src="${item.productPhoto[0]}"><div class="m-auto"><p>${item.productName}</p></div></div>`)
+      productElement.push(`<a target="_blank" href="/product/?product=${item.productID}" class="d-flex py-2 px-1 me-3 rounded justify-content-center search-product border border-secondary-50"><img class="me-2" src="${item.productPhoto[0]}"><div class="m-auto"><p>${item.productName}</p></div></a>`)
     })
     subCategoryProduct.forEach(item => {
-      subProductElement.push(`<a href="#" class="mt-2 b-c"><h5 class="fs-6 mb-1">${item[0]}</h5><p>In <span class="text-primary">${item[1]}</span> Category</p></a>`)
+      subProductElement.push(`<a href="/search/?q=productSubCategory&value=${item[0]}" target="_blank" class="mt-2 b-c"><h5 class="fs-6 mb-1">${item[0]}</h5><p>In <span class="text-primary">${item[1]}</span> Category</p></a>`)
     })
-    tagProduct1.slice(0, 4).forEach((item) => {
-      tagProductElement.push(`<div class="py-3"><a href="#" class="fs-6 d-flex align-items-center justify-content-center"><i class="text-muted bi bi-search me-2"></i>${item}<i class="ms-auto bi bi-arrow-up-left"></i></a></div>`)
+    tagProduct1.slice(0, 4).forEach((item, index) => {
+      tagProductElement.push(`<a href="/search/?q=productTags&value=${item}" target="_blank" class="${index === 0? "pb-3":"py-3"} fs-6 d-flex align-items-center justify-content-center"><i class="text-muted bi bi-search me-2"></i>${item}<i class="ms-auto bi bi-arrow-up-left"></i></a>`)
     })
     this.searchResultList.children[0].innerHTML = productElement.join("");
-    this.searchByCategory.innerHTML = subProductElement.join("");
-    this.searchByTag.innerHTML = tagProductElement.join("");
+    console.log(subProductElement);
+    if(subProductElement.length !== 0) {
+      this.searchByCategory.innerHTML = `<hr>${subProductElement.join("")}`;
+      this.searchByCategory.classList.remove("d-none");
+    } else {
+      this.searchByCategory.classList.add("d-none");
+    }
+
+    if(tagProductElement.length !== 0) {
+      this.searchByTag.innerHTML = `<hr>${tagProductElement.join("")}`;
+      this.searchByTag.classList.remove("d-none");
+    } else {
+      this.searchByTag.classList.add("d-none");
+    }
+
     this.searchResult.style.paddingTop = "55px";
     this.searchResult.classList.remove("mh-100");
     if (this.searchByResult.scrollWidth === this.searchByResult.clientWidth) {
@@ -263,7 +282,7 @@ class navBarLg extends HTMLElement {
       }
       this.user = await userData.json();
       this.user["profileID"] = userCookie.userTable;
-      this.showUserBtn.innerHTML = `<a id="/login" type="button" href="#" class="yes-login btn btn-primary py-0"><i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i><input class="position-absolute user-menu-btn" type="checkbox"></a><div class="rounded position-absolute user-menu d-none border-primary fw-bold"><a href="#" class="d-flex p-4 rounded">${this.user.userName} <i class="ms-auto bi bi-chevron-right"></i></a><hr class="m-0">
+      this.showUserBtn.innerHTML = `<a id="login" href="/login" class="yes-login btn btn-primary py-0"><i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i><input class="position-absolute user-menu-btn" type="checkbox"></a><div class="rounded position-absolute user-menu d-none border-primary fw-bold"><a href="#" class="d-flex p-4 rounded">${this.user.userName} <i class="ms-auto bi bi-chevron-right"></i></a><hr class="m-0">
       <a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-bag me-2"></i>Orders</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-suit-heart me-2"></i></i>Favorites</a><a href="#" class="d-flex px-3 py-3 btm-b"><i class="bi bi-chat-left-text me-2"></i>Comments</a><a href="#" class="log-out-btn d-flex px-3 py-3 rounded-bottom"><i class="bi bi-box-arrow-left me-2"></i>Log Out</a></div></div>`;
       this.shadowRoot.querySelector(".user-menu-btn").addEventListener("change", (e) => {
         let userMenu = this.shadowRoot.querySelector(".user-menu");
@@ -297,17 +316,20 @@ class navBarLg extends HTMLElement {
     basketClass.getBasket();
     this.searchBox.addEventListener("click", (e) => {
       this.searchBar.style.opacity = "1";
+      this.searchBar.style.visibility = "visible";
       this.searchBarInput.focus();
     })
     this.shadowRoot.addEventListener("click", (e) => {
       if (e.target !== this.searchBarInput) {
         this.searchBar.style.opacity = "0";
+        this.searchBar.style.visibility = "hidden";
       }
       if(!this.navbarSm.contains(e.target)) {
         this.navbarSm.style.left = "-100%";
       }
     }, true)
-    this.searchBarInput.addEventListener("keyup", this.searching)
+    this.searchBarInput.addEventListener("keyup", this.searching);
+    this.searchBarInput.addEventListener("click", this.searching);
     this.searchByResult.addEventListener("scroll", (e) => {
       if (this.searchByResult.scrollLeft !== 0) {
         this.leftArrow.classList.remove("d-none");
@@ -332,73 +354,73 @@ class navBarLg extends HTMLElement {
       element.addEventListener("mouseenter", (event) => {
         switch (event.target.getAttribute("category")) {
           case "digital":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Digital Product <i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=digital" target="_blank" class="category-head d-flex align-items-center">All Digital Product <i class="bi bi-chevron-right ms-2"></i></a>
           <ul class="list-unstyled mt-2 category-list">
-          <li class="fw-bold position-relative"><a class="" href="#">Accessories</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Mobile Phone</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Smart Watch</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Computer</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Laptop</a></li>
+          <li class="fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Accessories" target="_blank">Accessories</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Mobile phone" target="_blank">Mobile Phone</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Smart watch" target="_blank">Smart Watch</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Computer" target="_blank">Computer</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Laptop" target="_blank">Laptop</a></li>
           </ul>`;
             break;
           case "clothing":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Clothing Products<i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=clothing" target="_blank" class="category-head d-flex align-items-center">All Clothing Products<i class="bi bi-chevron-right ms-2"></i></a>
           <ul class="list-unstyled mt-2 category-list">
-          <li class="mt-3 fw-bold position-relative"><a href="#">Men</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Women</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Kids</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Men" target="_blank">Men</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Women" target="_blank">Women</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Kids" target="_blank">Kids</a></li>
           </ul>`;
             break;
           case "health":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Health Products<i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=health" target="_blank" class="category-head d-flex align-items-center">All Health Products<i class="bi bi-chevron-right ms-2"></i></a>
           <ul class="list-unstyled mt-2 category-list">
-          <li class="mt-3 fw-bold position-relative"><a href="#">Shampoo</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Skin Cream</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Oral Health</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Skin Care</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Face Makeup</a></li>
-          <li class="mt-3 fw-bold position-relative"><a href="#">Hairdressing</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Shampoo" target="_blank">Shampoo</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Skin cream" target="_blank">Skin Cream</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Oral health" target="_blank">Oral Health</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Skin care" target="_blank">Skin Care</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Face makeup" target="_blank">Face Makeup</a></li>
+          <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Hairdressing" target="_blank">Hairdressing</a></li>
           </ul>`;
             break;
           case "sport":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Sports Products<i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=sport" target="_blank" class="category-head d-flex align-items-center">All Sports Products<i class="bi bi-chevron-right ms-2"></i></a>
             <ul class="list-unstyled mt-2 category-list">
-            <li class="mt-3 fw-bold position-relative"><a href="#">Sports Watch</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Bodybuilding</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Mountaineering</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Sporting Goods</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Sports watch" target="_blank">Sports Watch</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Bodybuilding" target="_blank">Bodybuilding</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Mountaineering" target="_blank">Mountaineering</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Sporting goods" target="_blank">Sporting Goods</a></li>
             </ul>`;
             break;
           case "travel":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Travel Products<i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=travel" target="_blank" class="category-head d-flex align-items-center">All Travel Products<i class="bi bi-chevron-right ms-2"></i></a>
             <ul class="list-unstyled mt-2 category-list">
-            <li class="mt-3 fw-bold position-relative"><a href="#">Suitcases and Bags</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Tent</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Underlay</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Suitcases and Bags" target="_blank">Suitcases and Bags</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Tent" target="_blank">Tent</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Underlay" target="_blank">Underlay</a></li>
             </ul>`;
             break;
           case "home":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Home Products<i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=home" target="_blank" class="category-head d-flex align-items-center">All Home Products<i class="bi bi-chevron-right ms-2"></i></a>
             <ul class="list-unstyled mt-2 category-list">
-            <li class="mt-3 fw-bold position-relative"><a href="#">Video and Audio</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Decorative</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Electrical Appliances</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Kitchen</a></li>
-            <li class="mt-3 fw-bold position-relative"><a href="#">Detergents</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Video and Audio" target="_blank">Video and Audio</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Decorative" target="_blank">Decorative</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Electrical appliances" target="_blank">Electrical Appliances</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Kitchen" target="_blank">Kitchen</a></li>
+            <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Detergents" target="_blank">Detergents</a></li>
             </ul>`;
             break;
           case "book":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Books Products<i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=book" target="_blank" class="category-head d-flex align-items-center">All Books Products<i class="bi bi-chevron-right ms-2"></i></a>
               <ul class="list-unstyled mt-2 category-list">
-              <li class="mt-3 fw-bold position-relative"><a href="#">Book and Magazine</a></li>
-              <li class="mt-3 fw-bold position-relative"><a href="#">Audio Book</a></li>
+              <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Book and magazine" target="_blank">Book and Magazine</a></li>
+              <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Audio book" target="_blank">Audio Book</a></li>
               </ul>`;
             break;
           case "stationery":
-            this.categoryResult.innerHTML = `<a href="#" class="category-head d-flex align-items-center">All Stationery Products<i class="bi bi-chevron-right ms-2"></i></a>
+            this.categoryResult.innerHTML = `<a href="/search/?q=productCategory&value=stationery" target="_blank" class="category-head d-flex align-items-center">All Stationery Products<i class="bi bi-chevron-right ms-2"></i></a>
               <ul class="list-unstyled mt-2 category-list">
-              <li class="mt-3 fw-bold position-relative"><a href="#">Stationery</a></li>
-              <li class="mt-3 fw-bold position-relative"><a href="#">Painting Tools</a></li>
+              <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Stationery" target="_blank">Stationery</a></li>
+              <li class="mt-3 fw-bold position-relative"><a href="/search/?q=productSubCategory&value=Painting tools" target="_blank">Painting Tools</a></li>
               </ul>`;
             break;
         }
@@ -407,8 +429,7 @@ class navBarLg extends HTMLElement {
     this.categoryHead.addEventListener("mouseenter", (e) => {
       this.subCategory.classList.toggle("d-none", this.subCategory.classList.contains("d-flex"));
       this.subCategory.classList.toggle("d-flex", this.subCategory.classList.contains("d-none"));
-      this.bgLoad.style.height = document.documentElement.getBoundingClientRect().height + "px";
-      
+      this.bgLoad.style.height = `calc(100vh - ${this.shadowRoot.querySelector("nav").getBoundingClientRect().height}px)`;
       this.bgLoad.style.opacity = 1;
       this.bgLoad.style.zIndex = 1;
     }, false);

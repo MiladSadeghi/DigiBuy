@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   })
   navbar.shadowRoot.querySelector(".searchbar-div").innerHTML = value;
-  navbar.shadowRoot.querySelector(".searchbar-input input").value = value;
   products = await (await fetch("https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product.json")).json();
   showContent();
 })
@@ -25,7 +24,6 @@ function showContent() {
   let contentItem = [];
   for (let key in products) {
     let item = [products[key]].filter((item) => {
-      console.log(item);
       return item[query] === value || item[query].includes(value);
     })
     product = product.concat(item);
