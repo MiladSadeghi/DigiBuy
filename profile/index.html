@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,9 +16,10 @@
   <link rel="stylesheet" href="src/CSS/style.css">
   <title>DigiBuy - Profile</title>
 </head>
+
 <body>
   <div class="container">
-    <div class="row py-5">
+    <div class="row mt-4">
       <div class="col-lg-3">
         <div class="border-1 border rounded p-3 pb-0">
           <div class="user-stuff">
@@ -54,7 +56,7 @@
         </div>
       </div>
       <div class="col-lg-9">
-        <div class="home-content">
+        <div class="home-content d-none">
           <div class="my-order-status border-1 border px-4 pb-2 pt-2 rounded-3">
             <h4 class="mb-5 mt-4 fw-bold">My Orders</h4>
             <div class="d-flex justify-content-between w-100">
@@ -63,7 +65,8 @@
                   <img src="src/IMG/status-processing.png" alt="">
                 </div>
                 <div class="d-flex justify-content-center flex-column ms-3">
-                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="progress-counter">0</span> Order</div>
+                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="progress-counter">0</span>
+                    Order</div>
                   <h6 class="fs-09">Progress</h6>
                 </div>
               </div>
@@ -72,7 +75,8 @@
                   <img src="src/IMG/status-delivered.png" alt="">
                 </div>
                 <div class="d-flex justify-content-center flex-column ms-3">
-                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="delivery-counter">0</span> Order</div>
+                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="delivery-counter">0</span>
+                    Order</div>
                   <h6 class="fs-09">Delivered</h6>
                 </div>
               </div>
@@ -81,7 +85,8 @@
                   <img src="src/IMG/status-returned.png" alt="">
                 </div>
                 <div class="d-flex justify-content-center flex-column ms-3">
-                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="canceled-counter">0</span> Order</div>
+                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="canceled-counter">0</span>
+                    Order</div>
                   <h6 class="fs-09">Canceled</h6>
                 </div>
               </div>
@@ -100,10 +105,41 @@
             </div>
           </div>
         </div>
+        <div class="orders-content rounded-3 border border-1">
+          <div class="order-header ">
+            <div class="px-4 pb-2 pt-2">
+              <h5 class="mb-4 mt-4 fw-bold">Order History</h5>
+            </div>
+            <div class="histroy-tabs d-flex">
+              <p class="p-2 mb-0 fw-bold me-2 active-order-tab">Progress <span
+                  class=" badge text-white progress-counter">0</span></p>
+              <p class="p-2 mb-0 text-muted fw-bold me-2">Delivered <span
+                  class=" badge bg-secondary text-white delivery-counter">0</span></p>
+              <p class="p-2 mb-0 text-muted fw-bold me-2">Canceled <span
+                  class=" badge bg-secondary text-white canceled-counter">0</span></p>
+            </div>
+            <hr class="my-1">
+          </div>
+          <div class="order-body">
+            <div class="empty-order d-flex align-items-center justify-content-center flex-column my-5 py-4 d-none">
+              <div>
+                <img src="src/IMG/order-empty.png" alt="">
+              </div>
+              <div>
+                <h6 class="fs-6">You have no orders yet</h6>
+              </div>
+            </div>
+            <div id="progress-content" class="p-3 d-none"></div>
+            <div id="delivered-content" class="p-3"></div>
+            <div id="canceled-content" class="p-3 d-none"></div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
   </div>
   <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="src/JS/main.js"></script>
 </body>
+
 </html>

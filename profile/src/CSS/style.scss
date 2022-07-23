@@ -75,3 +75,28 @@ a {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+
+.active-order-tab {
+  color: rgb(13, 110, 235);
+  position: relative;
+  span {
+    background: rgb(13, 110, 235) !important;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 6px;
+    bottom: -4px;
+    left: 0;
+    display: flex;
+    width: 100%;
+    background: rgb(13, 110, 235);
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+}
+
+.dot {
+  font-family: bootstrap-icons !important;
+  margin: 0 .1rem;
+}

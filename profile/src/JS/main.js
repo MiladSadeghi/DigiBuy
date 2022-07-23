@@ -1,12 +1,15 @@
 import { navBarLg } from "/src/components/navbar.js";
 const body = document.querySelector("body");
-const progressOrderCounter = document.querySelector(".progress-counter");
-const deliveryOrderCounter = document.querySelector(".delivery-counter");
-const cancelOrderCounter = document.querySelector(".canceled-counter");
+const progressOrderCounter = document.querySelectorAll(".progress-counter");
+const deliveryOrderCounter = document.querySelectorAll(".delivery-counter");
+const cancelOrderCounter = document.querySelectorAll(".canceled-counter");
 const userName = document.querySelector(".user-name");
 const userPhone = document.querySelector(".user-phone");
 const list = document.querySelector(".list");
 const mostOrder = document.querySelector(".most-orders");
+const progressOrderDiv = document.querySelector("#progress-content");
+const deliveredOrderDiv = document.querySelector("#delivered-content");
+const canceledOrderDiv = document.querySelector("#canceled-content");
 let user, products, orders, progress, delivery, cancel;
 let userCookie = Object.fromEntries(document.cookie.split('; ').map(v => v.split(/=(.*)/s).map(decodeURIComponent)));
 
@@ -24,10 +27,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   orders = await getOrders();
   userName.innerHTML = user.userName;
   userPhone.innerHTML = user.phoneNumber;
-
-  progressOrderCounter.innerHTML = `${Object.keys(progress).length}`;
-  deliveryOrderCounter.innerHTML = `${Object.keys(delivery).length}`;
-  cancelOrderCounter.innerHTML = `${Object.keys(cancel).length}`;
+  console.log(progress);
+  [...progressOrderCounter].map(i => i.innerHTML = Object.keys(progress).length);
+  [...deliveryOrderCounter].map(i => i.innerHTML = Object.keys(delivery).length);
+  [...cancelOrderCounter].map(i => i.innerHTML = Object.keys(cancel).length);
   console.log(user, products, orders);
 
   user.dashboard.wishlist.forEach((product, index) => {
@@ -46,11 +49,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   })
 
   let productInOrder = [];
-  console.log(productInOrder);
   for (let [key, value] of Object.entries(orders)) {
     value.orderProduct.forEach((item2, index2) => {
       productInOrder.push(item2.product);
     });
+    if(value.orderStatus === 'progress' || value.orderStatus === 'pending') {
+      progressOrderDiv.insertAdjacentHTML("beforeend", orderTemplate(value, `bi-hourglass-split text-warning`, "Progress"));
+    } else if (value.orderStatus === 'delivery') {
+      deliveredOrderDiv.insertAdjacentHTML("beforeend", orderTemplate(value, `bi-check-circle-fill text-success`, "Delivered"));
+    } else if (value.orderStatus === 'canceled') {
+      canceledOrderDiv.insertAdjacentHTML("beforeend", orderTemplate(value, `bi-dash-circle-fill text-danger`, "Canceled"));
+    }
   }
 
   let mostOrderProduct = productInOrder.reduce((acc, el, i, arr) => {
@@ -71,6 +80,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       </a>
     `;
   })
+
+  
 })
 
 async function getUser() {
@@ -82,7 +93,7 @@ async function getProducts() {
 async function getOrders() {
   let orders = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/orders.json`)).json();
   let userOrder = Object.fromEntries(Object.entries(orders).filter(([key, value]) => value.userID === userCookie.userTable));
-  progress = Object.fromEntries(Object.entries(orders).filter(([key, value]) => value.orderStatus === ("progress") || ("pending")));
+  progress = Object.fromEntries(Object.entries(orders).filter(([key, value]) => (value.orderStatus === "progress") || (value.orderStatus === "pending")));
   delivery = Object.fromEntries(Object.entries(orders).filter(([key, value]) => value.orderStatus === "delivery"));
   cancel = Object.fromEntries(Object.entries(orders).filter(([key, value]) => value.orderStatus === "canceled"));
   return userOrder
@@ -90,4 +101,40 @@ async function getOrders() {
 
 function moneyFormat(num) {
   return Number(num).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+function orderTemplate(value, icon, statusString) {
+  let array = [];
+  let date = new Date(value.orderDate);
+  array.push(`<div class="progress-Item border border-1 rounded-3 mb-3">
+  <div class="p-4 pb-0">
+    <div class="d-flex">
+      <i class="bi ${icon} me-2"></i>
+      <h5 class="fw-bold">${statusString}</h5>
+    </div>
+    <div class="d-flex">
+      <p class="mb-0 fs-09 text-muted">${date.getDay()} ${date.toLocaleString('en-us', { month: 'long' })}
+        ${date.getFullYear()}</p>
+      <span class="dot text-muted">&#xF309;</span>
+      <p class="fs-09 text-muted">Order code <span class="text-black">${value.orderID}</span></p>
+      <span class="dot text-muted">&#xF309;</span>
+      <p class="fs-09 text-muted">Price <span class="text-black">$${moneyFormat(value.orderTotal)}</span></p>
+    </div>
+  </div>
+  <hr class="my-0">
+  <div class="d-flex px-4 py-3">
+    ${(() => {
+    let product = [];
+    value.orderProduct.forEach((item, index) => {
+    product.push(`
+    <div>
+      <img width="110px" src="${products[item.product].productPhoto[0]}" alt="">
+    </div>
+    `);
+    })
+    return product.join("");
+    })()}
+  </div>
+</div>`);
+return array.join("");
 }
