@@ -10,6 +10,7 @@ const mostOrder = document.querySelector(".most-orders");
 const progressOrderDiv = document.querySelector("#progress-content");
 const deliveredOrderDiv = document.querySelector("#delivered-content");
 const canceledOrderDiv = document.querySelector("#canceled-content");
+const productHistoryTabs = document.querySelectorAll(".history-tab");
 let user, products, orders, progress, delivery, cancel;
 let userCookie = Object.fromEntries(document.cookie.split('; ').map(v => v.split(/=(.*)/s).map(decodeURIComponent)));
 
@@ -27,10 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   orders = await getOrders();
   userName.innerHTML = user.userName;
   userPhone.innerHTML = user.phoneNumber;
-  console.log(progress);
-  [...progressOrderCounter].map(i => i.innerHTML = Object.keys(progress).length);
-  [...deliveryOrderCounter].map(i => i.innerHTML = Object.keys(delivery).length);
-  [...cancelOrderCounter].map(i => i.innerHTML = Object.keys(cancel).length);
+  [...progressOrderCounter].map(i => {i.innerHTML = Object.keys(progress).length;(Object.keys(progress).length <= 0? progressOrderDiv.innerHTML = emptyOrderTemplate(): false)});
+  [...deliveryOrderCounter].map(i => {i.innerHTML = Object.keys(delivery).length;(Object.keys(delivery).length <= 0? deliveredOrderDiv.innerHTML = emptyOrderTemplate(): false)});
+  [...cancelOrderCounter].map(i => {i.innerHTML = Object.keys(cancel).length;(Object.keys(cancel).length <= 0? canceledOrderDiv.innerHTML = emptyOrderTemplate(): false)});
   console.log(user, products, orders);
 
   user.dashboard.wishlist.forEach((product, index) => {
@@ -55,9 +55,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     if(value.orderStatus === 'progress' || value.orderStatus === 'pending') {
       progressOrderDiv.insertAdjacentHTML("beforeend", orderTemplate(value, `bi-hourglass-split text-warning`, "Progress"));
-    } else if (value.orderStatus === 'delivery') {
+    } else {
+    } if (value.orderStatus === 'delivery') {
       deliveredOrderDiv.insertAdjacentHTML("beforeend", orderTemplate(value, `bi-check-circle-fill text-success`, "Delivered"));
-    } else if (value.orderStatus === 'canceled') {
+    } if (value.orderStatus === 'canceled') {
       canceledOrderDiv.insertAdjacentHTML("beforeend", orderTemplate(value, `bi-dash-circle-fill text-danger`, "Canceled"));
     }
   }
@@ -81,7 +82,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     `;
   })
 
-  
+  productHistoryTabs.forEach((element, index) => {
+    element.addEventListener("click", (e) => {
+      let body = document.querySelector(e.target.getAttribute("show"));
+      if (body.classList.contains("d-none")) {
+        element.classList.add("active-order-tab")
+        body.classList.remove("d-none");
+        productHistoryTabs.forEach((element, index) => {
+          if (element !== e.target) {
+            document.querySelector(element.getAttribute("show")).classList.add("d-none");
+            element.classList.remove("active-order-tab");
+          }
+        })
+      }
+    }, true)
+  });
 })
 
 async function getUser() {
@@ -137,4 +152,15 @@ function orderTemplate(value, icon, statusString) {
   </div>
 </div>`);
 return array.join("");
+}
+
+function emptyOrderTemplate() {
+  return `<div class="empty-order d-flex align-items-center justify-content-center flex-column my-5 py-4">
+  <div>
+    <img src="src/IMG/order-empty.png" alt="">
+  </div>
+  <div>
+    <h6 class="fs-6">You have no orders yet</h6>
+  </div>
+</div>`
 }

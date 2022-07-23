@@ -110,27 +110,19 @@
             <div class="px-4 pb-2 pt-2">
               <h5 class="mb-4 mt-4 fw-bold">Order History</h5>
             </div>
-            <div class="histroy-tabs d-flex">
-              <p class="p-2 mb-0 fw-bold me-2 active-order-tab">Progress <span
-                  class=" badge text-white progress-counter">0</span></p>
-              <p class="p-2 mb-0 text-muted fw-bold me-2">Delivered <span
-                  class=" badge bg-secondary text-white delivery-counter">0</span></p>
-              <p class="p-2 mb-0 text-muted fw-bold me-2">Canceled <span
-                  class=" badge bg-secondary text-white canceled-counter">0</span></p>
+            <div class="d-flex">
+              <p class="p-2 mb-0 text-muted fw-bold me-2 active-order-tab history-tab" show="#progress-content" role="button">Progress <span
+                  class="badge bg-secondary text-white progress-counter">0</span></p>
+              <p class="p-2 mb-0 text-muted fw-bold me-2 history-tab" show="#delivered-content" role="button">Delivered <span
+                  class="badge bg-secondary text-white delivery-counter">0</span></p>
+              <p class="p-2 mb-0 text-muted fw-bold me-2 history-tab" show="#canceled-content" role="button">Canceled <span
+                  class="badge bg-secondary text-white canceled-counter">0</span></p>
             </div>
             <hr class="my-1">
           </div>
           <div class="order-body">
-            <div class="empty-order d-flex align-items-center justify-content-center flex-column my-5 py-4 d-none">
-              <div>
-                <img src="src/IMG/order-empty.png" alt="">
-              </div>
-              <div>
-                <h6 class="fs-6">You have no orders yet</h6>
-              </div>
-            </div>
-            <div id="progress-content" class="p-3 d-none"></div>
-            <div id="delivered-content" class="p-3"></div>
+            <div id="progress-content" class="p-3"></div>
+            <div id="delivered-content" class="p-3 d-none"></div>
             <div id="canceled-content" class="p-3 d-none"></div>
           </div>
         </div>
