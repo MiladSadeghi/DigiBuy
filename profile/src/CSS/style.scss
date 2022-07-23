@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Oswald:wght@200;300;400;500;600;700&family=Righteous&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro" !important;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+  }
+}
+
+.user-name {
+  font-size: 0.9rem;
+}
+
+.user-phone {
+  font-size: .8rem;
+}
+
+.bi {
+  &::before {
+    font-weight: bold !important;
+  }
+}
+
+.fs-09 {
+  font-size: 0.9rem;
+}
+
+.list, .most-orders {
+  height: auto;
+  width: auto;
+  overflow-x: scroll;
+  display: flex;
+  scroll-behavior: smooth;
+  align-content: center;
+  // position: absolute;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.list-item, .most-order-item {
+  width: 190px;
+}
+
+.roll-middle {
+  margin: 0 2rem;
+  &::after {
+    width: 1px;
+    height: 100%;
+    right: -2px;
+    position: absolute;
+    content: '';
+    background-color: #e0e0e0;
+  }
+}
+
+.list-title, .most-orders-title {
+  width: 190px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}

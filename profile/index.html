@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An open source project, which can be used as shopping website with CRM.">
+  <meta name="keywords" content="shopping, shop, crm">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="English">
+  <meta name="author" content="Milad Sadeghi">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="src/CSS/style.css">
+  <title>DigiBuy - Profile</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row py-5">
+      <div class="col-lg-3">
+        <div class="border-1 border rounded p-3 pb-0">
+          <div class="user-stuff">
+            <div class="profile d-flex">
+              <img width="55px" src="../product/src/IMG/user-avatar.png" alt="">
+              <div class="d-flex flex-column justify-content-center ps-2">
+                <h5 class="user-name mb-0"></h5>
+                <p class="user-phone mb-0 text-muted"></p>
+              </div>
+              <i class="bi bi-pencil-square text-primary ms-auto my-auto"></i>
+            </div>
+            <hr class="mb-0">
+            <div class="home d-flex align-items-center mb-4 mt-3">
+              <i class="bi bi-house-door fs-5 me-3"></i>
+              <p class="mb-0">Home</p>
+            </div>
+            <div class="orders d-flex align-items-center my-4">
+              <i class="bi bi-bag me-3 fs-5"></i>
+              <p class="mb-0">Orders</p>
+            </div>
+            <div class="favorite d-flex align-items-center my-4">
+              <i class="bi bi-suit-heart me-3 fs-5"></i>
+              <p class="mb-0">Favorites</p>
+            </div>
+            <div class="comments d-flex align-items-center my-4">
+              <i class="bi bi-chat-left-text me-3"></i>
+              <p class="mb-0">Comments</p>
+            </div>
+            <div class="last-seen d-flex align-items-center my-4">
+              <i class="bi bi-clock-history me-3"></i>
+              <p class="mb-0">Last Seen</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="home-content">
+          <div class="my-order-status border-1 border px-4 pb-2 pt-2 rounded-3">
+            <h4 class="mb-5 mt-4 fw-bold">My Orders</h4>
+            <div class="d-flex justify-content-between w-100">
+              <div class="pending-order d-flex">
+                <div>
+                  <img src="src/IMG/status-processing.png" alt="">
+                </div>
+                <div class="d-flex justify-content-center flex-column ms-3">
+                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="progress-counter">0</span> Order</div>
+                  <h6 class="fs-09">Progress</h6>
+                </div>
+              </div>
+              <div class="delivered-order d-flex">
+                <div>
+                  <img src="src/IMG/status-delivered.png" alt="">
+                </div>
+                <div class="d-flex justify-content-center flex-column ms-3">
+                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="delivery-counter">0</span> Order</div>
+                  <h6 class="fs-09">Delivered</h6>
+                </div>
+              </div>
+              <div class="canceled-order d-flex">
+                <div>
+                  <img src="src/IMG/status-returned.png" alt="">
+                </div>
+                <div class="d-flex justify-content-center flex-column ms-3">
+                  <div class="fs-09 fw-bold fs-5" style="line-height: 3rem;"><span class="canceled-counter">0</span> Order</div>
+                  <h6 class="fs-09">Canceled</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="my-list border-1 border px-4 pb-2 pt-2 rounded-3 mt-3">
+            <h4 class="mb-5 mt-4 fw-bold">Your Liked</h4>
+            <div class="position-relative">
+              <div class="list"></div>
+            </div>
+          </div>
+          <div class="most-orders-product border-1 border px-4 pb-2 pt-2 rounded-3 mt-3">
+            <h4 class="mb-5 mt-4 fw-bold">Your Most Buy</h4>
+            <div class="position-relative">
+              <div class="most-orders"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="src/JS/main.js"></script>
+</body>
+</html>

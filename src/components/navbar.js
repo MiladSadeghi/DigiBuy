@@ -249,7 +249,6 @@ class navBarLg extends HTMLElement {
       tagProductElement.push(`<a href="/search/?q=productTags&value=${item}" target="_blank" class="${index === 0? "pb-3":"py-3"} fs-6 d-flex align-items-center justify-content-center"><i class="text-muted bi bi-search me-2"></i>${item}<i class="ms-auto bi bi-arrow-up-left"></i></a>`)
     })
     this.searchResultList.children[0].innerHTML = productElement.join("");
-    console.log(subProductElement);
     if(subProductElement.length !== 0) {
       this.searchByCategory.innerHTML = `<hr>${subProductElement.join("")}`;
       this.searchByCategory.classList.remove("d-none");
@@ -309,7 +308,6 @@ class navBarLg extends HTMLElement {
   async connectedCallback() {
     await this.loadUser();
     await this.loadProduct();
-    console.log(this.user);
     let basketClass = new basket((this.user?.userName || null), this.basket);
     basketClass.getUser();
     basketClass.basketElementID = this.shadowRoot.querySelector("#basket");
