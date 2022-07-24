@@ -1,4 +1,5 @@
 import { navBarLg } from "/src/components/navbar.js";
+import { basket } from "/src/components/basket.js";
 const body = document.querySelector("body");
 const progressOrderCounter = document.querySelectorAll(".progress-counter");
 const deliveryOrderCounter = document.querySelectorAll(".delivery-counter");
@@ -11,6 +12,7 @@ const progressOrderDiv = document.querySelector("#progress-content");
 const deliveredOrderDiv = document.querySelector("#delivered-content");
 const canceledOrderDiv = document.querySelector("#canceled-content");
 const productHistoryTabs = document.querySelectorAll(".history-tab");
+const favoritesList = document.querySelector(".favorites-body");
 let user, products, orders, progress, delivery, cancel;
 let userCookie = Object.fromEntries(document.cookie.split('; ').map(v => v.split(/=(.*)/s).map(decodeURIComponent)));
 
@@ -26,6 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   user = await getUser();
   products = await getProducts();
   orders = await getOrders();
+  let basketClass = new basket();
+  basketClass.basketElementID = navbar.shadowRoot.querySelector("#basket");
+  basketClass.getUser();
   userName.innerHTML = user.userName;
   userPhone.innerHTML = user.phoneNumber;
   [...progressOrderCounter].map(i => {i.innerHTML = Object.keys(progress).length;(Object.keys(progress).length <= 0? progressOrderDiv.innerHTML = emptyOrderTemplate(): false)});
@@ -97,6 +102,47 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }, true)
   });
+
+  user.dashboard.wishlist.forEach((item, index) => {
+    favoritesList.innerHTML += `
+      <div class="card border-0 h-100 liked-product rounded-0">
+        <div class="d-flex align-items-center justify-content-center">
+          <img width="200px" src="${products[item].productPhoto[0]}" class="">
+        </div>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">${products[item].productName}</h5>
+          <p class="card-text fs-5 mx-1 mb-0 mt-auto text-primary fw-bold">$${moneyFormat(products[item].productPrice)}</p>
+          <div class="d-flex mt-2">
+            <button liked-id="${products[item].productID}" type="button" class="btn btn-outline-secondary me-2 d-flex fw-bold"><i
+              class="bi bi-trash-fill me-2"></i> Remove</button>
+            <button add-basket-id="${item}" type="button" class="btn btn-outline-danger w-100 d-flex justify-content-center align-items-center fw-bold"><i
+              class="bi bi-cart-check-fill me-2"></i> Add to basket</button>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  favoritesList.addEventListener("click", async (e) => {
+    if (e.target.hasAttribute("liked-id")) {
+      let likedID = e.target.getAttribute("liked-id");
+      user.dashboard.wishlist.splice(user.dashboard.wishlist.indexOf(likedID), 1);
+      let send = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${user.userID}.json`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+      if(send.ok) {
+        alert("Product removed from favorites");
+        e.target.parentElement.parentElement.parentElement.remove();
+      }
+    } else if (e.target.hasAttribute("add-basket-id")) {
+      basketClass.addToCardBtn = e.target;
+      await basketClass.addToBasket(e.target.getAttribute("add-basket-id"));
+      e.target.innerHTML = `<i class="bi bi-cart-check-fill me-2"></i> Add to basket`;
+    }
+  })
 })
 
 async function getUser() {
