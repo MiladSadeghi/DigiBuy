@@ -13,7 +13,8 @@ const deliveredOrderDiv = document.querySelector("#delivered-content");
 const canceledOrderDiv = document.querySelector("#canceled-content");
 const productHistoryTabs = document.querySelectorAll(".history-tab");
 const favoritesList = document.querySelector(".favorites-body");
-let user, products, orders, progress, delivery, cancel;
+const commentsList = document.querySelector(".comments-body");
+let user, products, orders, progress, delivery, cancel, comments;
 let userCookie = Object.fromEntries(document.cookie.split('; ').map(v => v.split(/=(.*)/s).map(decodeURIComponent)));
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   user = await getUser();
   products = await getProducts();
   orders = await getOrders();
+  comments = await getComments();
   let basketClass = new basket();
   basketClass.basketElementID = navbar.shadowRoot.querySelector("#basket");
   basketClass.getUser();
@@ -36,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   [...progressOrderCounter].map(i => {i.innerHTML = Object.keys(progress).length;(Object.keys(progress).length <= 0? progressOrderDiv.innerHTML = emptyOrderTemplate(): false)});
   [...deliveryOrderCounter].map(i => {i.innerHTML = Object.keys(delivery).length;(Object.keys(delivery).length <= 0? deliveredOrderDiv.innerHTML = emptyOrderTemplate(): false)});
   [...cancelOrderCounter].map(i => {i.innerHTML = Object.keys(cancel).length;(Object.keys(cancel).length <= 0? canceledOrderDiv.innerHTML = emptyOrderTemplate(): false)});
-  console.log(user, products, orders);
+  console.log(user, products, orders, comments);
 
   user.dashboard.wishlist.forEach((product, index) => {
     list.innerHTML += `
@@ -143,6 +145,62 @@ document.addEventListener("DOMContentLoaded", async () => {
       e.target.innerHTML = `<i class="bi bi-cart-check-fill me-2"></i> Add to basket`;
     }
   })
+
+  for (let [key, value] of Object.entries(comments)) {
+    if(value.userID === user.userID) {
+      console.log(products[value.productID]);
+      commentsList.innerHTML += `
+        <div class="comment-item p-4">
+          <div class="d-flex">
+            <div>
+              <a href="/product/?product=${value.productID}" target="_blank">
+                <img width="130px" src="${products[value.productID].productPhoto[0]}" alt="">
+              </a>
+            </div>
+            <div class="d-flex flex-column w-100 h-100">
+              <div class="d-flex justify-content-between w-100 h-100">
+                <div class="d-flex">
+                  ${(() => {
+                    let string = "";
+                    for (let i = 1; i <= 5; i++) {
+                      if (i <= value.rate) {
+                        string += `<i class="bi bi-star-fill text-warning"></i>`;
+                      } else {
+                        string += `<i class="bi bi-star text-warning"></i>`;
+                      }
+                    }
+                    return string
+                  })()}
+                </div>
+                <div>
+                  ${(() => {
+                    if(value.checked == true && value.show == true) {
+                      return `
+                        <div class="show-status bg-success text-success border-1 border border-success bg-opacity-25 rounded px-2">Confirm</div>
+                      `;
+                    }
+                    if(value.checked == true && value.show == false) {
+                      return `
+                        <div class="show-status bg-danger text-danger border-1 border border-danger bg-opacity-25 rounded px-2">Rejected</div>
+                      `;
+                    } 
+                    if(value.checked == false && value.show == false) {
+                      return `
+                        <div class="show-status bg-success text-warning border-1 border border-warning bg-opacity-25 rounded px-2">Pending</div>
+                      `;
+                    } 
+                  })()}
+                </div>
+              </div>
+              <div>
+                <p class="w-100">${value.comment}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
 })
 
 async function getUser() {
@@ -163,7 +221,9 @@ async function getOrders() {
 function moneyFormat(num) {
   return Number(num).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
-
+async function getComments() {
+  return await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/comments.json`)).json();
+}
 function orderTemplate(value, icon, statusString) {
   let array = [];
   let date = new Date(value.orderDate);
