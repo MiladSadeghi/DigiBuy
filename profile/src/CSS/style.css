@@ -95,7 +95,7 @@ a:hover {
   margin: 0 0.1rem;
 }
 
-.favorites-body {
+.favorites-body, .last-seen-body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
