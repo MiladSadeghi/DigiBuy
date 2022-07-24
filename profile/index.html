@@ -20,7 +20,7 @@
 <body>
   <div class="container">
     <div class="row mt-4">
-      <div class="col-lg-3">
+      <div class="col-xl-3 col-12">
         <div class="border-1 border rounded p-3 pb-0">
           <div class="user-stuff">
             <div class="profile d-flex">
@@ -32,33 +32,33 @@
               <i class="bi bi-pencil-square text-primary ms-auto my-auto"></i>
             </div>
             <hr class="mb-0">
-            <div class="home d-flex align-items-center mb-4 mt-3">
+            <div class="home d-flex align-items-center mb-4 mt-3 side-tab active-side-tab" show="#home">
               <i class="bi bi-house-door fs-5 me-3"></i>
               <p class="mb-0">Home</p>
             </div>
-            <div class="orders d-flex align-items-center my-4">
+            <div class="orders d-flex align-items-center my-4 side-tab" show="#orders">
               <i class="bi bi-bag me-3 fs-5"></i>
               <p class="mb-0">Orders</p>
             </div>
-            <div class="favorite d-flex align-items-center my-4">
+            <div class="favorite d-flex align-items-center my-4 side-tab" show="#liked">
               <i class="bi bi-suit-heart me-3 fs-5"></i>
               <p class="mb-0">Favorites</p>
             </div>
-            <div class="comments d-flex align-items-center my-4">
+            <div class="comments d-flex align-items-center my-4 side-tab" show="#comments">
               <i class="bi bi-chat-left-text me-3"></i>
               <p class="mb-0">Comments</p>
             </div>
-            <div class="last-seen d-flex align-items-center my-4">
+            <div class="last-seen d-flex align-items-center my-4 side-tab" show="#recent-visit">
               <i class="bi bi-clock-history me-3"></i>
               <p class="mb-0">Recent Visited</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-9">
-        <div class="home-content d-none">
-          <div class="my-order-status border-1 border px-4 pb-2 pt-2 rounded-3">
-            <h4 class="mb-5 mt-4 fw-bold">My Orders</h4>
+      <div class="col-xl-9 col-12 mt-3 m-xl-0">
+        <div id="home" class="home-content content-body">
+          <div class="my-order-status border-1 border px-4 pb-2 rounded-3">
+            <h4 class="mb-4 mt-4 fw-bold">My Orders</h4>
             <div class="d-flex justify-content-between w-100">
               <div class="pending-order d-flex">
                 <div>
@@ -105,9 +105,9 @@
             </div>
           </div>
         </div>
-        <div class="orders-content rounded-3 border border-1 d-none">
+        <div id="orders" class="orders-content content-body rounded-3 border border-1 d-none">
           <div class="order-header ">
-            <div class="px-4 pb-2 pt-2">
+            <div class="px-4 pb-2">
               <h5 class="mb-4 mt-4 fw-bold">Order History</h5>
             </div>
             <div class="d-flex">
@@ -126,21 +126,21 @@
             <div id="canceled-content" class="p-3 d-none"></div>
           </div>
         </div>
-        <div class="favorites-content rounded-3 border border-1 py-2 d-none">
+        <div id="liked" class="content-body favorites-content rounded-3 border border-1 d-none">
           <div class="favorites-header px-4 pb-2">
             <h5 class="mb-4 mt-4 fw-bold">Favorites List</h5>
           </div>
           <div class="favorites-body"></div>
         </div>
-        <div class="comments-content rounded-3 border border-1 mb-2 d-none">
+        <div id="comments" class="content-body comments-content rounded-3 border border-1 mb-2 d-none">
           <div class="favorites-header px-4 pb-2">
-            <h5 class="mb-3 mt-4 fw-bold">Comments List</h5>
+            <h5 class="mb-4 mt-4 fw-bold">Comments List</h5>
           </div>
           <div class="comments-body"></div>
         </div>
-        <div class="last-seen-content rounded-3 border border-1 mb-2">
+        <div id="recent-visit" class="content-body last-seen-content rounded-3 border border-1 mb-2 d-none">
           <div class="last-seen-header px-4 pb-2">
-            <h5 class="mb-3 mt-4 fw-bold">Recent Visited List</h5>
+            <h5 class="mb-4 mt-4 fw-bold">Recent Visited List</h5>
           </div>
           <div class="last-seen-body"></div>
         </div>

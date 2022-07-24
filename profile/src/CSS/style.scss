@@ -139,3 +139,20 @@ a {
   width: 100%;
   height: 100%;
 }
+
+.active-side-tab {
+  color: rgb(13, 110, 235) !important;
+  position: relative;
+  font-weight: bold;
+  &::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    bottom: 0px;
+    left: -16px;
+    display: flex;
+    width: 6px;
+    background: rgb(13, 110, 235);
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+}

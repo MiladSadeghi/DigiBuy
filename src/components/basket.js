@@ -87,6 +87,7 @@ class basket{
         body: JSON.stringify(getUserDB)
       });
       let postGuestDB = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${guestID}/basket.json`, {method: "DELETE"})
+      document.cookie = "guestID= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
     }
   }
 

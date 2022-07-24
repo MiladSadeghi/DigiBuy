@@ -287,13 +287,13 @@ async function registerUser(input) {
     "password": input[3].value,
     "userID": uniqueID,
     "type": "user",
-    "basket": "",
-    "notification": "",
+    "basket": [],
+    "notification": [],
     "dashboard": {
-      "orders": "",
-      "wishlist": "",
-      "reviews": "",
-      "recentlyViewed": ""
+      "orders": [],
+      "wishlist": [],
+      "reviews": [],
+      "recentlyViewed": []
     },
   }
   let createValidAccountTable = {
