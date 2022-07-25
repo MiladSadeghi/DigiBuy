@@ -66,9 +66,13 @@ class headerSlider extends HTMLElement {
         let last = element.value.lastIndexOf(",");
         let photo = element.value.substring(0, last);
         let link = element.value.substring(last+1);
-        getSliders.push([photo, link.replace(/\s/g, "")]);
+        getSliders[index] = [photo, link.replace(/\s/g, "")];
       }
     });
+    getSliders = getSliders.filter(function (el) {
+      return el != null;
+    });
+    console.log(getSliders);
     let putSliders = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/pages/sliders.json`, {
       method: "PUT",
       headers: {
