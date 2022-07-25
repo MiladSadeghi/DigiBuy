@@ -134,9 +134,8 @@ nav {
 #showMegaMenu {
   position: absolute;
   display: block;
-  top: 50%;
+  top: 0;
   right: 0;
-  transform: translate(-50%);
   z-index: 5;
   opacity: 0;
   width: 16%;

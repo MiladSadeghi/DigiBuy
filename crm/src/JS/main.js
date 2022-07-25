@@ -7,6 +7,7 @@ import { userSearch } from "../components/User/Search/userSearch.js";
 import { userManage } from "../components/User/Manage/userManage.js";
 import { orderSearch } from "../components/Order/Search/orderSearch.js";
 import { orderManage } from "../components/Order/Manage/orderManage.js";
+import { headerSlider } from "../components/Pages/MainPage/header.js";
 
 const dropDownMenuOption = document.querySelector('.option');
 const menuBtnArrow = document.querySelectorAll(".show-list");
@@ -18,6 +19,7 @@ const showMenu = document.querySelector("#showMegaMenu");
 const category = document.querySelector(".category");
 const mainBody = document.querySelector(".main-body");
 const logBtn = document.querySelector("#log");
+const navMainPage = document.querySelector("#pages");
 let crmUser;
 document.addEventListener("DOMContentLoaded", (e) => {
   loadUser();
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   window.customElements.define('manage-user', userManage);
   window.customElements.define('search-order', orderSearch);
   window.customElements.define('manage-order', orderManage);
+  window.customElements.define('header-slider', headerSlider);
   profileBtn.addEventListener('click', (element) => {
     profileBtn.children[0].classList.toggle('rotateArrow');
     dropDownMenuOption.classList.toggle('d-none');
@@ -102,6 +105,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
       });
     }
   })
+
+  navMainPage.addEventListener("click", (e) => {
+    mainBody.innerHTML = `<header-slider></header-slider>`;
+  })
 })
 
 async function loadUser() {
@@ -112,6 +119,9 @@ async function loadUser() {
       throw new Error();
     }
     crmUser = await userData.json();
+    if(crmUser.type === "user") {
+      window.location.href = "/";
+    }
     crmUser["profileID"] = userCookie.userTable;
     profileBtnSpan.innerHTML = crmUser["userName"];
   } catch (error) {
