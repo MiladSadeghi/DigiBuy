@@ -20,10 +20,17 @@ a:hover {
 }
 
 .carousel-item img {
-  height: 400px;
+  min-height: 400px;
+  max-height: 400px;
   width: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .carousel-item img {
+    height: 300px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
