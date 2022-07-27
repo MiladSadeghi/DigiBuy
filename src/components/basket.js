@@ -111,7 +111,6 @@ class basket{
       if(!response) throw new Error("Cant Connect To DB");
       return true;
     } catch (error) {
-      console.log(error);
     }
   }
 }

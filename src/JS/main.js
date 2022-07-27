@@ -1,4 +1,5 @@
 import { navBarLg } from "../components/navbar.js";
+import { basket } from "../components/basket.js";
 const body = document.querySelector("body");
 const topSlider = document.querySelector(".carousel-inner");
 const carouselIndicators = document.querySelector(".carousel-indicators");
@@ -6,7 +7,10 @@ const offer = document.querySelector(".content");
 const offerNextBtn = document.querySelector("#next-offer");
 const offerPrevBtn = document.querySelector("#prev-offer");
 const offerSlider = document.querySelector(".ofamz-par");
-const amazingOfferDiv = document.querySelector(".ltl-th");
+const lastVisitSlider = document.querySelector(".ls-scrll");
+const lastVisitContent = document.querySelector(".content-last-visit");
+const lastVisitNextBtn = document.querySelector("#next-visit");
+const lastVisitPrevBtn = document.querySelector("#prev-visit");
 let pages, slider, offers, products;
 document.addEventListener("DOMContentLoaded", async () => {
   window.customElements.define("navbar-lg", navBarLg);
@@ -21,9 +25,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   products = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product.json`)).json() || [];
   slider = pages.sliders;
   offers = pages.offers;
-  console.log(offers, products);
   showSlider();
   showOffer();
+  console.log(products);
+  let basketClass = new basket();
+  basketClass.getUser();
+  showLastVisit(basketClass);
   offerNextBtn.parentElement.addEventListener("click", () => {
     offerSlider.scrollLeft += 220;
     offerPrevBtn.parentElement.classList.remove("d-none");
@@ -44,6 +51,29 @@ document.addEventListener("DOMContentLoaded", async () => {
       offerSlider.scrollLeft = 0;
       offerPrevBtn.parentElement.classList.add("d-none");
       offerPrevBtn.parentElement.classList.remove("d-flex");
+    }
+  });
+
+  lastVisitNextBtn.parentElement.addEventListener("click", () => {
+    lastVisitSlider.scrollLeft += 220;
+    lastVisitPrevBtn.parentElement.classList.remove("d-none");
+    lastVisitPrevBtn.parentElement.classList.add("d-flex");
+    let lastVisit = lastVisitSlider.scrollWidth - (lastVisitSlider.offsetWidth + lastVisitSlider.scrollLeft);
+    if(lastVisit - 220 <= 200) {
+      lastVisitSlider.scrollLeft = lastVisitSlider.scrollWidth;
+      lastVisitNextBtn.parentElement.classList.add("d-none");
+      lastVisitNextBtn.parentElement.classList.remove("d-flex");
+    }
+  });
+  lastVisitPrevBtn.parentElement.addEventListener("click", () => {
+    lastVisitSlider.scrollLeft -= 220;
+    lastVisitNextBtn.parentElement.classList.remove("d-none");
+    lastVisitNextBtn.parentElement.classList.add("d-flex");
+    if(lastVisitSlider.scrollLeft -220 <= 200) {
+      console.log(lastVisitSlider.scrollLeft);
+      lastVisitSlider.scrollLeft = 0;
+      lastVisitPrevBtn.parentElement.classList.add("d-none");
+      lastVisitPrevBtn.parentElement.classList.remove("d-flex");
     }
   });
 })
@@ -84,4 +114,29 @@ function showOffer() {
 
 function moneyFormat(num) {
   return Number(num).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+async function showLastVisit(basketClass) {
+  let user = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/${basketClass.db}/${basketClass.userID}.json`)).json() || [];
+  let array = [];
+  console.log(user);
+  if(user.dashboard?.recentlyViewed && user.dashboard.recentlyViewed.length > 0) {
+    user.dashboard.recentlyViewed.forEach((element, index) => {
+      console.log(products[element], element);
+      array.push(`
+        <a href="/product/?product=${element}" target="_blank">
+          <div class="last-visit-item bg-white me-1 p-2 d-flex align-items-center justify-content-center">
+            <img class="w-100" src="${products[element].productPhoto[0]}" alt="">
+          </div>
+        </a>
+      `);
+    })
+  } else {
+    array.push(`
+      <div style="height: 200px"  class="w-100 bg-white me-1 p-2 d-flex align-items-center justify-content-center">
+        <p class="text-center fs-3">No recently viewed items</p>
+      </div>
+    `);
+  }
+  lastVisitContent.insertAdjacentHTML("beforeend", array.join(""));
 }

@@ -28,7 +28,7 @@ a {
   object-position: center;
 }
 
-.ofamz-par {
+.ofamz-par, .ls-scrll {
   height: auto;
   width: auto;
   overflow-x: scroll;
@@ -37,12 +37,12 @@ a {
   border-radius: 1rem;
 }
 
-.ofamz-par::-webkit-scrollbar {
+.ofamz-par::-webkit-scrollbar, .ls-scrll::-webkit-scrollbar {
   overflow: hidden;
   display: none;
 }
 
-.offer-item {
+.offer-item, .last-visit-item {
   width: 220px;
   height: 250px;
 }
@@ -83,11 +83,11 @@ a {
   opacity: 0.9;
 }
 
-#next-offer {
+#next-offer, #next-visit {
   font-size: 1.3rem;
 }
 
-#prev-offer {
+#prev-offer, #prev-visit {
   font-size: 1.3rem;
 }
 
