@@ -28,6 +28,69 @@ a {
   object-position: center;
 }
 
+.ofamz-par {
+  height: auto;
+  width: auto;
+  overflow-x: scroll;
+  display: flex;
+  scroll-behavior: smooth;
+  border-radius: 1rem;
+}
+
+.ofamz-par::-webkit-scrollbar {
+  overflow: hidden;
+  display: none;
+}
+
+.offer-item {
+  width: 220px;
+  height: 250px;
+}
+
+.rnd-1 {
+  border-radius: 1rem;
+}
+
+.offer-img {
+  width: 150px;
+  height: 150px;
+}
+
+.parrent-slide-btn {
+  position: absolute;
+  right: .6%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #44444C;
+  height: 50%;
+  width: 35px;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease-in-out;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 20px 0 0 20px;
+}
+
+.parent-prev-btn {
+  left: .6%;
+  border-radius: 0 20px 20px 0;
+}
+
+.hov:hover .parrent-slide-btn{
+  opacity: 0.9;
+}
+
+#next-offer {
+  font-size: 1.3rem;
+}
+
+#prev-offer {
+  font-size: 1.3rem;
+}
+
 @media screen and (max-width: 1024px) {
   .carousel-item img {
     height: 300px;

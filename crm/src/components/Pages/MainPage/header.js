@@ -90,7 +90,7 @@ class headerSlider extends HTMLElement {
     let getOffers = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/pages/offers.json`)).json() || [];
     this.offersItem.forEach((element, index) => {
       if(element.value !== ""){
-        getOffers.push(element.value);
+        getOffers[index] = element.value;
       }
     });
     let putOffers = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/pages/offers.json`, {
@@ -116,7 +116,9 @@ class headerSlider extends HTMLElement {
       });
     }
     if(getOffers.length > 0){
+      console.log(getOffers);
       getOffers.forEach((element, index) => {
+        console.log(element);
         this.offersItem[index].value = element;
       });
     }

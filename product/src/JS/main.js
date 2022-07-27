@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     userLastSeen(basketClass);
   }
 
-  if(users[basketClass.userID]?.dashboard.wishlist.includes(`${productID}`)) {
+  if(users[basketClass.userID]?.dashboard?.wishlist && users[basketClass.userID]?.dashboard.wishlist.includes(`${productID}`)) {
     productLike.classList.add("d-none");
     productUnLike.classList.remove("d-none");
   }
