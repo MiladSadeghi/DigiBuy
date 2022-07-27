@@ -53,13 +53,12 @@ function showSlider() {
   console.log();
   slider.forEach((element, index) => {
     carouselIndicators.innerHTML += `
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="active" aria-current="true" aria-label="Slide ${index+1}"></button>
-    `;
-    console.log(element);
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="active" aria-current="true" aria-label="Slide ${index+1}"></button>`;
+
     array.push(`
-      <div class="carousel-item ${index === 0? "active":""}">
-        <img class="" src="${(window.outerWidth >= 840)? element[0]:element[1]}">
-      </div>
+    <div class="carousel-item ${index === 0? "active":""}" data-bs-interval="7000">
+      <img class="" src="${(window.outerWidth >= 840)? element[0]:element[1]}">
+    </div>
     `);
   });
   topSlider.insertAdjacentHTML("beforeend", array.join(""));

@@ -93,6 +93,8 @@ a {
 
 @media screen and (max-width: 1024px) {
   .carousel-item img {
-    height: 300px;
+    height: 280px;
+    min-height: auto;
+    max-height: auto;
   }
 }
