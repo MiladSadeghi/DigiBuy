@@ -69,7 +69,6 @@ class headerSlider extends HTMLElement {
     getSliders = getSliders.filter(function (el) {
       return el != null;
     });
-    console.log(getSliders);
     let putSliders = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/pages/sliders.json`, {
       method: "PUT",
       headers: {
@@ -116,9 +115,7 @@ class headerSlider extends HTMLElement {
       });
     }
     if(getOffers.length > 0){
-      console.log(getOffers);
       getOffers.forEach((element, index) => {
-        console.log(element);
         this.offersItem[index].value = element;
       });
     }

@@ -55,7 +55,7 @@ class editProduct extends HTMLElement {
     if (product["productFeature"]) {
       product["productFeature"].forEach((element, index) => {
         this.productFeatures[index].children[0].value = element.title;
-        this.productFeatures[index].children[1].value = element.discription;
+        this.productFeatures[index].children[1].value = element.description;
       });
     }
     this.addPhotoDivBtn.addEventListener("click", (e) => { addProduct.addPhotoDiv(this.subPhotos, this.shadowRoot) });
@@ -84,7 +84,7 @@ class editProduct extends HTMLElement {
       product["productFeature"].forEach((element, index) => {
         if (index >= 1) addProduct.addSpecification(this.productSpecification);
         this.productSpecificationInputs.children[index].children[0].value = element.title;
-        this.productSpecificationInputs.children[index].children[1].value = element.discription;
+        this.productSpecificationInputs.children[index].children[1].value = element.description;
       })
     }
     this.productCategory["options"].selectedIndex = Object.values(this.productCategory["options"]).findIndex((option, index) => { return option.text === product["productSubCategory"] });

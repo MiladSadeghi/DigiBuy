@@ -1,7 +1,7 @@
 const template = document.createElement('template');
 template.innerHTML = `<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/crm/src/components/order/Search/style.css">
+<link rel="stylesheet" href="/crm/src/components/Order/Search/style.css">
 <div class="position-relative pt-2 px-3">
   <div class="main position-relative">
   <div class="row m-0 p-0">
@@ -95,7 +95,6 @@ class orderSearch extends HTMLElement {
     this.products = await (await fetch("https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/product.json")).json();
     this.users = await (await fetch("https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users.json")).json();
     this.loading.classList.toggle("d-none");
-    console.log(this.orders, this.products);
 
     this.searchFilter.addEventListener("change", (e) => {
       this.searchFilterValue = e.currentTarget.value;

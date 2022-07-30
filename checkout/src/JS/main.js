@@ -218,7 +218,6 @@ async function submitOrder() {
   })
   userOrder["orderProduct"] = orderProduct;
   let confirmOrder = confirm("You Want To Submit This Order?");
-  console.log(confirmOrder);
   if(confirmOrder) {
     let response = await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${userOrder.userID}/dashboard/orders/${userOrder.orderID}.json`, {
       method: "PUT",
@@ -234,7 +233,6 @@ async function submitOrder() {
       },
       body: JSON.stringify(userOrder)
     });
-    console.log(response, response1);
     await basketClass.removeFromBasket("all");
     basketProduct = [];
     await basketClass.getBasket();

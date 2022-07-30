@@ -282,7 +282,6 @@ async function guestLastSeen(basketClass) {
 async function userLastSeen(basketClass) {
   let getGuestDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/guest/${basketClass.guestID}/recentlyViewed.json`)).json();
   let getUserDB = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/users/${basketClass.userID}/dashboard/recentlyViewed.json`)).json() || [];
-  console.log(getGuestDB, getUserDB);
   if (getGuestDB !== null) {
     getGuestDB.forEach((item)=> {
       getUserDB.push(item);

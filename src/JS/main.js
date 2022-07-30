@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   offers = pages.offers;
   showSlider();
   showOffer();
-  console.log(products);
   let basketClass = new basket();
   basketClass.getUser();
   showLastVisit(basketClass);
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     offerNextBtn.parentElement.classList.remove("d-none");
     offerNextBtn.parentElement.classList.add("d-flex");
     if(offerSlider.scrollLeft -220 <= 200) {
-      console.log(offerSlider.scrollLeft);
       offerSlider.scrollLeft = 0;
       offerPrevBtn.parentElement.classList.add("d-none");
       offerPrevBtn.parentElement.classList.remove("d-flex");
@@ -70,7 +68,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     lastVisitNextBtn.parentElement.classList.remove("d-none");
     lastVisitNextBtn.parentElement.classList.add("d-flex");
     if(lastVisitSlider.scrollLeft -220 <= 200) {
-      console.log(lastVisitSlider.scrollLeft);
       lastVisitSlider.scrollLeft = 0;
       lastVisitPrevBtn.parentElement.classList.add("d-none");
       lastVisitPrevBtn.parentElement.classList.remove("d-flex");
@@ -80,7 +77,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function showSlider() {
   let array = [];
-  console.log();
   slider.forEach((element, index) => {
     carouselIndicators.innerHTML += `
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="active" aria-current="true" aria-label="Slide ${index+1}"></button>`;
@@ -119,10 +115,8 @@ function moneyFormat(num) {
 async function showLastVisit(basketClass) {
   let user = await (await fetch(`https://digibuy-da839-default-rtdb.europe-west1.firebasedatabase.app/${basketClass.db}/${basketClass.userID}.json`)).json() || [];
   let array = [];
-  console.log(user);
   if(user.dashboard?.recentlyViewed && user.dashboard.recentlyViewed.length > 0) {
     user.dashboard.recentlyViewed.forEach((element, index) => {
-      console.log(products[element], element);
       array.push(`
         <a href="/product/?product=${element}" target="_blank">
           <div class="last-visit-item bg-white me-1 p-2 d-flex align-items-center justify-content-center">
